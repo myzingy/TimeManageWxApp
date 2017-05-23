@@ -1,0 +1,73 @@
+
+<!--pages/product/detail.wxml-->
+
+<!--顶端标记-->
+<import src="/templates/templates.wxml" />
+
+<!--<template is="topmark" data="{{...topdata}}" />-->
+
+<!--详情头部-->
+<scroll-view scroll-y="true" style="height: 100vh;" scroll-top="{{scrollTop}}">
+  <view class="detail-header">
+
+    <!--预览图片-->
+    <swiper class="detail-img">
+      <block wx:if="{{product.files.length == 0}}">
+        <swiper-item>
+          <image src="{{imgPath}}{{product.file.savepath}}{{product.file.savename}}" />
+        </swiper-item>
+      </block>
+      <block wx:else>
+        <block wx:for="{{product.files}}" wx:key="lastItemIdx">
+          <swiper-item>
+            <image src="{{imgPath}}{{item.savepath}}{{item.savename}}" />
+          </swiper-item>
+        </block>
+      </block>
+    </swiper>
+
+    <!--名称价格-->
+    <view class="detail-name-price">
+      <view>{{product.name}}</view>
+      <view>￥{{product.price}}</view>
+    </view>
+
+    <!--添加购物车按钮-->
+    <view class="detail-add-cart pull-right" data-pid="{{product.id}}" bindtap="addToCart">
+      <image src="/images/1_02.png" class="detail-add-cart-icon"></image>
+      <text class="detail-add-cart-text">添加到购物车</text>
+    </view>
+  </view>
+
+  <!--详情内容-->
+  <view class="detail-content">
+
+    <!--商品赠送积分-->
+
+    <!--<view class="container-gird">
+    <view class="title-without-devider">赠送积分：
+      <text style="font-weight: normal;">{{product.score}}</text>
+    </view>
+  </view>-->
+
+    <!--商品详细介绍-->
+    <view class="container-gird">
+      <view class="title-with-devider">商品详情</view>
+      <import src="/helpers/wxParse/wxParse.wxml" />
+      <template is="wxParse" data="{{wxParseData:parseDetail.nodes}}" />
+    </view>
+
+    <!--商品评论-->
+
+    <!--<view class="container-gird">
+    <view class="title-with-devider">商品评论</view>
+    <view style="text-align: center">
+      <view id="commentList"></view>
+    </view>
+  </view>-->
+  </view>
+
+  <!--底部锚链接-->
+  <import src="/templates/templates.wxml" />
+  <template is="backToTop" data="" />
+</scroll-view>

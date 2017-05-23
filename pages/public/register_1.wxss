@@ -1,0 +1,45 @@
+/* pages/public/register.wxss */
+
+/*手机注册标题*/
+
+.register-title {
+  height: 45px;
+  padding: 0px 10vw;
+  background: #fff;
+  border-bottom: 1px solid #f3f4f9;
+}
+
+.register-title .outer {
+  font-size: 16px;
+  line-height: 40px;
+  text-align: center;
+  border-bottom: 1px solid #ec5151;
+}
+
+.register-title .inner {
+  height: 39px;
+  color: #ec5151;
+  border: none;
+}
+
+.register-title .inner:after {
+  content: " ";
+  position: absolute;
+  display: block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #ec5151;
+  border-right: 0;
+  border-bottom: 0;
+  transform: rotate(45deg);
+  background: #fff;
+  left: 49vw;
+  top: 39px;
+}
+
+/*用户注册表单*/
+
+.item-input {
+  width: 60%;
+  background: #fff;
+}

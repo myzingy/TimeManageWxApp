@@ -1,0 +1,66 @@
+
+<!--pages/pubviewc/register.wxml-->
+
+<!--手机注册-->
+
+<!--<view class="register-title">
+  <view class="register-title outer">
+    <view class="register-title inner">手机注册</view>
+  </view>
+</view>-->
+
+<!--用户注册表单-->
+<view class="sign-form">
+  <form bindsubmit="submitRegister">
+
+    <!--账号(手机号)-->
+    <view class="input-item">
+      <view class="register-country-code">+86</view>
+      <view class="item-input">
+        <input name="phone" placeholder="请输入手机号" bindblur="setPhone" />
+      </view>
+    </view>
+
+    <!--验证码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="captcha" placeholder="请输入验证码" />
+      </view>
+      <view class="register-sms-sendbtn">
+        <text bindtap="sendSmsCode">{{sendText}}</text>
+      </view>
+    </view>
+
+    <!--密码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="password" type="{{passtype}}" placeholder="请输入密码" />
+      </view>
+      <view class="icon-switch-passtype">
+        <view class="{{passTypeStyle}}" bindtap="switchPassType"></view>
+      </view>
+    </view>
+
+    <!--确认密码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="password2" type="{{pass2type}}" placeholder="请再次输入密码" />
+      </view>
+      <view class="icon-switch-passtype">
+        <view class="{{pass2TypeStyle}}" bindtap="switchPass2Type"></view>
+      </view>
+    </view>
+
+    <!--注册按钮-->
+    <view>
+      <button class="btn-red-wide" form-type="submit">注册</button>
+    </view>
+
+    <!--已注册直接登录-->
+    <view style="height:45px;text-align:right;">
+      <view style="color:#7D7B7B;font-size:0.8rem;line-height:45px;display:inline-block;">
+        <navigator url="/pages/public/login" hover-class="none">已注册直接登录</navigator>
+      </view>
+    </view>
+  </form>
+</view>

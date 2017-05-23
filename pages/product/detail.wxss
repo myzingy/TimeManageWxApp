@@ -1,0 +1,92 @@
+/* pages/product/detail.wxss */
+
+/*详情头部*/
+
+.detail-header {
+  height: 325px;
+  background-color: #fff;
+}
+
+/*预览图片*/
+
+.detail-img {
+  height: 200px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.detail-img image {
+  width: 86%;
+  height: 100%;
+}
+
+/*名称价格*/
+
+.detail-name-price view {
+  height: 40px;
+  margin: 0 10px;
+  line-height: 40px;
+  border-bottom: 2px solid #9b9b9b;
+}
+
+/*添加购物车按钮*/
+
+.detail-add-cart {
+  height: 24px;
+  margin-top: 10px;
+  margin-right: 10px;
+  color: #f6f6f9;
+  background-color: #ff4146;
+}
+
+.detail-add-cart-icon {
+  width: 15px;
+  height: 15px;
+  border: 4px solid #dd0000;
+  background-color: #dd0000;
+}
+
+.detail-add-cart-text {
+  width: 88px;
+  height: 24px;
+  font-size: 12px;
+  line-height: 24px;
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 10px;
+}
+
+/*详情内容*/
+
+.detail-content {
+  padding: 0 0px 20px;
+  line-height: 16px;
+  font-size: 12px;
+}
+
+.container-gird {
+  padding: 10px;
+  margin: 10px 0px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+.detail-content .title-without-devider {
+  color: #2c2c2c;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.detail-content .title-with-devider {
+  height: 24px;
+  color: #2c2c2c;
+  font-size: 14px;
+  font-weight: bold;
+  border-bottom: 1px solid #949494;
+}
+
+/*商品赠送积分*/
+
+/*商品详细介绍*/
+
+/*商品评论*/

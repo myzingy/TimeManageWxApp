@@ -1,0 +1,13 @@
+
+<!--首页商品列表-->
+<view class="goods-list">
+  <block wx:for="{{ads}}" wx:key="itemLastId">
+    <view class="goods-box" wx:if="{{item.position.name=='首页广告'}}">
+      <navigator url="{{item.url?item.url:''}}">
+        <image src="{{imgPath}}{{item.file.savepath}}{{item.file.savename}}"></image>
+      </navigator>
+    </view>
+  </block>
+  <view class="clear"></view>
+</view>
+<view class="homepage-bottom"></view>

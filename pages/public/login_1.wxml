@@ -1,0 +1,61 @@
+
+<!--pages/public/login.wxml-->
+
+<!--用户登录表单-->
+<view class="sign-form">
+  <form bindsubmit="submitLogin">
+
+    <!--账号(手机号)-->
+    <view class="input-item">
+      <view class="item-label"> 账号 </view>
+      <view class="item-input">
+        <input name="phone" placeholder="请输入手机号" />
+      </view>
+    </view>
+
+    <!--密码-->
+    <view class="input-item">
+      <view class="item-label"> 密码 </view>
+      <view class="item-input">
+        <input name="password" type="{{passtype}}" placeholder="请输入密码" />
+      </view>
+      <view class="icon-switch-passtype" style="display:none">
+        <view class="{{passTypeStyle}}" bindtap="switchPassType"></view>
+      </view>
+    </view>
+
+    <!--忘记密码-->
+    <view class="input-item" style="border-bottom: none;font-size:0.8rem;">
+      <view class="pull-right">
+        <navigator url="/pages/public/repass">忘记密码</navigator>
+      </view>
+    </view>
+
+    <!--登录按钮-->
+    <view class="input-item" style="border-bottom: none;">
+      <button class="btn-red-wide" form-type="submit">登录</button>
+    </view>
+    <view class="btn-go-index" bindtap="goIndex">
+      返回首页
+    </view>
+  </form>
+
+  <!--新用户注册-->
+  <view style="height:40px;text-align:center;">
+    <view style="color:#7D7B7B;font-size:0.8rem;line-height:40px;display:inline-block;">
+      <navigator url="/pages/public/register" hover-class="none">新用户注册</navigator>
+    </view>
+  </view>
+
+  <!--合作账号登录-->
+  <view style="height:40px;text-align:center;border-top:1px solid #f6f6f9;">
+    <view style="color:#7D7B7B;font-size:0.8rem;line-height:40px;display:inline-block;">
+      合作账号登录
+    </view>
+  </view>
+  <view style="padding-bottom:20px;">
+    <view style="margin:0 auto;width:15vw;height:15vw; " bindtap="wxAuth">
+      <image src="/images/1_07.png" style="width:15vw;height:15vw;border-radius:50px;"></image>
+    </view>
+  </view>
+</view>

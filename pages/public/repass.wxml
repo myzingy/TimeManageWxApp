@@ -1,0 +1,74 @@
+
+<!--pages/public/repass.wxml-->
+
+<!--输入手机号-->
+<view class="sign-form" style="display:{{inputContainerDisplay}};">
+
+  <!--账号(手机号)-->
+  <view class="input-item">
+    <view class="register-country-code">+86</view>
+    <view class="item-input">
+      <input placeholder="请输入手机号" bindblur="setPhone" />
+    </view>
+  </view>
+  <view class="input-item">
+    为了您的安全，我们会向您发送手机验证码
+  </view>
+
+  <!--注册按钮-->
+  <view>
+    <button class="btn-red-wide" form-type="submit" bindtap="switchDisplay">下一步</button>
+  </view>
+</view>
+
+<!--重置密码表单-->
+<view class="sign-form" style="display:{{repassFormDisplay}};">
+  <form bindsubmit="submitRepass">
+
+    <!--账号(手机号)-->
+    <view class="input-item">
+      您的手机号：+86 {{sendSmsTo}}
+      <input name="phone" type="text" value="{{sendSmsTo}}" style="display:none;" />
+    </view>
+
+    <!--验证码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="captcha" placeholder="请输入验证码" />
+      </view>
+      <view class="register-sms-sendbtn">
+        <text bindtap="sendSmsCode">{{sendText}}</text>
+      </view>
+    </view>
+
+    <!--密码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="password" type="{{passtype}}" placeholder="请输入密码" />
+      </view>
+      <view class="icon-switch-passtype">
+        <view class="{{passTypeStyle}}" bindtap="switchPassType"></view>
+      </view>
+    </view>
+
+    <!--确认密码-->
+    <view class="input-item">
+      <view class="item-input">
+        <input name="password2" type="{{pass2type}}" placeholder="请再次输入密码" />
+      </view>
+      <view class="icon-switch-passtype">
+        <view class="{{pass2TypeStyle}}" bindtap="switchPass2Type"></view>
+      </view>
+    </view>
+
+    <!--重置密码按钮-->
+    <view class="input-item">
+      <button class="btn-red-wide" form-type="submit">重置密码</button>
+    </view>
+
+    <!--返回上一步按钮-->
+    <view class="input-item">
+      <button type="default" bindtap="switchDisplay">上一步</button>
+    </view>
+  </form>
+</view>

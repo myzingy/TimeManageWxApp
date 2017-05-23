@@ -1,0 +1,103 @@
+
+<!--pages/order/confirm.wxml-->
+
+<!--收货人信息-->
+<view class="confirm-title">收货人信息</view>
+<form bindsubmit="orderSubmit" bindreset="formReset">
+
+  <!--输入确认项目-->
+  <view class="confirm-items-group">
+
+    <!--姓名-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"> 姓名 </view>
+      <view class="confirm-item-input">
+        <input id="name" name="name" value="{{consignee.name}}" placeholder="请输入姓名" />
+      </view>
+    </view>
+
+    <!--手机号-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"> 手机 </view>
+      <view class="confirm-item-input">
+        <input id="phone" name="phone" value="{{consignee.phone}}" placeholder="请输入手机号" />
+      </view>
+    </view>
+
+    <!--地址-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"> 地址 </view>
+      <view class="confirm-item-picker">
+
+        <!--选择省份-->
+        <picker id="province" name="province" bindchange="bindProvinceChange" value="{{provinceIdx}}" range="{{arrProvince}}" range-key="name">
+          <view class="picker">
+            {{arrProvince[provinceIdx].name}}
+          </view>
+        </picker>
+
+        <!--选择城市-->
+        <picker id="city" name="city" bindchange="bindCityChange" value="{{cityIdx}}" range="{{arrCity}}" range-key="name">
+          <view class="picker">
+            {{arrCity[cityIdx].name}}
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <!--详细地址-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"></view>
+      <view class="confirm-item-input">
+        <input id="address" name="address" value="{{consignee.address}}" placeholder="请输入详细地址" />
+      </view>
+    </view>
+
+    <!--备注-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"> 备注(选填) </view>
+      <view class="confirm-item-input">
+        <input name="remark" value="{{consignee.remark}}" placeholder="请输入备注信息" />
+      </view>
+    </view>
+
+    <!--配送时间-->
+    <view class="confirm-item">
+      <view class="confirm-item-label"> 配送时间 </view>
+
+      <!--选择配送时间-->
+      <view class="confirm-item-picker">
+        <picker id="deliveryTime" name="deliveryTime" bindchange="bindDeliveryTimeChange" value="{{deliveryTimeIdx}}" range="{{arrDeliveryTime}}">
+          <view class="picker">
+            {{arrDeliveryTime[deliveryTimeIdx]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+  </view>
+
+  <!--支付方式-->
+  <view class="confirm-title">
+    <text>支付方式</text>
+  </view>
+  <view class="confirm-items-group">
+    <radio-group name="payment">
+      <view class="confirm-payment" wx:for="{{payments}}" wx:key="lastItemIdx">
+        <label>
+          <view class="{{payment == item.id ? 'payment-mock-btn-active' : 'payment-mock-btn'}}" data-payment="{{item.id}}" bindtap="switchPayment">
+            {{item.name}}
+            <image class="payment-chosen-icon" src="/images/1_04.png"></image>
+          </view>
+        </label>
+      </view>
+    </radio-group>
+  </view>
+
+  <!--提交订单按钮-->
+  <view class="btn-orange-wide">
+    <button type="default" size="default" form-type="submit"> 提交订单 </button>
+  </view>
+</form>
+
+<!--占个位置-->
+<view class="perch"></view>

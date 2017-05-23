@@ -1,0 +1,6 @@
+/* pages/public/repass.wxss */
+
+.item-input {
+  background: #fff;
+}
+
