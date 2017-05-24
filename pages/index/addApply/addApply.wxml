@@ -1,0 +1,44 @@
+<view class="addApply-cell">
+  <label>申请类别</label>
+  <picker  value="{{selectDataIndex}}"  bindchange="pickSelect" data-kind="selectDataIndex" range="{{selectDataArr}}">
+    <view class="picker">
+      {{selectDataArr[selectDataIndex]}}
+    </view>
+  </picker>
+</view>
+<view class="addApply-cell">
+  <label>注意事项</label>
+  <text>注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</text>
+</view>
+<view class="addApply-cell">
+  <label>开始时间</label>
+ 
+</view>
+<view class="addApply-cell">
+   <picker class="left-space" mode="date" value="{{startDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startDate">
+    <view class="picker">
+       {{startDate}}
+    </view>
+  </picker>
+  <picker value="{{startHour}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startHour">
+    <view class="picker" >
+       {{startHour}}
+    </view>
+  </picker>
+  <picker  value="{{startMin}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startMin">
+    <view class="picker">
+       {{startMin}}
+    </view>
+  </picker>
+</view>
+<view class="addApply-cell">
+  <label>结算时间</label>
+  <picker></picker>
+</view>
+<view class="addApply-cell" >
+  <label>审批人</label>
+  <picker></picker>
+</view>
+
+
+

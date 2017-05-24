@@ -1,0 +1,16 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/index/common.wxml" />
+<template name="applying">
+  <view class="main-cell" wx:for="{{data}}">
+    <template is="cell-body" data="{{item}}"> </template>
+
+
+    <template wx:if="{{(!(item.item.C3_541449606438=='Y')&&item.item.C3_541449538456=='Y') && item.item.C3_545927244809 == 'Y' }}" is="cell-attach" data="{{item}}"></template>
+    <template wx:if="{{!(item.C3_541449606438=='Y')&&item.C3_541449538456=='Y'}}" is="cell-detail" data="{{item}}"></template>
+
+    <template wx:if="{{item.item.C3_541449606438=='Y'||(item.C3_541449538456==null||item.C3_541449538456=='N')}}" is="cell-submit"></template>
+    <template wx:if="{{item.C3_541449606438=='Y'||(item.C3_541449538456==null||item.C3_541449538456=='N')}}" is="cell-modify"></template>
+
+    <template is="bottom-line"></template>
+  </view>
+</template>

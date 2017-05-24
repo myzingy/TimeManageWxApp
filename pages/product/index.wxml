@@ -50,7 +50,7 @@
       </view>
     </view>
     <view class="clear"></view>
-
+    
     <!--底部锚链接-->
     <import src="/templates/templates.wxml" />
     <template is="backToTop" data="" />

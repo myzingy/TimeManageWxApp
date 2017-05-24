@@ -1,10 +1,12 @@
-/**app.wxss**/
+/*app.wxss*/
 @import "/helpers/wxParse/wxParse.wxss";
+@import '/dist/style/weui.wxss';
+
 
 page {
   margin: 0;
   padding: 0;
-  background-color: #f6f6f9;
+  background-color: white;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -268,4 +270,20 @@ page {
   bottom: -10vh;
   text-align: center;
   border-radius: 50px;
+}
+
+.refresh{/*刷新样式*/
+  /*position: absolute;*/
+  top: -10px;
+  height: 30px;
+  left: 0;
+  right: 0;
+}
+
+.bottom-line{/*底部分割线*/
+  position: absolute;
+  border: 0.5px solid #808080;
+  left: 10px;
+  right: 10px;
+  bottom: 0;
 }

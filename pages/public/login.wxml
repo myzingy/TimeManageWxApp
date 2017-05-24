@@ -57,5 +57,12 @@
     <view style="margin:0 auto;width:15vw;height:15vw; " bindtap="wxAuth">
       <image src="/images/1_07.png" style="width:15vw;height:15vw;border-radius:50px;"></image>
     </view>
+    <view style="margin:0 auto;width:15vw;height:15vw; " bindtap="customWxAuth">
+      <image src="/images/1_07.png" style="width:15vw;height:15vw;border-radius:50px;"></image>
+    </view>
+    <view style="margin:0 auto;width:15vw;height:15vw; " bindtap="customGetData">
+      <image src="/images/1_07.png" style="width:15vw;height:15vw;border-radius:50px;"></image>
+      {{user}}
+    </view>
   </view>
 </view>

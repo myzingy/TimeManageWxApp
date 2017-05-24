@@ -3,7 +3,8 @@ var app = getApp();
 Page({
   data: {
     passtype: 'password',
-    passTypeStyle: 'can-see'
+    passTypeStyle: 'can-see',
+    user:''
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -92,5 +93,71 @@ Page({
     wx.switchTab({
       url: '/pages/index/index'
     });
+  },
+  customWxAuth:function(){
+    var param = {
+      'apitoken':'KingOfDinner123456789',
+      'clienttype':'mobile',
+      'openid':'oqWaVwGcgX9cQhwYQs8e1fg7e9U8'
+    }
+    app.HttpService.customWxLogin(param,loginData => {
+      //alert("s");
+      app.globalData.userInfo = loginData.data;
+      wx.setStorageSync('userInfo', loginData.data);
+
+      let userInfoData = wx.getStorageSync("userInfo");
+      this.setData({user:userInfoData.user});
+    },function(){
+     // alert("e");
+    });
+  },
+  customGetData:function(){
+    var param = {
+      'uiver':'200',
+      'dynlogin':'1',
+      'method':'ShowHostTableDatas_Ajax',
+      'AccessToken':app.globalData.userInfo.data.AccessToken,
+      'user':app.globalData.userInfo.user,
+      'resid':'516731338280',
+      'subresid':'',
+      'cmswhere':'',
+      'key':''
+    }
+    app.HttpService.customGetData(param,function(){
+    },function(){
+
+    });
+  },
+  onPullDownRefresh:function(){
+    wx.showModal({
+      title:"2",
+      content:"2"
+    })
+  },
+  onReachBottom:function(){
+     wx.showModal({
+       title:'1',
+       content:'1',
+       success:(res) => {
+          if(res.confirm){
+            wx.switchTab({
+              url: '/pages/index/index',
+              success: function(res){
+                // success
+              },
+              fail: function(res) {
+                // fail
+              },
+              complete: function(res) {
+                // complete
+              }
+            })
+          }
+       }
+     });
+//     wx.showModal({
+//   title: '提示',
+//   content: '这是一个模态弹窗'
+// })
   }
 })

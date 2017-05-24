@@ -1,0 +1,40 @@
+/*************common**************/
+.left-space{
+    margin-left: 10px
+}
+
+.addApply-cell{
+    display: flex;
+    min-height: 28px;
+    margin-top: 11px;
+}
+
+.addApply-cell:nth-child(1){
+    margin-top: 21px;
+}
+
+.addApply-cell label{
+    flex: 0 0 65px;
+    font-size: 12px;
+    text-align: right;
+    color: #333333;
+    margin-right: 10px;
+    line-height: 28px;
+}
+
+.addApply-cell picker,.addApply-cell text{
+    flex: 1 1 auto;
+    margin-right: 11px;font-size: 12px;
+    line-height: 28px;
+    text-indent: 11px;
+    color: #666666;
+}
+
+.addApply-cell picker{
+    border: 1px #CFCFCF solid;
+    border-radius: 4px;
+    background-image: url(../../../images/xiala.png);
+    background-size: 13px 7px;
+    background-repeat: no-repeat;
+    background-position: 95% 10.5px
+}

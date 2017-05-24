@@ -1,3 +1,11 @@
+<template name="main-nav">
+  <view class="main-top">
+  <navigator class="" hover-class="nav-active">申请中</navigator>
+  <navigator class="" bindtap="">已审核</navigator>
+  <navigator class="">已退回</navigator>
+  <navigator class="">历史记录</navigator>
+</view>
+</template>
 
 <!--顶部锚标记-->
 <template name="topmark">
@@ -19,7 +27,7 @@
 
 <!--底部导航条-->
 <template name="fourDevarajas">
-  <view class="devaraja-group">
+  <!--<view class="devaraja-group">
     <view class="devaraja">
       <image src="/images/icon-home.png"></image>
       <text>首页</text>
@@ -36,10 +44,26 @@
       <image src="/images/icon-account.png"></image>
       <text>我的账户</text>
     </view>
-  </view>
+  </view>-->
+</template>
+
+<template name="refresh">
+  <view class="refresh">{{refreshTitle}}</view>
 </template>
 
 <!--购物车气泡-->
 <template name="cartBubble">
   <view class="cart-bubble">1</view>
+</template>
+
+<template name="loadMore">
+  <view class="load-bottom">加载更多</view>
+</template>
+
+<template name="noMore">
+  <view class="load-bottom">无更多数据</view>
+</template>
+
+<template name="bottom-line">
+  <view class="bottom-line"></view>
 </template>

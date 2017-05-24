@@ -1,0 +1,49 @@
+<!--cell主体-->
+<template name="cell-body">
+ 
+    <view class="main-cell-icon">
+      <view class="{{item.C3_542383374989}}">{{item.C3_542397132420}}</view>
+      <view class="{{item.C3_543518801920}} layout-{{item.C3_543518801920}}"></view>
+      <label>{{item.C3_533407351131}}</label>
+    </view>
+    <view class="main-cell-title">
+      <label>{{item.C3_533398158705}}</label>
+      <label>{{item.C3_541449959569}}日{{item.C3_541450006047}}</label>
+      <label>{{item.C3_541449974021}}日{{item.C3_541450008801}}</label>
+    </view>
+    <view class="main-cell-title">
+      <label>{{item.C3_541449935726}}小时</label>
+      <label>{{item.C3_541450072499}}:{{item.C3_541450107087}}</label>
+      <label>{{item.C3_541450084259}}:{{item.C3_541450125786}}</label>
+    </view>
+  
+</template>
+
+<!--附件-->
+<template name="cell-attach">
+    <view class="main-cell-btn">
+      <button class="image-attach">附件</button>
+    </view>
+</template>
+
+<!--详情-->
+<template name="cell-detail">
+    <view class="main-cell-btn">
+      <button class="image-detail">详情</button>
+    </view>
+</template>
+
+<!--提交-->
+<template name="cell-submit">
+    <view class="main-cell-btn">
+      <button class="image-submit">提交</button>
+    </view>
+</template>
+
+<!--修改-->
+<template name="cell-modify">
+    <view class="main-cell-btn">
+      <button class="image-modify">修改</button>
+    </view>
+</template>
+

@@ -1,25 +1,190 @@
-/**index.wxss**/
-
-.goods-list {
-  padding-top: 5px;
-  background-color: #fff;
+/******背景图片*********/
+.overtime {
+  background-image: url(../../../images/jiaban.png);
 }
 
-.goods-box {
-  padding: 2vw;
-  display: inline-block;
-  border-bottom: 1px solid #f6f6f9;
+.fillout {
+  background-image: url(../../../images/bushuaka.png);
 }
 
-.goods-box navigator {
-  height: 36vw;
+.annual,.business,.maternity,.trip,.compassionate,.breastfeeding,
+.sicks,.personal,.annual{
+  background-image: url(../../../images/qingjia.png);
 }
 
-.goods-box image {
-  width: 96vw;
-  height: 36vw;
+/**************草稿，主长审批***********/
+.spcg{
+  background-image: url(../../../images/caogao.png);
 }
 
-.homepage-bottom {
+.zzsp{
+  background-image: url(../../../images/zhuzhang.png);
+}
+
+.zgsp {
+  background-image: url(../../../images/zhuguan.png);
+}
+
+.jlsp{
+  background-image: url(../../../images/jingli.png);
+}
+
+/**************附件  详情****************/
+.image-attach{
+  background-image: url(../../../images/fujian.png);
+}
+
+.image-detail{
+  background-image: url(../../../images/xiangqing.png);
+}
+
+.image-submit{
+background-image: url(../../../images/tijiao.png);
+}
+
+.image-modify{
+background-image: url(../../../images/xiugai.png);
+}
+
+/*********顶部tab************/
+
+.main-top {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  opacity: 1;
+  z-index: 10;
+  position: relative;
+  height: 40px;
+}
+
+.main-top>view {
+  flex: 1;
+  text-align: center;
+  line-height: 40px;
+}
+
+.nav-active {
+  color: red;
+}
+
+.main-section {
+  position: relative;
+  margin-top: -30px;
+}
+
+/***select**/
+
+.main-select {
+  position: relative;
+  z-index: 10;
+  background-color: white;
+  padding: 5px 0 5px 10px;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #e4e4e4;
+}
+
+.main-select picker {
+  height: 30px;
+  width: 120px;
+  text-align: center;
+  line-height: 30px;
+  border: 1px lightgray solid;
+  border-radius: 4px;
+}
+
+/*****cell****/
+
+.main-cell {
+  height: 94px;
+  display: flex;
+  position: relative;
+  background-color: white;
+}
+
+.main-cell-icon, .main-cell-title, .main-cell-detail, .main-cell-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-cell-icon view {
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  margin-top: 5px;
+}
+
+.main-cell-icon view:nth-child(1) {
+  width: 44px;
+  height: 44px;
+  background-size: 44px 44px;
+  line-height: 44px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.layout-zzsp {
+  width: 31.875px;
   height: 20px;
+  background-size: 31.875px 20px;
+}
+
+.layout-jlsp{
+  width: 29.655px;
+  height: 20px;
+  background-size: 29.655px 20px;
+}
+
+.layout-jlsp,.layout-spcg{
+  width: 20px;
+  height: 20px;
+  background-size: 20px 20px;
+}
+
+.main-cell-icon label {
+  flex: 0 0 14px;
+  font-size: 12px;
+  text-align: center;
+  margin-top: 3px;
+}
+
+.main-cell-title label {
+  font-size: 12px;
+  flex: 0 0 14px;
+  padding: 5px 0;
+  text-align: center;
+}
+
+.main-cell-title label:nth-child(1) {
+  font-size: 20px;
+  flex: 1 1 auto;
+  line-height: 46px;
+  padding: 0;
+}
+
+.main-cell-btn button {
+  background-size: 30px 30px;
+  background-repeat: no-repeat;
+  background-position-x: 10px;
+  height: 55px;
+  font-size: 12px;
+  line-height: 80.5px;
+  margin-top: 19.5px;
+}
+
+/****添加****/
+
+.add-apply {
+  width: 60px;
+  position: fixed;
+  opacity: 0.8;
+  z-index: 10;
+  bottom: 10px;
+  right: 10px;
+  background-image: url(../../../images/xinjian-2.png);
+  height: 60px;
+  background-size: 60px 60px;
+  background-color: transparent;
 }

@@ -1,21 +1,17 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/product/index",
-    "pages/product/detail",
-    "pages/cart/index",
-    "pages/order/confirm",
-    "pages/order/success",
+    "pages/index/pended/pended",
+    "pages/login/login",
     "pages/user/index",
-    "pages/public/login",
-    "pages/public/register",
-    "pages/public/repass"
+    "pages/index/addApply/addApply"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FFFFFF",
-    "navigationBarTitleText": "wemall商城",
-    "navigationBarTextStyle": "black"
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#F3F3F3",
+    "navigationBarTitleText": "考勤管理",
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh": true
   },
   "tabBar": {
     "color": "#808080",
@@ -55,5 +51,5 @@
     "uploadFile": 10000,
     "downloadFile": 10000
   },
-  "debug": false
+  "debug": true
 }
