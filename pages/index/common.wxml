@@ -29,14 +29,14 @@
 <!--详情-->
 <template name="cell-detail">
     <view class="main-cell-btn">
-      <button class="image-detail">详情</button>
+      <button class="image-detail" bindtap="gotoApplyDetail" data-item="{{item}}">详情</button>
     </view>
 </template>
 
 <!--提交-->
 <template name="cell-submit">
     <view class="main-cell-btn">
-      <button class="image-submit">提交</button>
+      <button class="image-submit" data-item="{{item}}">提交</button>
     </view>
 </template>
 
@@ -46,4 +46,106 @@
       <button class="image-modify">修改</button>
     </view>
 </template>
+
+<template name="add-category">
+  <view class="addApply-cell">
+  <label>申请类别</label>
+  <picker  value="{{categoryModel.selectDataIndex}}"  bindchange="pickSelect" data-kind="selectDataIndex" range="{{categoryModel.selectDataArr}}">
+    <view class="picker">
+      {{categoryModel.selectDataArr[categoryModel.selectDataIndex]}}
+    </view>
+  </picker>
+</view>
+</template>
+
+<template name="cell-notice">
+  <view class="addApply-cell">
+  <label>注意事项</label>
+  <text>{{noticeStr}}</text>
+</view>
+</template>
+
+<template name="time-start">
+<view class="addApply-cell">
+  <label>开始时间</label>
+ 
+</view>
+<view class="addApply-cell">
+   <picker class="left-space" mode="date" value="{{startDateModel.startDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startDate">
+    <view class="picker">
+       {{startDateModel.startDate}}
+    </view>
+  </picker>
+  <picker value="{{startDateModel.startHour}}" range="{{startDateModel.startHours}}" bindchange="pickSelect" data-kind="startHour">
+    <view class="picker" >
+       {{startDateModel.startHours[startDateModel.startHour]}}
+    </view>
+  </picker>
+  <picker  value="{{startDateModel.startMin}}" range="{{startDateModel.startMins}}" bindchange="pickSelect" data-kind="startMin">
+    <view class="picker">
+       {{startDateModel.startMins[startDateModel.startMin]}}
+    </view>
+  </picker>
+</view>
+</template>
+
+<template name="time-end">
+<view class="addApply-cell">
+  <label>结束时间</label>
+</view>
+<view class="addApply-cell">
+  <picker class="left-space" mode="date" value="{{endDateModel.endDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="endDate">
+    <view class="picker">
+       {{endDateModel.endDate}}
+    </view>
+  </picker>
+  <picker value="{{endDateModel.endHour}}" range="{{endDateModel.startHours}}" bindchange="pickSelect" data-kind="endHour">
+    <view class="picker" >
+       {{endDateModel.startHours[endDateModel.endHour]}}
+    </view>
+  </picker>
+  <picker  value="{{endDateModel.endMin}}" range="{{endDateModel.startMins}}" bindchange="pickSelect" data-kind="endMin">
+    <view class="picker">
+       {{endDateModel.startMins[endDateModel.endMin]}}
+          </view>
+  </picker>
+</view>
+</template>
+
+<template name="apply-person">
+  <view class="addApply-cell" >
+  <label>审批人</label>
+  <text>{{tempApprove}}</text>
+</view>
+</template>
+
+<template name="time-length">
+  <view wx:if="{{selectDataArr[selectDataIndex] != '补打卡'}}" class="addApply-cell" >
+  <label>时长</label>
+  <text>{{hour}}</text>
+  <button bindtap="hourCalculate">获取时长</button>
+</view>
+
+</template>
+
+<template name="reson">
+  <view class="addApply-cell" >
+  <label>事由</label>
+  <textarea auto-height maxlength="-1" value="{{reason}}"/>
+</view>
+</template>
+
+<template name="cell-submit-modify">
+<view class="addApply-cell" >
+  <button class="weui-btn" bindtap="addApply">提交</button>
+  <button>保存</button>
+</view>
+</template>
+
+
+
+
+
+
+
 

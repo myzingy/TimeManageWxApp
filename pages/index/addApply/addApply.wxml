@@ -1,44 +1,61 @@
-<view class="addApply-cell">
-  <label>申请类别</label>
-  <picker  value="{{selectDataIndex}}"  bindchange="pickSelect" data-kind="selectDataIndex" range="{{selectDataArr}}">
-    <view class="picker">
-      {{selectDataArr[selectDataIndex]}}
-    </view>
-  </picker>
-</view>
-<view class="addApply-cell">
-  <label>注意事项</label>
-  <text>注意事项注意事项注意事项注意事项注意事项注意事项注意事项注意事项</text>
-</view>
-<view class="addApply-cell">
-  <label>开始时间</label>
+<import src='/pages/index/common.wxml' />
+<template is="add-category" data="{{categoryModel}}">
  
-</view>
-<view class="addApply-cell">
-   <picker class="left-space" mode="date" value="{{startDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startDate">
-    <view class="picker">
-       {{startDate}}
-    </view>
-  </picker>
-  <picker value="{{startHour}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startHour">
-    <view class="picker" >
-       {{startHour}}
-    </view>
-  </picker>
-  <picker  value="{{startMin}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startMin">
-    <view class="picker">
-       {{startMin}}
-    </view>
-  </picker>
-</view>
-<view class="addApply-cell">
-  <label>结算时间</label>
-  <picker></picker>
-</view>
-<view class="addApply-cell" >
-  <label>审批人</label>
-  <picker></picker>
-</view>
+</template>
+
+<template is="cell-notice" data="{{noticeStr}}">
+
+</template>
+
+<template is="time-start" data="{{startDateModel}}">
+</template>
+
+<template is="time-end" data="{{endDateModel}}">
+</template>
+
+<template is="apply-person" data="{{tempApprove}}">
+</template>
+
+<template is="time-length" data="{{hour}}">
+
+</template>
+
+<template is="reson" data="{{reason}}">
+</template>
+
+  <view wx:for="" class="addApply-cell" >
+  <label>车票</label>
+  <text>httP</text>
+  <button bindtap="hourCalculate">拍照</button>
+  </view>
+
+<view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                            <view class="weui-uploader__title">图片上传</view>
+                            <view class="weui-uploader__info">{{files.length}}/2</view>
+                        </view>
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files" id="uploaderFiles">
+                                <block wx:for="{{files}}" wx:key="*this">
+                                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                    </view>
+                                </block>
+                                
+                              
+                                <view class="weui-uploader__file weui-uploader__file_status">
+                                    <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
+                                    <view class="weui-uploader__file-content">50%</view>
+                                </view>
 
 
+                            </view>
+                            <view class="weui-uploader__input-box">
+                                <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                            </view>
+                        </view>
+                        </view>
 
+
+<template is="cell-submit-modify">
+</template>

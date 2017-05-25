@@ -140,5 +140,19 @@ Page({
   },
   gotoAddApply:function(){
     applying.gotoAddApply();
+  },
+  gotoApplyDetail:function(e){
+    wx.navigateTo({
+      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item),
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
   }
 });

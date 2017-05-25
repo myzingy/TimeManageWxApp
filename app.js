@@ -15,5 +15,6 @@ App({
   Config: Config,
   WxParse: WxParse,
   WxValidate: (rules, messages) => new WxValidate(rules, messages),
-  HttpService: HttpService
+  HttpService: HttpService,
+  debug:true
 });

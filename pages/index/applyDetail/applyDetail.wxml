@@ -1,0 +1,67 @@
+
+  <view class="addApply-cell">
+  <label>申请类别</label>
+  <view class="text-border">{{data.C3_533398158705}}</view>
+</view>
+
+
+  <view class="addApply-cell">
+  <label>注意事项</label>
+  <text>noticeStr</text>
+</view>
+
+
+
+<view class="addApply-cell">
+  <label>开始时间</label>
+ <view class="text-border">{{data.C3_533143179815}}</view>
+</view>
+
+
+<view class="addApply-cell">
+  <label>结束时间</label>
+  <view class="text-border">{{data.C3_533143217561}}</view>
+</view>
+
+
+  <view class="addApply-cell" >
+  <label>审批人</label>
+  <view class="text-border">{{data.C3_541451111065}}</view>
+</view>
+
+
+<!--wx:if="{{selectDataArr[selectDataIndex] != '补打卡'}}" -->
+  <view class="addApply-cell" >
+  <label>时长</label>
+  <text>{{data.C3_541449935726}}</text>
+</view>
+
+
+
+
+<view class="addApply-cell" >
+  <label>事由</label>
+  <text>{{data.C3_533143291117}}</text>
+</view>
+
+<view class="addApply-cell" >
+  <label>审批流</label>
+  <!--<text>{{data.C3_533143291117}}</text>-->
+</view>
+
+<view class="addApply-cell" >
+  <view class=""></view>
+  <view class=""></view>
+  <view class=""></view>
+  <view class=""></view>
+</view>
+
+
+
+
+
+<view class="addApply-cell" >
+  <button class="weui-btn" bindtap="">撤销</button>
+ 
+</view>
+

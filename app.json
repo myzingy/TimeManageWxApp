@@ -4,7 +4,8 @@
     "pages/index/pended/pended",
     "pages/login/login",
     "pages/user/index",
-    "pages/index/addApply/addApply"
+    "pages/index/addApply/addApply",
+    "pages/index/applyDetail/applyDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",

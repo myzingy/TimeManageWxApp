@@ -2,7 +2,8 @@ var app = getApp();
 var self;
 Page({
   data:{
-    
+    vacationCategorySuccess:false,
+    teamApproveSuccess:false
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
@@ -21,6 +22,7 @@ Page({
     app.HttpService.customWxLogin(param, function (data) {
       app.globalData.userInfo = data.data;
       self.getVacationCategory();
+      self.getTeamApprove();
     }, function () {
 
     });
@@ -40,8 +42,63 @@ Page({
           for(let i = 0; i < dataArr.length; i ++){
             tmpArr.push(dataArr[i].C3_533402301362);
           }
+          app.globalData.rule = dataArr;
           app.globalData.vacationCategory = tmpArr;
-          wx.switchTab({
+          self.setData({
+            vacationCategorySuccess:true
+          })
+          self.gotoApplyPage();
+      }else {
+            wx.showModal({
+              title:'获取假期类别失败'
+            })
+      }
+      wx.hideLoading();
+    }, function () {
+      wx.hideLoading();
+      wx.showModal({
+              title:'获取假期类别失败'
+            })
+    });
+  },
+  getTeamApprove:function(){
+    var param = {
+      'resid':542225544503,
+      'subresid': '',
+      'cmswhere': '',
+      'key': ''
+    }
+    app.HttpService.getApplyData(param, function (data) {
+      if(data && data.data && data.data.data){
+          let dataArr = Array.from(data.data.data);
+
+          if(dataArr[0].C3_541450807755==dataArr[0].C3_541450797951){
+                  app.globalData.teamApprove=dataArr[0].C3_541467332728;
+              }else{
+                  app.globalData.teamApprove=dataArr[0].C3_541450797951;
+              }
+
+          console.log('app.globalData.teamApprove'+app.globalData.teamApprove);
+    self.setData({
+            teamApproveSuccess:true
+          })
+          self.gotoApplyPage();
+      }else {
+            wx.showModal({
+              title:'获取审批组长类别失败'
+            })
+      }
+      wx.hideLoading();
+    }, function () {
+      wx.hideLoading();
+      wx.showModal({
+              title:'获取审批组长类别失败'
+            })
+    });
+  },
+  gotoApplyPage:function(){
+    if( self.data.vacationCategorySuccess && self.data.teamApproveSuccess ){
+      wx.switchTab({
               url: '/pages/index/index',
               success: function(res){
                 // success
@@ -54,15 +111,10 @@ Page({
                 // complete
               }
             })
-      }else {
-            wx.showModal({
-              title:'获取假期类别失败'
-            })
-      }
-      wx.hideLoading();
-    }, function () {
-      wx.hideLoading();
-    });
+    }else{
+
+    }
+     
   },
   onShow:function(){
     // 生命周期函数--监听页面显示

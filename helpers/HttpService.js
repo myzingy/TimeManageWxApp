@@ -44,12 +44,30 @@ function getRequest(url, data, doSuccess, doFail, doComplete) {
 
 //获取数据
 function getData(url, data,method, doSuccess, doFail, doComplete) {
-  data.uiver = 200;
-  data.dynlogin = 1;
-  data.AccessToken = getApp().globalData.userInfo.ucode;
-  data.user = getApp().globalData.userInfo.user;
+  
   if(method == 1){
     data.method = 'ShowHostTableDatas_Ajax';
+    data.uiver = 200;
+     data.dynlogin = 1;
+     data.AccessToken = getApp().globalData.userInfo.ucode;
+      data.user = getApp().globalData.userInfo.user;
+   }else if(method == 2){
+    data.method = 'SaveData_Ajax';
+     data.uiver = 200;
+     data.dynlogin = 1;
+     data.user = getApp().globalData.userInfo.user;
+
+
+    data.data._id = 1;
+    data.data._state = "added";
+    data.data.REC_ID = 0;
+
+    data.data = JSON.stringify([data.data]);
+     
+    data.AccessToken = getApp().globalData.userInfo.ucode;
+
+
+
   }
 
   var str = getApp().Config.basePath + url + '?';
@@ -161,7 +179,18 @@ function getApplyData(params,doSuccess,doFail){
   getData(path.apply,params,1,doSuccess,doFail);
 }
 
+function hourCalculate(params,doSuccess,doFail){
+  getData(path.apply,params,2,doSuccess,doFail);
+}
+
+//添加申请
+function addApply(params,doSuccess,doFail){
+  getData(path.apply,params,2,doSuccess,doFail);
+}
+
 module.exports = {
   customWxLogin:customWxLogin,
-  getApplyData:getApplyData
+  getApplyData:getApplyData,
+  hourCalculate:hourCalculate,
+  addApply:addApply
 }
