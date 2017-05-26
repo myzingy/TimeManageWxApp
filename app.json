@@ -5,7 +5,8 @@
     "pages/login/login",
     "pages/user/index",
     "pages/index/addApply/addApply",
-    "pages/index/applyDetail/applyDetail"
+    "pages/index/applyDetail/applyDetail",
+    "pages/index/fixSubmit/fixSubmit"
   ],
   "window": {
     "backgroundTextStyle": "dark",

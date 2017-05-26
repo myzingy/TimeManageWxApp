@@ -1,8 +1,8 @@
 <view class="main-top">
   <view class="" bindtap="pageClick" data-id="0">申请中</view>
   <view class="" bindtap="pageClick" data-id="1">已审核</view>
-  <view class="">已退回</view>
-  <view class="">历史记录</view>
+  <view class="" bindtap="pageClick" data-id="2">已退回</view>
+  <view class="" bindtap="pageClick" data-id="3">历史记录</view>
 </view>
 
  <view class="main-select">
@@ -16,6 +16,8 @@
 <import src="/templates/templates.wxml" />
 <import src="/pages/index/applying/applying.wxml"/>
 <import src="/pages/index/pended/pended.wxml"/>
+<import src="/pages/index/refuse/refuse.wxml"/>
+<import src="/pages/index/history/history.wxml"/>
 
 <template is="{{pageName}}" data="{{data}}"></template>
 

@@ -66,7 +66,28 @@ function getData(url, data,method, doSuccess, doFail, doComplete) {
      
     data.AccessToken = getApp().globalData.userInfo.ucode;
 
+  }else if(method == 3){
+    data.method = 'ajax_GetRelTableByHostRecord';
 
+      data.uiver = 200;
+     data.dynlogin = 1;
+    data.AccessToken = getApp().globalData.userInfo.ucode;
+     data.user = getApp().globalData.userInfo.user;
+    
+   
+  }else if(method == 4){
+    data.method = 'SaveData_Ajax';
+
+    data.uiver = 200;
+     data.dynlogin = 1;
+      data.user = getApp().globalData.userInfo.user;
+
+      data.data._id = 1;
+    data.data._state = "modified";
+
+     data.data = JSON.stringify([data.data]);
+
+     data.AccessToken = getApp().globalData.userInfo.ucode;
 
   }
 
@@ -188,9 +209,21 @@ function addApply(params,doSuccess,doFail){
   getData(path.apply,params,2,doSuccess,doFail);
 }
 
+function getSubData(params,doSuccess,doFail){
+  getData(path.apply,params,3,doSuccess,doFail);
+}
+
+// 修改数据
+function saveData(params,doSuccess,doFail){
+  getData(path.apply,params,4,doSuccess,doFail);
+}
+
+
 module.exports = {
   customWxLogin:customWxLogin,
   getApplyData:getApplyData,
   hourCalculate:hourCalculate,
-  addApply:addApply
+  addApply:addApply,
+  getSubData:getSubData,
+  saveData:saveData
 }

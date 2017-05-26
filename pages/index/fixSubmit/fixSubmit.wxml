@@ -20,19 +20,17 @@
 
 
 </template>
-
-<template is="reson-readonly" data="{{data}}">
+<template is="reson" data="{{reason}}">
 </template>
+<template is="cell-picture" data="{{files}}">
 
-<template is="cell-picture-readonly" data="{{data}}">
-  
 </template>
 
 
 <template is="cell-pended-readonly" data="{{pendedProcessData}}">
 </template>
-
-
+<template is="cell-submit-modify">
+</template>
 
 <template is="cell-cancel" data="{{data}}">
 </template>

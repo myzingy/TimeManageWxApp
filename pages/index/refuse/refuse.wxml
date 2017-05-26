@@ -1,0 +1,13 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/index/common.wxml" />
+<template name="refuse">
+  <view class="main-cell" wx:for="{{data}}">
+    <template is="cell-body" data="{{item}}"> </template>
+
+
+    <template is="{{item.C3_541503245775 == 'Y' ? 'cell-invaild' : 'cell-modify-submit'}}" data="{{item}}">
+    </template>
+
+    <template is="bottom-line"></template>
+  </view>
+</template>

@@ -1,4 +1,5 @@
 import applying from '/applying/applying'
+import common from '/common'
 
 //获取应用实例
 var app = getApp();
@@ -10,7 +11,7 @@ Page({
     selectDataIndex: 0,
     pageIndex: 0,//当前第几页
     pageName: 'applying',//当前页的名称
-    pageNameArr: ['applying', 'pended'],
+    pageNameArr: ['applying', 'pended','refuse','history'],
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
     loadMore: false,
@@ -26,7 +27,7 @@ Page({
     self.setData({ dataArr: a });//初始化数据
     self.isLaunch();//登录
   },
-  isLaunch:function(){
+  isLaunch: function () {
     if (!app.globalData.userInfo) {//判断是否登录
       wx.redirectTo({
         url: '/pages/login/login',
@@ -43,7 +44,7 @@ Page({
     }
   },
   onShow: function () {
-    
+
   },
   onReady: function () {
     self.getData();
@@ -53,7 +54,7 @@ Page({
   },
   getData: function () {//获取数据
     var self = this;
-   
+
 
     if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
       self.setData({ data: self.data.dataArr[self.data.pageIndex] });
@@ -61,37 +62,38 @@ Page({
     }
 
     wx.showLoading({
-      title:'加载中'
+      title: '加载中'
     })
 
-    if(self.data.pageIndex == 0){//申请中
-         var param = {
-      'resid': 541502768110,
-      'subresid': '',
-      'cmswhere': '',
-      'key': ''
-    }
-    }else if(self.data.pageIndex == 1){//已审核
-       var param = {
-      'resid': 541518522808,
-      'subresid': '',
-      'cmswhere': '',
-      'key': ''
-    }
+     var param = {
+        'subresid': '',
+        'cmswhere': '',
+        'key': ''
+      }
+
+    if (self.data.pageIndex == 0) {//申请中
+       param.resid = 541502768110
+    } else if (self.data.pageIndex == 1) {//已审核
+       param.resid = 541518522808
+    }else if (self.data.pageIndex == 2) {//已退回
+      //  param.resid =  543000345781
+      param.resid = 541502768110
+    }else if (self.data.pageIndex == 3) {//历史记录
+       param.resid = 541518678060
     }
     app.HttpService.getApplyData(param, function (data) {
-      if(data && data.data &&data.data.data){
+      if (data && data.data && data.data.data) {
         let dataArr = Array.from(data.data.data);
-         self.setData({ data: dataArr });
-         self.data.dataArr[self.data.pageIndex] = dataArr;
-      }else self.setData({data:[]});
+        self.setData({ data: dataArr });
+        self.data.dataArr[self.data.pageIndex] = dataArr;
+      } else self.setData({ data: [] });
       wx.stopPullDownRefresh();
       wx.hideLoading();
     }, function () {
       wx.stopPullDownRefresh();
       wx.hideLoading();
     });
-    
+
   },
   bindPickerChange: function (e) {//picker 选择事件
     console.log('picker发送选择改变，携带值为', e.detail.value)
@@ -138,19 +140,73 @@ Page({
   scrolling: function (event) {
     console.log('scroll');
   },
-  gotoAddApply:function(){
+  gotoAddApply: function () {
     applying.gotoAddApply();
   },
-  gotoApplyDetail:function(e){
+  gotoApplyDetail: function (e) {
     wx.navigateTo({
       url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item),
-      success: function(res){
+      success: function (res) {
         // success
       },
-      fail: function(res) {
+      fail: function (res) {
         // fail
       },
-      complete: function(res) {
+      complete: function (res) {
+        // complete
+      }
+    })
+  },
+  attachShow: function (e) {//附件
+    let item = e.target.dataset.item;
+    let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
+    urls = urls.filter(x => x != null);
+    wx.previewImage({
+      urls: urls, // 需要预览的图片http链接列表
+      success: function () {
+
+      },
+      fail: function () {
+
+      }
+    })
+  },
+  draftModify:function(e){
+    wx.navigateTo({
+      url: '/pages/index/addApply/addApply?data=' + JSON.stringify(e.target.dataset.item),
+      success: function (res) {
+        // success
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function (res) {
+        // complete
+      }
+    })
+  },
+  submit:function(e){//提交
+    let tag = e.target.dataset.tag;
+    self.data.data[tag].C3_541449538456 = 'Y';
+    let item = self.data.data[tag];
+     common.saveAndSubmit(item,function(){
+        self.setData({
+          data:self.data.data
+        })
+     },function(){
+        self.data.data[tag].C3_541449538456 = 'N';
+     });
+  },
+  draftModifySubmit:function(e){
+    wx.navigateTo({
+      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.target.dataset.item),
+      success: function (res) {
+        // success
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function (res) {
         // complete
       }
     })

@@ -22,7 +22,7 @@
 <!--附件-->
 <template name="cell-attach">
     <view class="main-cell-btn">
-      <button class="image-attach">附件</button>
+      <button class="image-attach" bindtap="attachShow" data-item="{{item}}">附件</button>
     </view>
 </template>
 
@@ -36,19 +36,40 @@
 <!--提交-->
 <template name="cell-submit">
     <view class="main-cell-btn">
-      <button class="image-submit" data-item="{{item}}">提交</button>
+      <button class="image-submit" data-tag="{{index}}" bindtap="submit">提交</button>
     </view>
 </template>
 
 <!--修改-->
 <template name="cell-modify">
     <view class="main-cell-btn">
-      <button class="image-modify">修改</button>
+      <button class="image-modify" data-item="{{item}}" bindtap="draftModify">修改</button>
     </view>
 </template>
 
+<!--修改并提交-->
+<template name="cell-modify-submit">
+    <view class="main-cell-btn">
+      <button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>
+    </view>
+</template>
+
+<!--已作废-->
+<template name="cell-invaild">
+    <view class="main-cell-btn">
+      <button class="image-modify" >已作废</button>
+    </view>
+</template>
+
+<template name="state">
+  <text>{{item.C3_545948501137}}</text>
+</template>
+
+
+
+
 <template name="add-category">
-  <view class="addApply-cell">
+<view class="addApply-cell">
   <label>申请类别</label>
   <picker  value="{{categoryModel.selectDataIndex}}"  bindchange="pickSelect" data-kind="selectDataIndex" range="{{categoryModel.selectDataArr}}">
     <view class="picker">
@@ -59,6 +80,7 @@
 </template>
 
 <template name="cell-notice">
+
   <view class="addApply-cell">
   <label>注意事项</label>
   <text>{{noticeStr}}</text>
@@ -66,8 +88,9 @@
 </template>
 
 <template name="time-start">
+
 <view class="addApply-cell">
-  <label>开始时间</label>
+  <label>{{isCard ? '开始补卡时间' : '开始时间'}} </label>
  
 </view>
 <view class="addApply-cell">
@@ -90,8 +113,9 @@
 </template>
 
 <template name="time-end">
+
 <view class="addApply-cell">
-  <label>结束时间</label>
+  <label>{{isCard ? '结束补卡时间' : '结束时间'}}</label>
 </view>
 <view class="addApply-cell">
   <picker class="left-space" mode="date" value="{{endDateModel.endDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="endDate">
@@ -110,9 +134,12 @@
           </view>
   </picker>
 </view>
+
 </template>
 
 <template name="apply-person">
+
+
   <view class="addApply-cell" >
   <label>审批人</label>
   <text>{{tempApprove}}</text>
@@ -120,7 +147,8 @@
 </template>
 
 <template name="time-length">
-  <view wx:if="{{selectDataArr[selectDataIndex] != '补打卡'}}" class="addApply-cell" >
+
+  <view wx:if="{{!isCard}}" class="addApply-cell" >
   <label>时长</label>
   <text>{{hour}}</text>
   <button bindtap="hourCalculate">获取时长</button>
@@ -138,7 +166,187 @@
 <template name="cell-submit-modify">
 <view class="addApply-cell" >
   <button class="weui-btn" bindtap="addApply">提交</button>
-  <button>保存</button>
+  <button bindtap="saveApply">保存</button>
+</view>
+
+</template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<template name="cell-pricture-title">
+  <view wx:for="{{imageShowArr}}" wx:if="{{imageShowArr[index][0]}}" class="addApply-cell" >
+  <!--<view wx:for="{{imageShowArr}}" class="addApply-cell" >-->
+  <label>{{item[2]}}</label>
+  <text>{{item[1]}}</text>
+  <button bindtap="chooseImage" data-tag="{{index}}">拍照</button>
+  </view>
+</template>
+
+<template name="cell-picture">
+
+
+
+  <view class="addApply-cell" >
+<view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                            <view class="weui-uploader__title">附件上传</view>
+                            <view class="weui-uploader__info">{{files.length}}/2</view>
+                        </view>
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files" id="uploaderFiles">
+                                <block wx:for="{{files}}" wx:key="*this">
+                                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                    </view>
+                                </block>
+                                
+                            
+
+                            </view>
+                        </view>
+                        </view>
+                          </view>
+
+
+</template>
+
+
+
+
+
+
+
+
+<!--applydetail-->
+
+<template name="add-category-readonly" >
+ <view class="addApply-cell">
+  <label>申请类别</label>
+  <view class="text-border">{{data.C3_533398158705}}</view>
+</view>
+
+</template>
+
+<template name="cell-notice-readonly" >
+
+
+  <view class="addApply-cell">
+  <label>注意事项</label>
+  <text>noticeStr</text>
+</view>
+
+</template>
+
+<template name="time-start-readonly" >
+<view class="addApply-cell">
+  <label>开始时间</label>
+ <view class="text-border">{{data.C3_533143179815}}</view>
+</view>
+</template>
+
+<template name="time-end-readonly" >
+
+<view class="addApply-cell">
+  <label>结束时间</label>
+  <view class="text-border">{{data.C3_533143217561}}</view>
+</view>
+</template>
+
+<template name="apply-person-readonly">
+  <view class="addApply-cell" >
+  <label>审批人</label>
+  <view class="text-border">{{data.C3_541451111065}}</view>
+</view>
+</template>
+
+<template name="time-length-readonly">
+  <view class="addApply-cell" >
+  <label>时长</label>
+  <text>{{data.C3_541449935726}}</text>
+</view>
+
+
+
+</template>
+
+<template name="reson-readonly" >
+
+<view class="addApply-cell" >
+  <label>事由</label>
+  <text>{{data.C3_533143291117}}</text>
+</view>
+</template>
+
+<template name="cell-picture-readonly">
+  
+<view class="weui-uploader">
+                        <view class="weui-uploader__hd">
+                        </view>
+                        <view class="weui-uploader__bd">
+                            <view class="weui-uploader__files" id="uploaderFiles">
+                                <block wx:for="{{files}}" wx:key="*this">
+                                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                    </view>
+                                </block>
+                                
+                            
+
+                            </view>
+                        </view>
+                        </view>
+</template>
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+<template name="cell-pended-readonly">
+<view class="addApply-cell" >
+  <label>审批流</label>
+  <!--<text>{{data.C3_533143291117}}</text>-->
+</view>
+
+<view class="addApply-cell" wx:for="{{pendedProcessData}}" >
+  <view class="{{item.C3_543790707188}} pended-process"></view>
+  <view class="pended-process-person">{{item.C3_541450392920}}</view>
+  <view class="pended-process-state {{item.C3_541450438440 == 'Y' ? 'pended-state-Y' : 'pended-state-N'}}"></view>
+  <view class="pended-process-date">{{item.C3_541450449702}}</view>
+</view>
+
+</template>
+
+
+
+<template name="cell-cancel">
+
+<view class="addApply-cell" wx:if="{{data.C3_541449538456=='Y'&&data.C3_541449586048!=='Y'}}" >
+  <button class="weui-btn" bindtap="cancel">撤销</button>
+ 
 </view>
 </template>
 

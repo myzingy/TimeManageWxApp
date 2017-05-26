@@ -1,10 +1,9 @@
 <import src='/pages/index/common.wxml' />
+
 <template is="add-category" data="{{categoryModel}}">
- 
 </template>
 
 <template is="cell-notice" data="{{noticeStr}}">
-
 </template>
 
 <template is="time-start" data="{{startDateModel}}">
@@ -18,44 +17,27 @@
 
 <template is="time-length" data="{{hour}}">
 
+
 </template>
 
 <template is="reson" data="{{reason}}">
 </template>
 
-  <view wx:for="" class="addApply-cell" >
-  <label>车票</label>
-  <text>httP</text>
-  <button bindtap="hourCalculate">拍照</button>
-  </view>
+<template is="cell-pricture-title" data="{{imageShowArr}}">
+</template>
 
-<view class="weui-uploader">
-                        <view class="weui-uploader__hd">
-                            <view class="weui-uploader__title">图片上传</view>
-                            <view class="weui-uploader__info">{{files.length}}/2</view>
-                        </view>
-                        <view class="weui-uploader__bd">
-                            <view class="weui-uploader__files" id="uploaderFiles">
-                                <block wx:for="{{files}}" wx:key="*this">
-                                    <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
-                                        <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
-                                    </view>
-                                </block>
-                                
-                              
-                                <view class="weui-uploader__file weui-uploader__file_status">
-                                    <image class="weui-uploader__img" src="../images/pic_160.png" mode="aspectFill" />
-                                    <view class="weui-uploader__file-content">50%</view>
-                                </view>
+<template is="cell-picture" data="{{files}}">
 
-
-                            </view>
-                            <view class="weui-uploader__input-box">
-                                <view class="weui-uploader__input" bindtap="chooseImage"></view>
-                            </view>
-                        </view>
-                        </view>
-
-
+</template>
 <template is="cell-submit-modify">
 </template>
+
+
+
+
+
+
+
+
+
+  

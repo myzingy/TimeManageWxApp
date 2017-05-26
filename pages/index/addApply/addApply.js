@@ -1,3 +1,5 @@
+import common from '../common'
+
 var self;
 var app = getApp();
 
@@ -5,17 +7,19 @@ var startHours = [];
 var startMins = [];
 
 for (let i = 0; i < 24; i++) {
-  if(i < 10) startHours.push('0' + i);
+  if (i < 10) startHours.push('0' + i);
   else startHours.push(i);
 }
 
 for (let i = 0; i < 60; i++) {
-   if(i < 10) startMins.push('0' + i);
-   else startMins.push(i);
+  if (i < 10) startMins.push('0' + i);
+  else startMins.push(i);
 }
 
 Page({
   data: {
+    isCard:false,
+    isDraft:false,
     categoryModel: {
       selectDataIndex: 0,
       selectDataArr: []
@@ -23,28 +27,28 @@ Page({
 
     startTime: '请选择',
     endTime: '请选择',
-    files: [],
-    startDateModel:{
+    files: ['','','',''],
+    startDateModel: {
       startDate: '请选择',
-     startHour: '0',
+      startHour: '0',
       startHours: startHours,
       startMin: '0',
-     startMins: startMins
+      startMins: startMins
     },
 
-     endDateModel:{
+    endDateModel: {
       endDate: '请选择',
       endHour: '0',
       startHours: startHours,
       endMin: '0',
-     startMins: startMins
+      startMins: startMins
     },
 
-    tempApprove:'',
-    noticeStr:'',
-    hour:'',
-    reason:''
-    
+    tempApprove: '',
+    noticeStr: '',
+    hour: '',
+    reason: '',
+    imageShowArr:[]
 
   },
   onLoad: function (options) {
@@ -58,14 +62,50 @@ Page({
     })
 
     self.setData({
-      tempApprove:app.globalData.teamApprove
+      tempApprove: app.globalData.teamApprove
     })
 
 
+    if(options.data){
+      let item = JSON.parse(options.data);
+      let tmpCategoryModel = self.data.categoryModel;
+      tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value,index,arr) => value == item.C3_533398158705);
+// C3_533143179815
+// C3_533143217561
+//开始时间
+      let tmpStartDateModel = self.data.startDateModel;
+      tmpStartDateModel.startDate = item.C3_533143179815.split(' ')[0];
+
+      let tmpSartHour = item.C3_533143179815.split(' ')[1].split(':')[0];
+      let tmpSartMin = item.C3_533143179815.split(' ')[1].split(':')[1];
+      tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value,index,arr) => value == tmpSartHour)
+      tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value,index,arr) => value == tmpSartMin)
+
+       let tmpEndDateModel = self.data.endDateModel;
+      tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
+
+      let tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
+      let tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
+      tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value,index,arr) => value == tmpEndHour)
+      tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value,index,arr) => value == tmpEndMin)
+
+      self.setData({
+        categoryModel:tmpCategoryModel,
+        reason:item.C3_533143291117,
+        tempApprove:item.C3_542556605600,
+        hour:item.C3_541449935726,
+        files:[item.C3_541450276993,item.C3_545771156108,item.C3_545771157350,item.C3_545771158420],
+        startDateModel:tmpStartDateModel,
+        endDateModel:tmpEndDateModel
+
+      })
+    }
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
-
+    // var e;
+    // e.target.dataset.kind = 'selectDataIndex';
+    // self.pickSelect();
   },
   getData: function () {
 
@@ -98,14 +138,16 @@ Page({
       path: 'path' // 分享路径
     }
   },
-  chooseImage: function () {
+  chooseImage: function (e) {
+    let tag = e.target.dataset.tag;
     wx.chooseImage({
       count: 1, // 最多可以选择的图片张数，默认9
       sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function (res) {
+        self.data.files[tag] = res.tempFilePaths[0];
         self.setData({
-          files: self.data.files.concat(res.tempFilePaths)
+          files: self.data.files
         });
       },
       fail: function (res) {
@@ -132,15 +174,31 @@ Page({
       })
 
       var ruleArr = app.globalData.rule;
-        var itemStr = self.data.categoryModel.selectDataArr[e.detail.value];
-        for (var i = 0; i < ruleArr.length; i++) {
-            var tempRuleM = ruleArr[i];
-            if (tempRuleM.C3_533402301362 == itemStr) {
-              self.setData({
-                noticeStr:tempRuleM.C3_545771115865
-              })
-            }
+      var itemStr = self.data.categoryModel.selectDataArr[e.detail.value];
+      for (var i = 0; i < ruleArr.length; i++) {
+        var tempRuleM = ruleArr[i];
+        if (tempRuleM.C3_533402301362 == itemStr) {
+          self.setData({
+            noticeStr: tempRuleM.C3_545771115865
+          })
+          var imageShowArr = self.kvoAttach(tempRuleM);
+          self.setData({
+            imageShowArr:imageShowArr
+          })
+
+          
         }
+
+        if(itemStr == '补打卡'){
+          self.setData({
+            isCard:true
+          })
+        }else{
+          self.setData({
+            isCard:false
+          })
+        }
+      }
 
     } else if (kindStr == 'startDate') {
       let tmpM = self.data.startDateModel;
@@ -150,7 +208,7 @@ Page({
       })
 
     } else if (kindStr == 'startHour') {
-        let tmpM = self.data.startDateModel;
+      let tmpM = self.data.startDateModel;
       tmpM.startHour = e.detail.value;
       self.setData({
         startDateModel: tmpM
@@ -162,7 +220,7 @@ Page({
       self.setData({
         startDateModel: tmpM
       })
-    }else if (kindStr == 'endDate') {
+    } else if (kindStr == 'endDate') {
       let tmpM = self.data.endDateModel;
       tmpM.endDate = e.detail.value;
       self.setData({
@@ -170,7 +228,7 @@ Page({
       })
 
     } else if (kindStr == 'endHour') {
-        let tmpM = self.data.endDateModel;
+      let tmpM = self.data.endDateModel;
       tmpM.endHour = e.detail.value;
       self.setData({
         endDateModel: tmpM
@@ -185,80 +243,56 @@ Page({
     }
 
   },
-  hourCalculate:function(){
-//  startDateModel:{
-//       startDate: '请选择',
-//      startHour: '0',
-//       startHours: startHours,
-//       startMin: '0',
-//      startMins: startMins
-//     },
-
-//      endDateModel:{
-//       endDate: '请选择',
-//       endHour: '0',
-//       startHours: startHours,
-//       endMin: '0',
-//      startMins: startMins
-//     },
+  hourCalculate: function () {
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
-     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
+    var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
 
     var data1 = {
-      "C3_546130034510":startTime,
-      "C3_546130034799":endTime,
-      "C3_546130035036":self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex],
-      "C3_546181010461":app.globalData.userInfo.data.Dep1Code
+      "C3_546130034510": startTime,
+      "C3_546130034799": endTime,
+      "C3_546130035036": self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex],
+      "C3_546181010461": app.globalData.userInfo.data.Dep1Code
     }
 
-    
+
 
     var param = {
-      'resid':546129993686,
-      'data':data1
+      'resid': 546129993686,
+      'data': data1
     }
 
 
     var data2 = {
-      "C3_545822726730":startTime,
-      "C3_545822726977":endTime,
-      "C3_545822727444":self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex]
-      
+      "C3_545822726730": startTime,
+      "C3_545822726977": endTime,
+      "C3_545822727444": self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex]
+
     }
 
-     var param2 = {
-      'resid':545822693342,
-      'data':data2
+    var param2 = {
+      'resid': 545822693342,
+      'data': data2
     }
 
-        // var standardHourCalModel = new Object();
-        // standardHourCalModel.C3_546130034510 = '';
-        // standardHourCalModel.C3_546130034799 = '';
-        // standardHourCalModel.C3_546130035036 = self.data.categoryModel.selectDataArr[e.detail.value];
-        // //一级企业编号
-        // standardHourCalModel.C3_546181010461 = app.globalData.userInfo.data.Dep1Code;
+    app.HttpService.hourCalculate(param, function (data) {
+      if (data && data.data && data.data.data) {
+        param2.data.C3_546180817741 = data.data.data[0].C3_546130076462;
+        app.HttpService.hourCalculate(param2, function (data) {
+          if (data && data.data && data.data.data) {
+            self.setData({
+              hour: data.data.data[0].C3_545928354975
+            })
 
-        // //if (appConfig.app.debug) hourCalModel.C3_545822727218 = '544901984748';
+          } else self.setData({ data: [] });
+          wx.stopPullDownRefresh();
+          wx.hideLoading();
+        }, function () {
+          wx.stopPullDownRefresh();
+          wx.hideLoading();
+        });
 
-        app.HttpService.hourCalculate(param, function (data) {
-      if(data && data.data &&data.data.data){
-          param2.data.C3_546180817741 = data.data.data[0].C3_546130076462;
-                  app.HttpService.hourCalculate(param2, function (data) {
-              if(data && data.data &&data.data.data){
-                 self.setData({
-                   hour:data.data.data[0].C3_545928354975
-                 }) 
-                
-              }else self.setData({data:[]});
-              wx.stopPullDownRefresh();
-              wx.hideLoading();
-            }, function () {
-              wx.stopPullDownRefresh();
-              wx.hideLoading();
-            });
-        
-      }else self.setData({data:[]});
+      } else self.setData({ data: [] });
       wx.stopPullDownRefresh();
       wx.hideLoading();
     }, function () {
@@ -267,51 +301,60 @@ Page({
     });
 
   },
-  addApply:function(){
+  saveApply:function(){
+    let data = self.fixData('save');
+    common.saveAndSubmit(data,function(){
+      common.successBack();
+    });
+  },
+  addApply: function () {//提交
+    let data = self.fixData('submit');
+    common.saveAndSubmit(data,function(){
+      common.successBack();
+    });
+  },
+  kvoAttach:function(selectRuleM){//附件
+    if (selectRuleM == null) return ["", "", "", ""];
+        var imgShowArr = [];//拍照是否显示
+        imgShowArr.push([selectRuleM.C3_545770918237 == 'Y' ? true : false,selectRuleM.C3_545770982165 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032511]);
+        imgShowArr.push([selectRuleM.C3_545770921226 == 'Y' ? true : false,selectRuleM.C3_545770982361 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032706]);
+        imgShowArr.push([selectRuleM.C3_545770922361 == 'Y' ? true : false,selectRuleM.C3_545770982566 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032913]);
+        imgShowArr.push([selectRuleM.C3_545770923478 == 'Y' ? true : false,selectRuleM.C3_545770990395 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771067208]);
+        return imgShowArr;
+  },
+  fixData:function(str){
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
-     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
+    var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
 
-     if(app.debug) {
-       startTime = '2017-04-25 19:00';
-       endTime = '2017-04-25 20:00';
-       self.data.hour = '1';
-     }
-     
+    if (app.debug) {
+      startTime = '2017-04-25 19:00';
+      endTime = '2017-04-25 20:00';
+      self.data.hour = '1';
+    }
+
+
     var data = {
-      "C3_533143179815":startTime,
-      "C3_533143217561":endTime,
-      "C3_533398158705":self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex],
+      "C3_533143179815": startTime,
+      "C3_533143217561": endTime,
+      "C3_533398158705": self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex],
       // "C3_546181010461":app.globalData.userInfo.data.Dep1Code
-      "C3_542556605600":self.data.tempApprove,
-      "C3_541449935726":self.data.hour,
-      "C3_541450276993":"",
-      "C3_545771156108":"",
-      "C3_545771157350":"",
-      "C3_545771158420":"",
-      "C3_533143291117":self.data.reason,
-      "C3_541449538456":"Y",
-      "C3_541449606438":"N"
+      "C3_542556605600": self.data.tempApprove,
+      "C3_541449935726": self.data.hour,
+      "C3_541450276993": self.data.files[0],
+      "C3_545771156108": self.data.files[1],
+      "C3_545771157350": self.data.files[2],
+      "C3_545771158420": self.data.files[3],
+      "C3_533143291117": self.data.reason,
+      "C3_541449606438": "N"
     }
 
-    var param = {
-      'resid':541502768110,
-      'data':data
+    if(str == 'save'){
+      data.C3_541449538456= "N"
+    }else{
+      data.C3_541449538456= "Y"
     }
-      app.HttpService.hourCalculate(param, function (data) {
-      if(data && data.data &&data.data.data){
-        wx.showToast({
-  title: '成功',
-  icon: 'success',
-  duration: 2000
-})
-      }else self.setData({data:[]});
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-    }, function () {
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-    });
+    return data;
   }
 
 })

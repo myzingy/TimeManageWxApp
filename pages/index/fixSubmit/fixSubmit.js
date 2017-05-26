@@ -1,3 +1,5 @@
+import common from '/common'
+
 var app = getApp();
 Page({
   data: {
@@ -15,7 +17,7 @@ Page({
       data: item,
       files:urls
     })
-
+    self.getData();
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -91,6 +93,50 @@ Page({
 
     
 
+    var param = {
+      'resid': 541502768110,
+      'data': self.data.data
+    }
+
+
+    app.HttpService.saveData(param, function (data) {
+      if (data && data.data && data.data.data) {
+        self.data.data.C3_541449646638 = 'Y';
+      } else {
+          self.data.data.C3_541449646638 = 'N';
+      }
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+    }, function () {
+      wx.stopPullDownRefresh();
+      wx.hideLoading();
+       self.data.data.C3_541449646638 = 'N';
+    });
+  },
+  submit:function(e){//提交
+    let tag = e.target.dataset.tag;
+    self.data.data[tag].C3_541449538456 = 'Y';
+    let item = self.data.data[tag];
+     common.saveAndSubmit(item,function(){
+        // self.setData({
+        //   data:self.data.data
+        // })
+        common.successBack();
+     },function(){
+        self.data.data[tag].C3_541449538456 = 'N';
+     });
+  },
+  saveApply:function(){
+    let tag = e.target.dataset.tag;
+    // self.data.data[tag].C3_541449538456 = 'Y';
+    let item = self.data.data[tag];
+    common.saveAndSubmit(data,function(){
+      common.successBack();
+    });
+  },
+  cancel:function(){
+    //541502768110
+        self.data.data.C3_541449646638 = 'Y';
     var param = {
       'resid': 541502768110,
       'data': self.data.data
