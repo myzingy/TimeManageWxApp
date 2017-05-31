@@ -20,7 +20,7 @@
 
 </template>
 
-<template is="reson" data="{{reason}}">
+<template is="reason" data="{{reason}}">
 </template>
 
 <template is="cell-pricture-title" data="{{imageShowArr}}">

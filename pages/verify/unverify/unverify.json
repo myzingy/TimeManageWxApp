@@ -1,8 +1,10 @@
 {
+    
       "navigationBarBackgroundColor": "#ffffff",
       "navigationBarTextStyle": "black",
-      "navigationBarTitleText": "详情",
+      "navigationBarTitleText": "我的审批",
       "backgroundColor": "#eeeeee",
       "backgroundTextStyle": "light",
       "enablePullDownRefresh": false
+    
 }

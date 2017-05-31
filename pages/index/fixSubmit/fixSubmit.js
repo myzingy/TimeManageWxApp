@@ -1,4 +1,4 @@
-import common from '/common'
+import common from '../common'
 
 var app = getApp();
 Page({
@@ -86,75 +86,30 @@ Page({
       urls: this.data.files // 需要预览的图片http链接列表
     })
   },
-  cancel:function(){
-    //541502768110
-        self.data.data.C3_541449646638 = 'Y';
-       
-
-    
-
-    var param = {
-      'resid': 541502768110,
-      'data': self.data.data
-    }
-
-
-    app.HttpService.saveData(param, function (data) {
-      if (data && data.data && data.data.data) {
-        self.data.data.C3_541449646638 = 'Y';
-      } else {
-          self.data.data.C3_541449646638 = 'N';
-      }
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-    }, function () {
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-       self.data.data.C3_541449646638 = 'N';
-    });
-  },
-  submit:function(e){//提交
-    let tag = e.target.dataset.tag;
-    self.data.data[tag].C3_541449538456 = 'Y';
-    let item = self.data.data[tag];
-     common.saveAndSubmit(item,function(){
+  addApply:function(e){//提交
+    self.data.data.C3_541449538456 = 'Y';
+    self.data.data.C3_541449606438 = 'N';
+    let item = self.data.data;
+     common.reSaveAndSubmit(item,function(){
         // self.setData({
         //   data:self.data.data
         // })
         common.successBack();
      },function(){
-        self.data.data[tag].C3_541449538456 = 'N';
+        self.data.data.C3_541449538456 = '';
+        self.data.data.C3_541449606438 = '';
      });
   },
-  saveApply:function(){
-    let tag = e.target.dataset.tag;
-    // self.data.data[tag].C3_541449538456 = 'Y';
-    let item = self.data.data[tag];
-    common.saveAndSubmit(data,function(){
+  saveApply:function(e){//保存
+    self.data.data.C3_541449538456 = 'N';
+    let item = self.data.data;
+    common.reSaveAndSubmit(item,function(){
       common.successBack();
+    },function(){
+      self.data.data.C3_541449538456 = '';
     });
   },
   cancel:function(){
-    //541502768110
-        self.data.data.C3_541449646638 = 'Y';
-    var param = {
-      'resid': 541502768110,
-      'data': self.data.data
-    }
-
-
-    app.HttpService.saveData(param, function (data) {
-      if (data && data.data && data.data.data) {
-        self.data.data.C3_541449646638 = 'Y';
-      } else {
-          self.data.data.C3_541449646638 = 'N';
-      }
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-    }, function () {
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-       self.data.data.C3_541449646638 = 'N';
-    });
+    common.cancel(self.data.data);
   }
 })

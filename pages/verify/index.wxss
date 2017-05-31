@@ -1,0 +1,10 @@
+@import "/pages/index/addApply/addApply.wxss";
+@import "/pages/index/index.wxss";
+
+.image-refuse{
+    background-image: url(../../../images/1_11_1.png);
+}
+
+.image-checkbox-N{
+    background-image: url(../../../images/1_11_1.png);
+}

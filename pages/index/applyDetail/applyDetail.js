@@ -1,7 +1,8 @@
+import common from "../common"
+
 var app = getApp();
 Page({
   data: {
-    // data
     files: []
   },
   onLoad: function (options) {
@@ -15,6 +16,12 @@ Page({
       data: item,
       files:urls
     })
+
+
+     var ruleM = common.getRule(item.C3_533398158705);
+     self.setData({
+        noticeStr: ruleM.C3_545771115865
+      })
 
   },
   onReady: function () {
@@ -85,30 +92,6 @@ Page({
     })
   },
   cancel:function(){
-    //541502768110
-        self.data.data.C3_541449646638 = 'Y';
-       
-
-    
-
-    var param = {
-      'resid': 541502768110,
-      'data': self.data.data
-    }
-
-
-    app.HttpService.saveData(param, function (data) {
-      if (data && data.data && data.data.data) {
-        self.data.data.C3_541449646638 = 'Y';
-      } else {
-          self.data.data.C3_541449646638 = 'N';
-      }
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-    }, function () {
-      wx.stopPullDownRefresh();
-      wx.hideLoading();
-       self.data.data.C3_541449646638 = 'N';
-    });
+    common.cancel(self.data.data);
   }
 })

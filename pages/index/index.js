@@ -6,8 +6,9 @@ var app = getApp();
 var self;
 Page({
   data: {
+    navTitleArr:['申请中','已审核','已退回','历史记录'],
     userInfo: {},
-    selectDataArr: ['全部', '申请中'],
+    selectDataArr: [],
     selectDataIndex: 0,
     pageIndex: 0,//当前第几页
     pageName: 'applying',//当前页的名称
@@ -47,19 +48,25 @@ Page({
 
   },
   onReady: function () {
-    self.getData();
+    self.setData({
+      selectDataArr:common.getAllRuleCategory()
+    })
+
+    self.getData(0);
   },
   onHide: function () {
 
   },
-  getData: function () {//获取数据
+  getData: function (index) {//获取数据
     var self = this;
 
+    
 
-    if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
-      self.setData({ data: self.data.dataArr[self.data.pageIndex] });
-      return;
-    }
+
+    // if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
+    //   self.setData({ data: self.data.dataArr[self.data.pageIndex] });
+    //   return;
+    // }
 
     wx.showLoading({
       title: '加载中'
@@ -71,22 +78,56 @@ Page({
         'key': ''
       }
 
+      param.pageSize = 20;
+      if(!index){//刷新
+        param.pageIndex = 0;
+        
+      }else{//加载
+        param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
+      }
+
     if (self.data.pageIndex == 0) {//申请中
        param.resid = 541502768110
     } else if (self.data.pageIndex == 1) {//已审核
        param.resid = 541518522808
     }else if (self.data.pageIndex == 2) {//已退回
-      //  param.resid =  543000345781
-      param.resid = 541502768110
+       param.resid =  543000345781
+      // param.resid = 541502768110
     }else if (self.data.pageIndex == 3) {//历史记录
        param.resid = 541518678060
     }
     app.HttpService.getApplyData(param, function (data) {
-      if (data && data.data && data.data.data) {
-        let dataArr = Array.from(data.data.data);
-        self.setData({ data: dataArr });
-        self.data.dataArr[self.data.pageIndex] = dataArr;
-      } else self.setData({ data: [] });
+      if(!index){//刷新
+          if (data && data.data && data.data.data) {
+            let dataArr = Array.from(data.data.data);
+            dataArr.forEach(x => x.C3_542383374989 = common.getLocalImageUrl(x.C3_542383374989));
+            self.setData({ data: dataArr });
+            self.data.dataArr[self.data.pageIndex] = dataArr;
+
+            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
+            else self.setData({ noMore: false });
+          } else {
+            self.setData({ data: [] }); 
+            self.setData({ noMore: true });
+          }
+
+
+      }else{//加载
+          if (data && data.data && data.data.data) {
+            let oldDataArr = self.data.dataArr[self.data.pageIndex];
+            let dataArr = Array.from(data.data.data); 
+            oldDataArr.concat(dataArr);
+            self.setData({ data: oldDataArr });
+            self.data.dataArr[self.data.pageIndex] = oldDataArr;
+
+            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
+            else self.setData({ noMore: false });
+          } else {
+            self.setData({ noMore: true });
+          }
+      }
+
+
       wx.stopPullDownRefresh();
       wx.hideLoading();
     }, function () {
@@ -108,34 +149,14 @@ Page({
 
     this.setData({ pageName: self.data.pageNameArr[index] });
 
-    this.getData();
+    this.getData(0);
 
   },
   onPullDownRefresh: function () {
-    self.getData();
+    self.getData(0);
   },
   onReachBottom: function () {
-    if (!self.data.loadMore) self.loadMore();
-  },
-  loadMore: function () {
-    if (self.data.loadMore) return;
-    console.log('loadmore');
-
-    self.setData({ loadMore: true });
-
-    var a = self.data.data;
-    var l = self.data.data.length;
-    if (l > 150) {
-      self.setData({ noMore: true });
-      return;
-    }
-    for (var i = l; i < 20 + l; i++)  a.push(i);
-    setTimeout(function () {
-      self.setData({ data: a });
-      self.setData({ loadMore: false });
-    }, 3000)
-
-
+    if (!self.data.loadMore) self.getData(1);
   },
   scrolling: function (event) {
     console.log('scroll');
@@ -210,5 +231,18 @@ Page({
         // complete
       }
     })
+  },
+  categoryChange:function(e){//类型筛选
+      self.setData({
+        selectDataIndex:e.detail.value
+      })
+      var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
+      var conditionData = self.data.dataArr[self.data.pageIndex];
+      if(conditionStr != '全部') conditionData = Array.from(conditionData).filter( x => x.C3_533398158705 == conditionStr)
+      
+      self.setData({
+          data:conditionData
+      })
+
   }
 });

@@ -1,8 +1,7 @@
 <import src="/templates/templates.wxml" />
-<import src="/pages/index/applying/applying.wxml"/>
-<import src="/pages/index/pended/pended.wxml"/>
-<import src="/pages/index/refuse/refuse.wxml"/>
-<import src="/pages/index/history/history.wxml"/>
+<import src="/pages/verify/unverify/unverify.wxml" />
+<!--<import src="/pages/verify/unverify/unverify.wxml" />-->
+
 <template is="main-nav" data="{{navTitleArr}}">
 </template>
 
@@ -14,12 +13,8 @@
       </picker>
     </view>
 
-
-
 <template is="{{pageName}}" data="{{data}}"></template>
 
 <template is="{{noMore ? 'noMore' : 'loadMore'}}"></template>
 
-<image src="/images/xinjian-2.png" class="add-apply" bindtap="gotoAddApply"></image>
-
-
+<button class="add-apply" bindtap="gotoAddApply"></button>

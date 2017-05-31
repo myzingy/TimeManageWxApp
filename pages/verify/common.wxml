@@ -1,0 +1,17 @@
+<!--退回-->
+<template name="cell-refuse">
+    <view class="main-cell-btn">
+    <button class="image-refuse" bindtap="" data-item="{{item}}">退回</button>
+  </view>
+</template>
+
+<!--审批勾选-->
+<template name="cell-checkbox">
+    <view class="main-cell-btn">
+        <checkbox-group bindchange="checkboxChange" >
+            <label class="checkbox" >
+                <checkbox value="{{item.selected}}"  />
+            </label>
+        </checkbox-group>
+  </view>
+</template>

@@ -43,56 +43,34 @@ function getRequest(url, data, doSuccess, doFail, doComplete) {
 }
 
 //获取数据
-function getData(url, data,method, doSuccess, doFail, doComplete) {
-  
-  if(method == 1){
+function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
+  data.uiver = 200;
+  data.dynlogin = 1;
+  data.user = getApp().globalData.userInfo.user;
+  data.AccessToken = getApp().globalData.userInfo.ucode;
+  if (method == 1) {
     data.method = 'ShowHostTableDatas_Ajax';
-    data.uiver = 200;
-     data.dynlogin = 1;
-     data.AccessToken = getApp().globalData.userInfo.ucode;
-      data.user = getApp().globalData.userInfo.user;
-   }else if(method == 2){
-    data.method = 'SaveData_Ajax';
-     data.uiver = 200;
-     data.dynlogin = 1;
-     data.user = getApp().globalData.userInfo.user;
 
+  } else if (method == 2 || method == 4) {
+    data.method = 'SaveData_Ajax';
 
     data.data._id = 1;
-    data.data._state = "added";
-    data.data.REC_ID = 0;
 
+    if (method == 2) {
+      data.data._state = "added";
+      data.data.REC_ID = 0;
+    } else {
+      data.data._state = "modified";
+    }
     data.data = JSON.stringify([data.data]);
-     
-    data.AccessToken = getApp().globalData.userInfo.ucode;
 
-  }else if(method == 3){
+  } else if (method == 3) {
     data.method = 'ajax_GetRelTableByHostRecord';
-
-      data.uiver = 200;
-     data.dynlogin = 1;
-    data.AccessToken = getApp().globalData.userInfo.ucode;
-     data.user = getApp().globalData.userInfo.user;
-    
-   
-  }else if(method == 4){
-    data.method = 'SaveData_Ajax';
-
-    data.uiver = 200;
-     data.dynlogin = 1;
-      data.user = getApp().globalData.userInfo.user;
-
-      data.data._id = 1;
-    data.data._state = "modified";
-
-     data.data = JSON.stringify([data.data]);
-
-     data.AccessToken = getApp().globalData.userInfo.ucode;
 
   }
 
   var str = getApp().Config.basePath + url + '?';
-  for(var key in data){
+  for (var key in data) {
     str = str + '&' + key + '=' + data[key];
   }
   console.log(str);
@@ -116,7 +94,16 @@ function getData(url, data,method, doSuccess, doFail, doComplete) {
         });
       } else {
         if (typeof doSuccess == "function") {
+          // if(res.data.error == 0){
           doSuccess(res);
+          // }else{
+          //   wx.showModal({
+          //     title:'失败',
+          //     content:res.data.message
+          //   })
+          //    doFail();
+          // }
+
         }
       }
     },
@@ -192,38 +179,46 @@ function getConfig(doSuccess) {
   // getRequest(path.config, {}, doSuccess);
 }
 
-function customWxLogin(params,doSuccess,doFail){
-  getRequest(path.login,params,doSuccess,doFail);
+function customWxLogin(params, doSuccess, doFail) {
+  getRequest(path.login, params, doSuccess, doFail);
 }
 
-function getApplyData(params,doSuccess,doFail){
-  getData(path.apply,params,1,doSuccess,doFail);
+function getApplyData(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 1, doSuccess, doFail);
 }
 
-function hourCalculate(params,doSuccess,doFail){
-  getData(path.apply,params,2,doSuccess,doFail);
+
+
+function hourCalculate(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 2, doSuccess, doFail);
 }
 
 //添加申请
-function addApply(params,doSuccess,doFail){
-  getData(path.apply,params,2,doSuccess,doFail);
+function addApply(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 2, doSuccess, doFail);
 }
 
-function getSubData(params,doSuccess,doFail){
-  getData(path.apply,params,3,doSuccess,doFail);
+function getSubData(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 3, doSuccess, doFail);
+}
+
+// 添加数据
+function addData(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 2, doSuccess, doFail);
 }
 
 // 修改数据
-function saveData(params,doSuccess,doFail){
-  getData(path.apply,params,4,doSuccess,doFail);
+function saveData(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 4, doSuccess, doFail);
 }
 
 
 module.exports = {
-  customWxLogin:customWxLogin,
-  getApplyData:getApplyData,
-  hourCalculate:hourCalculate,
-  addApply:addApply,
-  getSubData:getSubData,
-  saveData:saveData
+  customWxLogin: customWxLogin,
+  getApplyData: getApplyData,
+  hourCalculate: hourCalculate,
+  addApply: addApply,
+  getSubData: getSubData,
+  saveData: saveData,
+  addData: addData
 }

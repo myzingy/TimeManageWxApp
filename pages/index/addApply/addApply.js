@@ -18,8 +18,9 @@ for (let i = 0; i < 60; i++) {
 
 Page({
   data: {
-    isCard:false,
-    isDraft:false,
+    isCard: false,
+    isDraft: false,
+    draftData:{},
     categoryModel: {
       selectDataIndex: 0,
       selectDataArr: []
@@ -27,7 +28,7 @@ Page({
 
     startTime: '请选择',
     endTime: '请选择',
-    files: ['','','',''],
+    files: ['', '', '', ''],
     startDateModel: {
       startDate: '请选择',
       startHour: '0',
@@ -48,7 +49,7 @@ Page({
     noticeStr: '',
     hour: '',
     reason: '',
-    imageShowArr:[]
+    imageShowArr: []
 
   },
   onLoad: function (options) {
@@ -66,37 +67,41 @@ Page({
     })
 
 
-    if(options.data){
+    if (options.data) {
+      self.setData({
+        isDraft:true
+      })
       let item = JSON.parse(options.data);
+      self.setData({draftData:item});
       let tmpCategoryModel = self.data.categoryModel;
-      tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value,index,arr) => value == item.C3_533398158705);
-// C3_533143179815
-// C3_533143217561
-//开始时间
+      tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value, index, arr) => value == item.C3_533398158705);
+      // C3_533143179815
+      // C3_533143217561
+      //开始时间
       let tmpStartDateModel = self.data.startDateModel;
       tmpStartDateModel.startDate = item.C3_533143179815.split(' ')[0];
 
       let tmpSartHour = item.C3_533143179815.split(' ')[1].split(':')[0];
       let tmpSartMin = item.C3_533143179815.split(' ')[1].split(':')[1];
-      tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value,index,arr) => value == tmpSartHour)
-      tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value,index,arr) => value == tmpSartMin)
+      tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value, index, arr) => value == tmpSartHour)
+      tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value, index, arr) => value == tmpSartMin)
 
-       let tmpEndDateModel = self.data.endDateModel;
+      let tmpEndDateModel = self.data.endDateModel;
       tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
 
       let tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
       let tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
-      tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value,index,arr) => value == tmpEndHour)
-      tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value,index,arr) => value == tmpEndMin)
+      tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value, index, arr) => value == tmpEndHour)
+      tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value, index, arr) => value == tmpEndMin)
 
       self.setData({
-        categoryModel:tmpCategoryModel,
-        reason:item.C3_533143291117,
-        tempApprove:item.C3_542556605600,
-        hour:item.C3_541449935726,
-        files:[item.C3_541450276993,item.C3_545771156108,item.C3_545771157350,item.C3_545771158420],
-        startDateModel:tmpStartDateModel,
-        endDateModel:tmpEndDateModel
+        categoryModel: tmpCategoryModel,
+        reason: item.C3_533143291117,
+        tempApprove: item.C3_542556605600,
+        hour: item.C3_541449935726,
+        files: [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420],
+        startDateModel: tmpStartDateModel,
+        endDateModel: tmpEndDateModel
 
       })
     }
@@ -106,6 +111,18 @@ Page({
     // var e;
     // e.target.dataset.kind = 'selectDataIndex';
     // self.pickSelect();
+     var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+
+     var ruleM = common.getRule(ruleStr);
+     if(ruleM){
+     self.setData({
+        noticeStr: ruleM.C3_545771115865
+      })
+      var imageShowArr = self.kvoAttach(ruleM);
+      self.setData({
+        imageShowArr: imageShowArr
+      })
+     }
   },
   getData: function () {
 
@@ -173,31 +190,24 @@ Page({
         categoryModel: tmpM
       })
 
-      var ruleArr = app.globalData.rule;
       var itemStr = self.data.categoryModel.selectDataArr[e.detail.value];
-      for (var i = 0; i < ruleArr.length; i++) {
-        var tempRuleM = ruleArr[i];
-        if (tempRuleM.C3_533402301362 == itemStr) {
-          self.setData({
-            noticeStr: tempRuleM.C3_545771115865
-          })
-          var imageShowArr = self.kvoAttach(tempRuleM);
-          self.setData({
-            imageShowArr:imageShowArr
-          })
+      var ruleM = common.getRule(itemStr);
+      self.setData({
+        noticeStr: ruleM.C3_545771115865
+      })
+      var imageShowArr = self.kvoAttach(ruleM);
+      self.setData({
+        imageShowArr: imageShowArr
+      })
 
-          
-        }
-
-        if(itemStr == '补打卡'){
-          self.setData({
-            isCard:true
-          })
-        }else{
-          self.setData({
-            isCard:false
-          })
-        }
+      if (itemStr == '补打卡') {
+        self.setData({
+          isCard: true
+        })
+      } else {
+        self.setData({
+          isCard: false
+        })
       }
 
     } else if (kindStr == 'startDate') {
@@ -243,7 +253,7 @@ Page({
     }
 
   },
-  hourCalculate: function () {
+  hourCalculate: function () {//计算时长
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
@@ -301,37 +311,56 @@ Page({
     });
 
   },
-  saveApply:function(){
+  saveApply: function () {//修改
     let data = self.fixData('save');
-    common.saveAndSubmit(data,function(){
+    if(self.data.isDraft){//草稿 重新修改
+      for(var key in data){
+        self.data.draftData[key] = data[key];
+      }
+      common.reSaveAndSubmit(self.data.draftData,function(){
+        common.successBack();
+      })
+    }else{
+      common.saveAndSubmit(data, function () {
       common.successBack();
-    });
+     });
+    }
+    
   },
   addApply: function () {//提交
     let data = self.fixData('submit');
-    common.saveAndSubmit(data,function(){
+    if(self.data.isDraft){//草稿 重新修改
+      for(var key in data){
+        self.data.draftData[key] = data[key];
+      }
+      common.reSaveAndSubmit(self.data.draftData,function(){
+        common.successBack();
+      })
+    }else{
+    common.saveAndSubmit(data, function () {
       common.successBack();
     });
+    }
   },
-  kvoAttach:function(selectRuleM){//附件
+  kvoAttach: function (selectRuleM) {//附件
     if (selectRuleM == null) return ["", "", "", ""];
-        var imgShowArr = [];//拍照是否显示
-        imgShowArr.push([selectRuleM.C3_545770918237 == 'Y' ? true : false,selectRuleM.C3_545770982165 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032511]);
-        imgShowArr.push([selectRuleM.C3_545770921226 == 'Y' ? true : false,selectRuleM.C3_545770982361 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032706]);
-        imgShowArr.push([selectRuleM.C3_545770922361 == 'Y' ? true : false,selectRuleM.C3_545770982566 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771032913]);
-        imgShowArr.push([selectRuleM.C3_545770923478 == 'Y' ? true : false,selectRuleM.C3_545770990395 == 'Y' ? "必填" : "非必填",selectRuleM.C3_545771067208]);
-        return imgShowArr;
+    var imgShowArr = [];//拍照是否显示
+    imgShowArr.push([selectRuleM.C3_545770918237 == 'Y' ? true : false, selectRuleM.C3_545770982165 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032511]);
+    imgShowArr.push([selectRuleM.C3_545770921226 == 'Y' ? true : false, selectRuleM.C3_545770982361 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032706]);
+    imgShowArr.push([selectRuleM.C3_545770922361 == 'Y' ? true : false, selectRuleM.C3_545770982566 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032913]);
+    imgShowArr.push([selectRuleM.C3_545770923478 == 'Y' ? true : false, selectRuleM.C3_545770990395 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771067208]);
+    return imgShowArr;
   },
-  fixData:function(str){
+  fixData: function (str) {
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
 
-    if (app.debug) {
-      startTime = '2017-04-25 19:00';
-      endTime = '2017-04-25 20:00';
-      self.data.hour = '1';
-    }
+    // if (app.debug) {
+    //   startTime = '2017-04-25 19:00';
+    //   endTime = '2017-04-25 20:00';
+    //   self.data.hour = '1';
+    // }
 
 
     var data = {
@@ -349,12 +378,17 @@ Page({
       "C3_541449606438": "N"
     }
 
-    if(str == 'save'){
-      data.C3_541449538456= "N"
-    }else{
-      data.C3_541449538456= "Y"
+    if (str == 'save') {
+      data.C3_541449538456 = "N"
+    } else {
+      data.C3_541449538456 = "Y"
     }
     return data;
+  },
+  textInput:function(e){//监听text输入
+    self.setData({
+      reason:e.detail.value
+    })
   }
 
 })

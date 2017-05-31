@@ -3,7 +3,7 @@
 <template is="add-category-readonly" data="{{data}}">
 </template>
 
-<template is="cell-notice-readonly" data="{{data}}">
+<template is="cell-notice-readonly" data="{{noticeStr}}">
 </template>
 
 <template is="time-start-readonly" data="{{data}}">
@@ -24,7 +24,7 @@
 <template is="reson-readonly" data="{{data}}">
 </template>
 
-<template is="cell-picture-readonly" data="{{data}}">
+<template is="cell-picture-readonly" data="{{files}}">
   
 </template>
 

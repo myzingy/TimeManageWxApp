@@ -1,9 +1,6 @@
 <template name="main-nav">
-  <view class="main-top">
-  <navigator class="" hover-class="nav-active">申请中</navigator>
-  <navigator class="" bindtap="">已审核</navigator>
-  <navigator class="">已退回</navigator>
-  <navigator class="">历史记录</navigator>
+<view class="main-top">
+  <view class="" bindtap="pageClick" wx:for="{{navTitleArr}}" wx:key="*this" data-id="{{index}}">{{navTitleArr[index]}}</view>
 </view>
 </template>
 
