@@ -1,4 +1,4 @@
-import common from "../index/common"
+import common from '../../common/common'
 
 var app = getApp();
 var self;
@@ -6,32 +6,48 @@ Page({
   data:{
     navTitleArr:['待审批','已审批','已退回','历史记录'],
     pageName: 'unverify',//当前页的名称
-    pageNameArr: ['unverify', 'pended','refuse','history'],
+    pageNameArr: ['unverify', 'pended','pended','history'],
     selectDataArr:[],
     selectDataIndex:0,
     data:[],
     dataArr:[],
-    pageIndex:0
+    pageIndex:0,
+    selectMap:{},
+    inputShowed: false,
+        inputVal: ""
+    
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
     self = this;
-  },
-  onReady:function(){
-    // 生命周期函数--监听页面初次渲染完成
 
-
+    var a = [];
+    for (var i = 0; i < 4; i++) {
+      a.push([]);
+    }
+    self.setData({ dataArr: a });//初始化数据
     self.setData({
       selectDataArr:common.getAllRuleCategory()
     })
 
     self.getData(0); 
   },
+  onReady:function(){
+    // 生命周期函数--监听页面初次渲染完成
+
+  },
+  pageClick: function (event) {//导航点击事件
+    var self = this;
+    var index = event.target.dataset.id;
+    this.setData({ pageIndex: index });
+
+    this.setData({ pageName: self.data.pageNameArr[index] });
+
+    this.getData(0);
+
+  },
   getData: function (index) {//获取数据
     var self = this;
-
-    
-
 
     // if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
     //   self.setData({ data: self.data.dataArr[self.data.pageIndex] });
@@ -68,7 +84,9 @@ Page({
     app.HttpService.getApplyData(param, function (data) {
       if(!index){//刷新
           if (data && data.data && data.data.data) {
-            let dataArr = Array.from(data.data.data);
+            var dataArr;
+            if(common.isArray(data.data.data)) dataArr = data.data.data;
+            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
             dataArr.forEach(x => x.selected = 'N');
             self.setData({ data: dataArr });
             self.data.dataArr[self.data.pageIndex] = dataArr;
@@ -83,8 +101,10 @@ Page({
 
       }else{//加载
           if (data && data.data && data.data.data) {
-            let oldDataArr = self.data.dataArr[self.data.pageIndex];
-            let dataArr = Array.from(data.data.data); 
+            var oldDataArr = self.data.dataArr[self.data.pageIndex];
+            var dataArr;
+            if(common.isArray(data.data.data)) dataArr = data.data.data;
+            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
             dataArr.forEach(x => x.selected = 'N');
             oldDataArr.concat(dataArr);
             self.setData({ data: oldDataArr });
@@ -148,7 +168,10 @@ Page({
 
   },
   pageClick: function (event) {//导航点击事件
-    var self = this;
+  self.setData({
+    data:[]
+  })
+    
     var index = event.target.dataset.id;
     this.setData({ pageIndex: index });
 
@@ -159,7 +182,67 @@ Page({
   },
   checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
-    if(e.detail.value == 'Y') e.detail.value = 'N'
-    else e.detail.value = 'Y'
+    var index = e.target.dataset.tag;
+    var tempData;
+    if(index < self.data.data.length) tempData = self.data.data[index];
+    if(e.detail.value.length) self.data.selectMap[index] = tempData;
+    else delete self.data.selectMap[index]
+
+  },
+  approve :function(){//审批
+    // for(var i = 0 ; i < self.data.selectMap.le)
+    var submitArr = [];
+    for(var key in self.data.selectMap){
+      var item = self.data.selectMap[key];
+      var i = {
+                REC_ID: item.REC_ID,
+                _id: 1,
+                _state: "modified",
+                C3_541454801460: 'Y'
+            }
+            // if (item.C3_541454801460 == true || item.C3_541454801460 == 'Y') {
+            //     i = {
+            //         REC_ID: item.REC_ID,
+            //         _id: 1,
+            //         _state: "modified",
+            //         C3_541454801460: 'Y'
+            //     };
+            // }
+
+            submitArr.push(i);
+    }
+
+    var param = {
+    'resid': 541518842754,
+    'data': submitArr
   }
+
+    app.HttpService.saveDataArr(param,function(data){
+      wx.showModal({
+        title:"dddddddddd"
+      })
+    });
+
+  },
+    showInput: function () {
+        this.setData({
+            inputShowed: true
+        });
+    },
+    hideInput: function () {
+        this.setData({
+            inputVal: "",
+            inputShowed: false
+        });
+    },
+    clearInput: function () {
+        this.setData({
+            inputVal: ""
+        });
+    },
+    inputTyping: function (e) {
+        this.setData({
+            inputVal: e.detail.value
+        });
+    }
 })

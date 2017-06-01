@@ -1,5 +1,5 @@
 import applying from '/applying/applying'
-import common from '/common'
+import common from '../../common/common'
 
 //获取应用实例
 var app = getApp();
@@ -48,6 +48,7 @@ Page({
 
   },
   onReady: function () {
+    if (!app.globalData.userInfo) {return}
     self.setData({
       selectDataArr:common.getAllRuleCategory()
     })
@@ -100,7 +101,8 @@ Page({
       if(!index){//刷新
           if (data && data.data && data.data.data) {
             let dataArr = Array.from(data.data.data);
-            dataArr.forEach(x => x.C3_542383374989 = common.getLocalImageUrl(x.C3_542383374989));
+            // dataArr.forEach(x => x.C3_542383374989 = common.getLocalImageUrl(x.C3_542383374989));
+            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
             self.setData({ data: dataArr });
             self.data.dataArr[self.data.pageIndex] = dataArr;
 
@@ -152,19 +154,19 @@ Page({
     this.getData(0);
 
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function () {//下拉刷新
     self.getData(0);
   },
-  onReachBottom: function () {
+  onReachBottom: function () {//上拉加载
     if (!self.data.loadMore) self.getData(1);
   },
   scrolling: function (event) {
     console.log('scroll');
   },
-  gotoAddApply: function () {
+  gotoAddApply: function () {//添加请假等
     applying.gotoAddApply();
   },
-  gotoApplyDetail: function (e) {
+  gotoApplyDetail: function (e) {//详情
     wx.navigateTo({
       url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item),
       success: function (res) {

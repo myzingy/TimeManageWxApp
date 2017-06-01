@@ -84,14 +84,14 @@ background-image: url(../../../images/xiugai.png);
   flex-direction: column;
 }
 
-.main-cell-icon image {
+.main-cell-icon image {/*请假icon 背景地板和人力审批*/
   margin: 0 auto;
   background-repeat: no-repeat;
   margin-top: 5px;
   position: relative;
 }
 
-.main-cell-icon image:nth-child(1) {
+.main-cell-icon image:nth-child(1) {/*请假icon 背景地板*/
   width: 44px;
   height: 44px;
   background-size: 44px 44px;
@@ -101,10 +101,17 @@ background-image: url(../../../images/xiugai.png);
   text-align: center;
 }
 
-.icon-title{
+.main-cell-icon image:nth-child(2) {
+  width: 100%;
+  height: 20px;
+}
+
+.icon-title{/*请假icon中字*/
   position: absolute;
   top: 0;
-  /*bo*/
+  left: 0;
+  right: 0;
+  height: 44px;
 }
 
 .layout-zzsp {
@@ -146,14 +153,21 @@ background-image: url(../../../images/xiugai.png);
   padding: 0;
 }
 
-.main-cell-btn button {
-  background-size: 30px 30px;
-  background-repeat: no-repeat;
-  background-position-x: 10px;
-  height: 55px;
-  font-size: 12px;
-  line-height: 80.5px;
+.main-cell-btn image {
+  width: 30px;
+  height: 30px;
   margin-top: 19.5px;
+  position: relative;
+  overflow: visible;
+}
+
+.main-cell-btn text{
+  font-size: 12px;
+  position: absolute;
+  bottom: -20px;
+  text-align: center;
+  right: 0;
+  left: 0;
 }
 
 /****添加****/

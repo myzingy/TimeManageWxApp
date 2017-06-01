@@ -139,24 +139,36 @@ function getAllRuleCategory(){
 
 //配置图片路径
 function getLocalImageUrl(str){
-//   const overtimeArr = ['overtime'];
-//   // background-image: url(../../../images/jiaban.png);
-// // }
-
-//   const fillout fillout {
-//   background-image: url(../../../images/bushuaka.png);
-// }
-
-// .annual,.business,.maternity,.trip,.compassionate,.breastfeeding,
-// .sicks,.personal,.annual{
-//   background-image: url(../../../images/qingjia.png);
-// }
   const vacationStrArr = ['annual','business','maternity','trip','compassionate','breastfeeding',
- 'sicks','personal','annual']
+ 'sicks','personal','annual'];
+
+
+
   if(str == 'overtime') return '/images/jiaban.png';
   else if(str == 'fillout') return '/images/bushuaka.png';
-  else if(vacationStrArr.indexOf(str)) return '/images/qingjia.png';
+  else if(vacationStrArr.indexOf(str) != -1) return '/images/qingjia.png';
+  else if(str == 'spcg') return '/images/caogao.png';
+  else if(str == 'zzsp') return '/images/zhuzhang.png';
+  else if(str == 'zgsp') return '/images/zhuguan.png';
+  else if(str == 'jlsp') return '/images/jingli.png';
+
+
 }
+
+//处理data中的样式和图片匹配
+function promiseImageWithStyle(data,strArray){
+  for(var i = 0 ; i < strArray.length ; i ++){
+    var keyStr = strArray[i];
+      for(var j = 0 ; j < data.length ; j ++){
+        data[j][keyStr] = getLocalImageUrl(data[j][keyStr]);
+      }
+  }
+  return data;
+}
+
+function isArray(o) {  
+    return Object.prototype.toString.call(o) === '[object Array]';  
+}  
 
 
 
@@ -167,5 +179,7 @@ module.exports = {
   cancel: cancel,
   getRule:getRule,
   getAllRuleCategory:getAllRuleCategory,
-  getLocalImageUrl:getLocalImageUrl
+  getLocalImageUrl:getLocalImageUrl,
+  promiseImageWithStyle:promiseImageWithStyle,
+  isArray:isArray
 }

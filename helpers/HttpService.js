@@ -67,6 +67,9 @@ function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
   } else if (method == 3) {
     data.method = 'ajax_GetRelTableByHostRecord';
 
+  }else if(method == 5){
+    data.method = 'SaveData_Ajax';
+    data.data = JSON.stringify(data.data);
   }
 
   var str = getApp().Config.basePath + url + '?';
@@ -202,6 +205,11 @@ function getSubData(params, doSuccess, doFail) {
   coustomRequest(path.apply, params, 3, doSuccess, doFail);
 }
 
+// 获取数据
+function getData(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 1, doSuccess, doFail);
+}
+
 // 添加数据
 function addData(params, doSuccess, doFail) {
   coustomRequest(path.apply, params, 2, doSuccess, doFail);
@@ -212,6 +220,11 @@ function saveData(params, doSuccess, doFail) {
   coustomRequest(path.apply, params, 4, doSuccess, doFail);
 }
 
+// 修改数据
+function saveDataArr(params, doSuccess, doFail) {
+  coustomRequest(path.apply, params, 5, doSuccess, doFail);
+}
+
 
 module.exports = {
   customWxLogin: customWxLogin,
@@ -220,5 +233,7 @@ module.exports = {
   addApply: addApply,
   getSubData: getSubData,
   saveData: saveData,
-  addData: addData
+  addData: addData,
+  getData:getData,
+  saveDataArr:saveDataArr
 }

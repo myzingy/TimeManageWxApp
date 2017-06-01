@@ -2,10 +2,8 @@
 <!--cell主体-->
 <template name="cell-body">
   <view class="main-cell-icon">
-    <!--<view class="{{item.C3_542383374989}}">{{item.C3_542397132420}}</view>
-    <view class="{{item.C3_543518801920}} layout-{{item.C3_543518801920}}"></view>-->
       <image src="{{item.C3_542383374989}}"><text class="icon-title">{{item.C3_542397132420}}</text></image>
-    <!--<image src="{{item.C3_543518801920}}"  class="layout-{{item.C3_543518801920}}"></image>-->
+    <image src="{{item.C3_543518801920}}" mode="aspectFit"></image>
     <label>{{item.C3_533407351131}}</label>
   </view>
   <view class="main-cell-title">
@@ -23,14 +21,17 @@
 <!--附件-->
 <template name="cell-attach">
   <view class="main-cell-btn">
-    <button class="image-attach" bindtap="attachShow" data-item="{{item}}">附件</button>
+    <!--<button class="image-attach" bindtap="attachShow" data-item="{{item}}">附件</button>-->
+    <image  src="/images/fujian.png" bindtap="attachShow" mode="aspectFit" data-item="{{item}}">                <text>附件</text>
+    </image>
   </view>
 </template>
 
 <!--详情-->
 <template name="cell-detail">
   <view class="main-cell-btn">
-    <button class="image-detail" bindtap="gotoApplyDetail" data-item="{{item}}">详情</button>
+    <image  src="/images/xiangqing.png" bindtap="gotoApplyDetail" mode="aspectFit" data-item="{{item}}">        <text>详情</text>
+    </image>
   </view>
 </template>
 
@@ -51,7 +52,9 @@
 <!--修改并提交-->
 <template name="cell-modify-submit">
   <view class="main-cell-btn">
-    <button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>
+    <!--<button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>-->
+     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-item="{{item}}">              <text>修改并提交</text>
+    </image>
   </view>
 </template>
 

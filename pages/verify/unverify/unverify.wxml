@@ -9,7 +9,7 @@
     <template wx:if="{{(!(item.item.C3_541449606438=='Y')&&item.item.C3_541449538456=='Y') && item.item.C3_545927244809 == 'Y' }}" is="cell-attach" data="{{item}}"></template>
     
     <template is="cell-refuse"></template>
-    <template is="cell-checkbox" data="{{item}}"></template>
+    <template is="cell-checkbox" data="{{index}}"></template>
 
     <template is="bottom-line"></template>
   </view>

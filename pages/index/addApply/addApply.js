@@ -1,4 +1,4 @@
-import common from '../common'
+import common from '../../../common/common'
 
 var self;
 var app = getApp();
