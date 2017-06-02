@@ -3,25 +3,44 @@ import common from "../../../common/common"
 var app = getApp();
 Page({
   data: {
-    files: []
+    files: [],
+    willRefuse: false,
+    refuseArr:[],
+    refuseIndex:0
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
 
-    let item = JSON.parse(options.data);
-    let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
-    urls = urls.filter(x => x != null);
-    self.setData({
-      data: item,
-      files:urls
-    })
+    if (options.data) {
+      let item = JSON.parse(options.data);
+      let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
+      urls = urls.filter(x => x != null);
+      self.setData({
+        data: item,
+        files: urls
+      })
 
 
-     var ruleM = common.getRule(item.C3_533398158705);
-     self.setData({
+      var ruleM = common.getRule(item.C3_533398158705);
+      self.setData({
         noticeStr: ruleM.C3_545771115865
       })
+
+    }
+
+    if (options.willRefuse) {
+      var tmpWillRefuse = JSON.parse(options.willRefuse);
+      self.setData({
+        willRefuse: tmpWillRefuse
+      })
+
+      self.setData({
+        refuseArr:app.globalData.refuseArr
+      })
+    }
+
+
 
   },
   onReady: function () {
@@ -35,14 +54,14 @@ Page({
       'resid': 541502768110,
       'subresid': 541521075674,
       'cmswhere': '',
-      'hostrecid':self.data.data.REC_ID,
-      'cmsorder':''
+      'hostrecid': self.data.data.REC_ID,
+      'cmsorder': ''
     }
     app.HttpService.getSubData(param, function (data) {
       if (data && data.data && data.data.data) {
         let pendedProcessData = Array.from(data.data.data);
         self.setData({
-          pendedProcessData:pendedProcessData
+          pendedProcessData: pendedProcessData
         })
         wx.showToast({
           title: '成功',
@@ -91,7 +110,23 @@ Page({
       urls: this.data.files // 需要预览的图片http链接列表
     })
   },
-  cancel:function(){
+  cancel: function () {
     common.cancel(self.data.data);
+  },
+  refuseChange:function(e){//退回理由选择
+    self.setData({
+      refuseIndex:e.detail.value
+    })
+  },
+  refuseClick:function(e){//退回
+    // C3_541449606438
+
+    self.data.data.C3_541449606438 = 'Y';
+    let item = self.data.data;
+    common.reSaveAndSubmit(item,function(){
+      common.successBack();
+    },function(){
+      self.data.data.C3_541449606438 = '';
+    });
   }
 })

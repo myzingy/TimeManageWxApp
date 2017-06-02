@@ -8,3 +8,11 @@
 .image-checkbox-N{
     background-image: url(../../../images/1_11_1.png);
 }
+
+.selectAll{
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 5px;
+
+}

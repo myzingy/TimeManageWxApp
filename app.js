@@ -10,7 +10,8 @@ App({
    
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    refuseArr:null//退回理由数据
   },
   Config: Config,
   WxParse: WxParse,

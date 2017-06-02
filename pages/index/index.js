@@ -222,7 +222,7 @@ Page({
   },
   draftModifySubmit:function(e){
     wx.navigateTo({
-      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.target.dataset.item),
+      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.currentTarget.dataset.item),
       success: function (res) {
         // success
       },

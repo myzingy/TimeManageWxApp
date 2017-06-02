@@ -13,16 +13,18 @@
           {{selectDataArr[selectDataIndex]}}
         </view>
       </picker>
-      <label class="checkbox">
-        <checkbox value="" checked="" />
+      <checkbox-group bindchange="selectAllChange" >
+      <label class="checkbox selectAll" >
+        <checkbox value="selectAll" />
       </label>
+      </checkbox-group>
     </view>
 
       <view class="weui-search-bar">
             <view class="weui-search-bar__form">
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                    <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindconfirm="inputConfim" bindinput="inputTyping" />
                     <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
                         <icon type="clear" size="14"></icon>
                     </view>
@@ -43,4 +45,6 @@
 <template is="{{noMore ? 'noMore' : 'loadMore'}}"></template>
 
 <!--<button class="add-apply" bindtap="gotoAddApply"></button>-->
-<image src="/images/shengpianniu-2.png" class="add-apply" bindtap="approve"></image>
+<image src="/images/shengpianniu-2.png" class="add-apply" bindtap="approve">
+    <text>审批</text>
+</image>

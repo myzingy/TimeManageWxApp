@@ -3,7 +3,8 @@ var self;
 Page({
   data:{
     vacationCategorySuccess:false,
-    teamApproveSuccess:false
+    teamApproveSuccess:false,
+    refuseArrSuccess:false
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
@@ -23,6 +24,7 @@ Page({
       app.globalData.userInfo = data.data;
       self.getVacationCategory();
       self.getTeamApprove();
+      self.getRefuseData();
     }, function () {
 
     });
@@ -97,7 +99,7 @@ Page({
     });
   },
   gotoApplyPage:function(){
-    if( self.data.vacationCategorySuccess && self.data.teamApproveSuccess ){
+    if( self.data.vacationCategorySuccess && self.data.teamApproveSuccess && self.data.refuseArrSuccess){
       wx.switchTab({
               url: '/pages/index/index',
               success: function(res){
@@ -116,6 +118,39 @@ Page({
     }
      
   },
+  getRefuseData:function(){
+     var param = {
+      'resid':541705605790,
+      'subresid': '',
+      'cmswhere': '',
+      'key': ''
+    }
+    app.HttpService.getApplyData(param, function (data) {
+      if(data && data.data && data.data.data){
+          var dataArr = data.data.data;
+          var tmpArr = [];
+          for(var i = 0; i < dataArr.length; i ++){
+            tmpArr.push(dataArr[i].C3_541705620055);
+          }
+          app.globalData.refuseArr = tmpArr;
+
+          self.setData({
+            refuseArrSuccess:true
+          })
+          self.gotoApplyPage();
+      }else {
+            wx.showModal({
+              title:'获取退回理由失败'
+            })
+      }
+      wx.hideLoading();
+    }, function () {
+      wx.hideLoading();
+      wx.showModal({
+              title:'获取退回理由失败'
+            })
+    });
+  },
   onShow:function(){
     // 生命周期函数--监听页面显示
     
@@ -127,21 +162,5 @@ Page({
   onUnload:function(){
     // 生命周期函数--监听页面卸载
     
-  },
-  onPullDownRefresh: function() {
-    // 页面相关事件处理函数--监听用户下拉动作
-    
-  },
-  onReachBottom: function() {
-    // 页面上拉触底事件的处理函数
-    
-  },
-  onShareAppMessage: function() {
-    // 用户点击右上角分享
-    return {
-      title: 'title', // 分享标题
-      desc: 'desc', // 分享描述
-      path: 'path' // 分享路径
-    }
   }
 })

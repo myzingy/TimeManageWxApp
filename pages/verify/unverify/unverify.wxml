@@ -8,8 +8,18 @@
 
     <template wx:if="{{(!(item.item.C3_541449606438=='Y')&&item.item.C3_541449538456=='Y') && item.item.C3_545927244809 == 'Y' }}" is="cell-attach" data="{{item}}"></template>
     
-    <template is="cell-refuse"></template>
-    <template is="cell-checkbox" data="{{index}}"></template>
+    <template is="cell-refuse" data="{{item}}"></template>
+    <!--<template is="cell-checkbox" data="{{index}}"></template>-->
+<!--<template is="cell-checkbox" data="{{index}}"></template>-->
+
+    <view class="main-cell-btn">
+        <checkbox-group bindchange="checkboxChange" data-tag="{{index}}">
+            <label class="checkbox" >
+                <!--<checkbox value="{{item.selected}}"  />-->
+                 <checkbox value="{{index}}" checked="{{item.selected}}" />
+            </label>
+        </checkbox-group>
+  </view>
 
     <template is="bottom-line"></template>
   </view>

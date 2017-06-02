@@ -87,7 +87,7 @@ Page({
             var dataArr;
             if(common.isArray(data.data.data)) dataArr = data.data.data;
             dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
-            dataArr.forEach(x => x.selected = 'N');
+            dataArr.forEach(x => x.selected = false);
             self.setData({ data: dataArr });
             self.data.dataArr[self.data.pageIndex] = dataArr;
 
@@ -182,12 +182,18 @@ Page({
   },
   checkboxChange: function(e) {
     console.log('checkbox发生change事件，携带value值为：', e.detail.value)
-    var index = e.target.dataset.tag;
-    var tempData;
-    if(index < self.data.data.length) tempData = self.data.data[index];
-    if(e.detail.value.length) self.data.selectMap[index] = tempData;
-    else delete self.data.selectMap[index]
+    // var index = e.target.dataset.tag;
+    // var tempData;
+    // if(index < self.data.data.length) tempData = self.data.data[index];
+    // if(e.detail.value.length) self.data.selectMap[index] = tempData;
+    // else delete self.data.selectMap[index]
 
+    var index = e.target.dataset.tag;
+     var tempData;
+    if(index < self.data.data.length) tempData = self.data.data[index];
+    if(e.detail.value.length) tempData.selected = true;
+    else tempData.selected = false;
+    
   },
   approve :function(){//审批
     // for(var i = 0 ; i < self.data.selectMap.le)
@@ -200,14 +206,6 @@ Page({
                 _state: "modified",
                 C3_541454801460: 'Y'
             }
-            // if (item.C3_541454801460 == true || item.C3_541454801460 == 'Y') {
-            //     i = {
-            //         REC_ID: item.REC_ID,
-            //         _id: 1,
-            //         _state: "modified",
-            //         C3_541454801460: 'Y'
-            //     };
-            // }
 
             submitArr.push(i);
     }
@@ -244,5 +242,70 @@ Page({
         this.setData({
             inputVal: e.detail.value
         });
+    },
+    inputConfim:function(e){//确认搜索按钮
+        var param = {
+        'subresid': '',
+        'cmswhere': '',
+        'key': e.detail.value,
+        'pageIndex':0
+      }
+        param.pageSize = self.data.dataArr[self.data.pageIndex].length;
+      
+
+    if (self.data.pageIndex == 0) {//待审批
+       param.resid = 541518842754
+    } else if (self.data.pageIndex == 1) {//已审批
+       param.resid = 541518986783
+    }else if (self.data.pageIndex == 2) {//已退回
+       param.resid =  541519417864
+    }else if (self.data.pageIndex == 3) {//历史记录
+       param.resid = 541520707421
+    }
+    app.HttpService.getApplyData(param, function (data) {
+     
+          if (data && data.data && data.data.data) {
+            var dataArr;
+            if(common.isArray(data.data.data)) dataArr = data.data.data;
+            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
+            dataArr.forEach(x => x.selected = false);
+            self.setData({ data: dataArr });
+            self.data.dataArr[self.data.pageIndex] = dataArr;
+
+            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
+            else self.setData({ noMore: false });
+          } else {
+            self.setData({ data: [] }); 
+            self.setData({ noMore: true });
+          }
+
+
+      })
+    },
+    gotoUnverifyDetailPage:function(e){//退回操作界面
+      // pages/verify/unverifyDetail/unverifyDetail
+      wx.navigateTo({
+        url: '/pages/index/applyDetail/applyDetail?data='+JSON.stringify(e.target.dataset.item)+'&willRefuse=true',
+        success: function(res){
+          // success
+        },
+        fail: function(res) {
+          // fail
+        },
+        complete: function(res) {
+          // complete
+        }
+      })
+    },
+    selectAllChange:function(e){//全选
+        for(var i = 0 ; i < self.data.data.length ; i ++){
+          // self.data.selectMap[i] = self.data.data[i];
+          if(e.detail.value.length)self.data.data[i].selected = true;
+          else self.data.data[i].selected = false;
+        }
+        self.setData({
+          data:self.data.data
+        })
+      
     }
 })

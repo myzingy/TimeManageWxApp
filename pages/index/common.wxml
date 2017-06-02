@@ -2,7 +2,7 @@
 <!--cell主体-->
 <template name="cell-body">
   <view class="main-cell-icon">
-      <image src="{{item.C3_542383374989}}"><text class="icon-title">{{item.C3_542397132420}}</text></image>
+      <image src="{{item.C3_542383374989}}"  bindtap="gotoUnverifyDetailPage"><text data-item="{{item}}" class="icon-title">{{item.C3_542397132420}}</text></image>
     <image src="{{item.C3_543518801920}}" mode="aspectFit"></image>
     <label>{{item.C3_533407351131}}</label>
   </view>
