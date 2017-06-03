@@ -1,0 +1,7 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/index/common.wxml" />
+<import src="../common.wxml" />
+<template name="monthWork">
+  <picker ></picker>
+</template>
+

@@ -6,7 +6,8 @@
     "pages/index/addApply/addApply",
     "pages/index/applyDetail/applyDetail",
     "pages/index/fixSubmit/fixSubmit",
-    "pages/verify/index"
+    "pages/verify/index",
+    "pages/query/index"
   ],
   "window": {
     "backgroundTextStyle": "dark",
@@ -34,7 +35,7 @@
         "text": "我的审批"
       },
       {
-        "pagePath": "pages/cart/index",
+        "pagePath": "pages/query/index",
         "iconPath": "images/icon-cart.png",
         "selectedIconPath": "images/icon-cart-active.png",
         "text": "我的查询"

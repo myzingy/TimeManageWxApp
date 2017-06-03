@@ -24,7 +24,7 @@
 <template is="reson-readonly" data="{{data}}">
 </template>
 
-<view class="" wx:if="{{willRefuse}}">
+<view class="addApply-cell" wx:if="{{willRefuse}}">
     <label>退回操作</label>
     <picker bindchange="refuseChange" range="{{refuseArr}}" value="{{refuseIndex}}" >{{refuseArr[refuseIndex]}}</picker>
     <button bindtap="refuseClick">退回</button>
@@ -40,5 +40,5 @@
 
 
 
-<template is="cell-cancel" data="{{data}}">
+<template wx:if="{{!willRefuse}}" is="cell-cancel" data="{{data}}">
 </template>

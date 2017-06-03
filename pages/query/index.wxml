@@ -1,0 +1,11 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/verify/unverify/unverify.wxml" />
+<import src="/pages/index/pended/pended.wxml" />
+<import src="/pages/index/history/history.wxml" />
+<import src="/pages/verify/common.wxml" />
+
+<template is="main-nav" data="{{navTitleArr}}">
+</template>
+
+<template is="{{pageName}}" data="{{data}}"></template>
+
