@@ -2,6 +2,35 @@
 <import src="/pages/index/common.wxml" />
 <import src="../common.wxml" />
 <template name="monthWork">
-  <picker ></picker>
+  <picker value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="monthWork" range="{{yearMonthArr}}">
+    <view class="picker">
+      {{yearMonthArr[yearMothSelect]}}
+    </view>
+  </picker>
+  <view id="week">
+    <text>日</text>
+    <text>一</text>
+    <text>二</text>
+    <text>三</text>
+    <text>四</text>
+    <text>五</text>
+    <text>六</text>
+  </view>
+  <view wx:for="{{dateArr}}">
+    <text>{{item.sun[0]}}</text>
+    <text style="color:{{item.sun[2]}}">{{item.sun[1]}}</text>
+    <text>{{item.mon[0]}}</text>
+    <text style="color:{{item.mon[2]}}">{{item.mon[1]}}</text>
+    <text>{{item.tus[0]}}</text>
+    <text style="color:{{item.tus[2]}}">{{item.tus[1]}}</text>
+    <text>{{item.wen[0]}}</text>
+    <text style="color:{{item.wen[2]}}">{{item.wen[1]}}</text>
+    <text>{{item.thur[0]}}</text>
+    <text style="color:{{item.thur[2]}}">{{item.thur[1]}}</text>
+    <text>{{item.fri[0]}}</text>
+    <text style="color:{{item.fri[2]}}">{{item.fri[1]}}</text>
+    <text>{{item.sat[0]}}</text>
+    <text style="color:{{item.sat[2]}}">{{item.sat[1]}}</text>
+    <view class="viewne"></view>
+  </view>
 </template>
-

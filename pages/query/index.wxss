@@ -16,3 +16,15 @@
     top: 5px;
 
 }
+
+
+.dayReportCell-mian{
+    height: 73px;
+    font-size: 0;
+}
+
+.dayReportCell-mian-col{
+    display: inline-block;
+    width: 25%;
+}
+

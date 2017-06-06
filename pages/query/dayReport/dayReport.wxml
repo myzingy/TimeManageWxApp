@@ -1,0 +1,17 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/index/common.wxml" />
+<import src="../common.wxml" />
+<template name="dayReport">
+   <picker value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="dayReport" range="{{yearMonthArr}}">
+    <view class="picker">
+      {{yearMonthArr[yearMothSelect]}}
+    </view>
+  </picker>
+  
+    <switch checked bindchange=""/>
+    
+    <view class="">
+    
+    </view>
+    
+</template>
