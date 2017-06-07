@@ -18,6 +18,68 @@
 }
 
 
+/***********当月排班*************/
+
+.selector-contain{
+  height: 39px;
+  border-style: solid;
+  border-width:0 0 1px 0;
+  border-color: #CFCFCF;
+}
+
+.week-cell{
+  position: relative;
+  font-size: 0;
+  height: 42px;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #EE2B15;
+}
+
+.week-cell text{
+  display: inline-block;
+  vertical-align: top;
+  width: 14.285%;
+  text-align: center;
+  height: inherit;
+  line-height: 42px;
+  color: #333333;
+  font-size: 12px;
+}
+
+.calendar-cell{
+  position: relative;
+  font-size: 0;
+  height: 72px;
+}
+
+.calendar-cell-col{
+  width: 14.285%;
+  display: inline-block;
+  height: inherit;
+  vertical-align: top;
+}
+
+.calendar-cell-col text{
+  width: 100%;
+  display: block;
+  min-height: 12px;
+  text-align: center;
+}
+
+.calendar-title{
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+.calendar-subTitle{
+  font-size: 9px;
+  margin-top: 20px;
+}
+
+
+/************日报*************/
+
 .dayReportCell-mian{
     height: 73px;
     font-size: 0;
@@ -26,5 +88,82 @@
 .dayReportCell-mian-col{
     display: inline-block;
     width: 25%;
+    height: 100%;
+    vertical-align: top;
+}
+
+.dayReportCell-mian-col label{
+    display: block;
+    font-size: 12px;
+}
+
+.height-half{
+    height: 50%;
+}
+
+.height-all{
+    height: 100%;
+}
+
+.dayReport-error{/*异常switch*/
+    position:absolute;
+    right: 0;
+    top: 40px;
+    width: 80px;
+}
+
+.dayReport-error switch{
+    display: inline-block;
+    width: 45px;
+}
+
+
+
+.pic-title-btn{/*******详情按钮********/
+    width: 60px;
+    min-height: 50px;
+}
+
+.pic-title-btn image{
+    width: 20px;
+    height: 20px;
+    margin: 0 auto;
+    display: block;
+}
+
+.pic-title-btn text{
+    font-size: 12px;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
+
+/***************日报详情cell************/
+.table-cell{
+    width: 100%;
+    height: 37px;
+    font-size: 0;
+}
+
+.table-cell-col,.table-cell-col-4,.table-cell-col-6{
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+    height: 100%;
+    line-height: 37px;
+    font-size: 12px;
+}
+
+.table-cell-col{
+    width: 25%;
+}
+
+.table-cell-col-4{
+    width: 40%;
+}
+
+.table-cell-col-6{
+    width: 60%;
 }
 

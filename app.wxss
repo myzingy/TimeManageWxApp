@@ -282,7 +282,9 @@ page {
 
 .bottom-line{/*底部分割线*/
   position: absolute;
-  border: 0.5px solid #808080;
+  /*border: 0.5px solid #808080;*/
+  height: 1px;
+  background-color: #808080;
   left: 10px;
   right: 10px;
   bottom: 0;
@@ -291,19 +293,23 @@ page {
 /*********顶部tab************/
 
 .main-top {
-  display: flex;
-  flex-direction: row;
+  font-size: 0;
   background-color: white;
   opacity: 1;
   z-index: 10;
   position: relative;
   height: 40px;
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #E4E4E4;
 }
 
 .main-top>view {
-  flex: 1;
+  display: inline-block;
+  vertical-align: top;
   text-align: center;
   line-height: 40px;
+  font-size: 20px;
 }
 
 .nav-active {
@@ -313,4 +319,33 @@ page {
 .main-section {
   position: relative;
   margin-top: -30px;
+}
+
+
+/*******下滑线**********/
+.gray-line{
+  position: absolute;
+  bottom: 0;
+  left: 10px;
+  right: 10px;
+  height: 1px;
+  background-color: #BBBBBB;
+}
+
+/*选择器*/
+.selector{
+      width: 132px;
+    height: 23px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #CFCFCF;
+    border-radius: 4px;
+    margin-left: 3.125%;
+    margin-top: 8px;
+    font-size: 11px;
+    color: #666666;
+    line-height: 23px;
+    display: inline-block;
+    text-indent: 6.818%;
+    letter-spacing: 0.8px;
 }

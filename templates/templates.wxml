@@ -1,6 +1,6 @@
 <template name="main-nav">
 <view class="main-top">
-  <view class="" bindtap="pageClick" wx:for="{{navTitleArr}}" wx:key="*this" data-id="{{index}}">{{navTitleArr[index]}}</view>
+  <view style="width:{{navTitle.navWidth}}" class="{{navTitle.activeIndex == index ? 'nav-active':''}}" bindtap="pageClick" wx:for="{{navTitle.navTitleArr}}" wx:key="*this" data-id="{{index}}">{{navTitle.navTitleArr[index]}}</view>
 </view>
 </template>
 
@@ -58,7 +58,9 @@
 </template>
 
 <template name="noMore">
-  <view class="load-bottom">无更多数据</view>
+  <view class="weui-loadmore weui-loadmore_line">
+            <view class="weui-loadmore__tips weui-loadmore__tips_in-line">暂无数据</view>
+        </view>
 </template>
 
 <template name="bottom-line">

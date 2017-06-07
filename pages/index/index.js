@@ -6,7 +6,11 @@ var app = getApp();
 var self;
 Page({
   data: {
-    navTitleArr:['申请中','已审核','已退回','历史记录'],
+    navTitle:{
+      navTitleArr: ['申请中', '已审核', '已退回', '历史记录'],
+      activeIndex:0,
+      navWidth:'25%'
+    },
     userInfo: {},
     selectDataArr: [],
     selectDataIndex: 0,
@@ -16,7 +20,8 @@ Page({
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
     loadMore: false,
-    noMore: false
+    noMore: false,
+
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -151,6 +156,11 @@ Page({
 
     this.setData({ pageName: self.data.pageNameArr[index] });
 
+    this.data.navTitle.activeIndex = index;
+    self.setData({
+      navTitle: this.data.navTitle
+    })
+
     this.getData(0);
 
   },
@@ -209,16 +219,7 @@ Page({
     })
   },
   submit:function(e){//提交
-    let tag = e.target.dataset.tag;
-    self.data.data[tag].C3_541449538456 = 'Y';
-    let item = self.data.data[tag];
-     common.saveAndSubmit(item,function(){
-        self.setData({
-          data:self.data.data
-        })
-     },function(){
-        self.data.data[tag].C3_541449538456 = 'N';
-     });
+    applying.submit(e,self);
   },
   draftModifySubmit:function(e){
     wx.navigateTo({

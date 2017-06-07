@@ -1,14 +1,19 @@
 import common from '../../common/common'
 import monthWork from '/monthWork/monthWork'
 import dayReport from '/dayReport/dayReport'
+import monthReport from '/monthReport/monthReport'
 
 var app = getApp();
 var self;
 Page({
   data: {
-    navTitleArr: ['当月排班', '考勤日报', '考勤月报'],
+    navTitle: {
+      navTitleArr: ['当月排班', '考勤日报', '考勤月报'],
+      activeIndex: 0,
+      navWidth: '33.33%'
+    },
     pageName: 'monthWork',//当前页的名称
-    pageNameArr: ['monthWork', 'dayReport', 'pended'],
+    pageNameArr: ['monthWork', 'dayReport', 'monthReport'],
     data:{},
     monthWork: {
       yearMothSelect: 0,
@@ -17,7 +22,8 @@ Page({
     },
     dayReport:{
       yearMothSelect: 0,
-      yearMonthArr:['201705','201705']
+      yearMonthArr:['201705','201705'],
+      isChecked:false
     },
     pageIndex: 0
 
@@ -45,7 +51,7 @@ Page({
       dayReport.getDayReportMonth(self);
       dayReport.getDayReportData(self);
     } else if (self.data.pageIndex == 2) {//已退回
-      param.resid = 541519417864
+      monthReport.getMonthReportData(self);
     }
     
 
@@ -91,5 +97,27 @@ Page({
       })
     }
     
+  },
+  gotoDayReportDetail:function(e){//跳转到日报详情
+    // var value = e.
+    wx.navigateTo({
+      url: '/pages/query/dayReportDetail/dayReportDetail',
+      success: function(res){
+        // success
+      },
+      fail: function(res) {
+        // fail
+      },
+      complete: function(res) {
+        // complete
+      }
+    })
+  },
+  switchChange:function(e){//异常switch
+    if(e.detail.value){
+      dayReport.getErrorData(self);
+    }else{
+      dayReport.getDefaultData(self);
+    }
   }
 })

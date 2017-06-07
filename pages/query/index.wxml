@@ -1,12 +1,10 @@
 <import src="/templates/templates.wxml" />
 <import src="/pages/query/monthWork/monthWork.wxml" />
-
 <import src="/pages/query/dayReport/dayReport.wxml" />
-
-<import src="/pages/index/history/history.wxml" />
+<import src="/pages/query/monthReport/monthReport.wxml" />
 <import src="/pages/verify/common.wxml" />
 
-<template is="main-nav" data="{{navTitleArr}}">
+<template is="main-nav" data="{{navTitle}}">
 </template>
 
 <template is="{{pageName}}" data="{{...data}}"></template>

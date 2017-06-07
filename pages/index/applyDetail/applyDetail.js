@@ -59,7 +59,8 @@ Page({
     }
     app.HttpService.getSubData(param, function (data) {
       if (data && data.data && data.data.data) {
-        let pendedProcessData = Array.from(data.data.data);
+        var pendedProcessData = data.data.data;
+        pendedProcessData = common.promiseImageWithStyle(pendedProcessData, ['C3_543790707188','C3_541450438440'])
         self.setData({
           pendedProcessData: pendedProcessData
         })

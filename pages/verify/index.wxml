@@ -4,7 +4,7 @@
 <import src="/pages/index/history/history.wxml" />
 <import src="/pages/verify/common.wxml" />
 
-<template is="main-nav" data="{{navTitleArr}}">
+<template is="main-nav" data="{{navTitle}}">
 </template>
 
  <view class="main-select">

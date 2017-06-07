@@ -23,6 +23,7 @@ function getMonthWorkData(self) {//获取考勤月份
       self.setData({
         data: self.data.monthWork
       })
+      getCalendar(yearMonthArr[0],self);
     }
     wx.stopPullDownRefresh();
     wx.hideLoading();

@@ -1,3 +1,6 @@
+var app = getApp();
+
+
 
 function gotoAddApply(){
     wx.navigateTo({
@@ -14,7 +17,21 @@ function gotoAddApply(){
     })
 }
 
+function submit(e,self) {//提交
+  let tag = e.target.dataset.tag;
+  self.data.data[tag].C3_541449538456 = 'Y';
+  let item = self.data.data[tag];
+  common.saveAndSubmit(item, function () {
+    self.setData({
+      data: self.data.data
+    })
+  }, function () {
+    self.data.data[tag].C3_541449538456 = 'N';
+  });
+}
+
 
 module.exports = {
-  gotoAddApply:gotoAddApply
+  gotoAddApply:gotoAddApply,
+  submit: submit
 }

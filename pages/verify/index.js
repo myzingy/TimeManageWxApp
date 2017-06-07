@@ -4,7 +4,11 @@ var app = getApp();
 var self;
 Page({
   data:{
-    navTitleArr:['待审批','已审批','已退回','历史记录'],
+    navTitle: {
+      navTitleArr: ['待审批', '已审批', '已退回', '历史记录'],
+      activeIndex: 0,
+      navWidth: '25%'
+    },
     pageName: 'unverify',//当前页的名称
     pageNameArr: ['unverify', 'pended','pended','history'],
     selectDataArr:[],

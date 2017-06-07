@@ -2,16 +2,37 @@
 <import src="/pages/index/common.wxml" />
 <import src="../common.wxml" />
 <template name="dayReport">
-   <picker value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="dayReport" range="{{yearMonthArr}}">
+  <picker value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="dayReport" range="{{yearMonthArr}}">
     <view class="picker">
       {{yearMonthArr[yearMothSelect]}}
     </view>
   </picker>
-  
-    <switch checked bindchange=""/>
-    
-    <view class="">
-    
+
+  <view class="dayReport-error">
+  <switch checked="{{isChecked}}" bindchange="switchChange" />
+  <text>异常</text>
+  </view>
+
+  <view class="dayReportCell-mian">
+    <view class="dayReportCell-mian-col">
+      <label class="height-half" data-bind="text:DATES">1yue1日</label>
+      <label class="height-half" data-bind="text:C3_375377576828,style:{color:tcolor}">白帮</label>
     </view>
-    
+    <view class="dayReportCell-mian-col">
+      <label class="height-half" data-bind="text:STARTTIMES == '00:00' ? '' : STARTTIMES">周一上</label>
+      <label class="height-half" data-bind="text:ENDTIMES == '00:00' ? '' : ENDTIMES">周一下</label>
+    </view>
+    <view class="dayReportCell-mian-col" data-bind="text:F_5">
+      <label class="height-all">10h</label>
+    </view>
+    <view class="dayReportCell-mian-col">
+      <view class="pic-title-btn" bindtap="gotoDayReportDetail">
+        <image src="../../../images/xiangqing.png">
+      </image>
+       <text>详细</text>
+      </view>
+      
+    </view>
+    <view class="viewne"></view>
+  </view>
 </template>

@@ -32,8 +32,6 @@
 }
 
 .addApply-cell picker{
-    
-    background-image: url(../../../images/xiala.png);
     background-size: 13px 7px;
     background-repeat: no-repeat;
     background-position: 95% 10.5px

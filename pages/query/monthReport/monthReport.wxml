@@ -1,0 +1,109 @@
+<import src="/templates/templates.wxml" />
+<import src="/pages/index/common.wxml" />
+<import src="../common.wxml" />
+<template name="monthReport">
+  <view class="table-cell">
+    <view class="table-cell-col-4">姓名</view>
+    <view class="table-cell-col-6" data-bind='text:YGNAMES'>1111111</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">年月</view>
+    <view class="table-cell-col-6" data-bind='text:YEARMONTH'>222222</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">入职日期</view>
+    <view class="table-cell-col-6" data-bind='text:JOINDATE'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">考勤类别</view>
+    <view class="table-cell-col-6" data-bind='text:KQTYPE'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">制度工作时数</view>
+    <view class="table-cell-col-6" data-bind='text:STWOKDAYS'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">标准时数</view>
+    <view class="table-cell-col-6" data-bind='text:STWORKHOURS'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">病假</view>
+    <view class="table-cell-col-6" data-bind='text:F_14'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产假</view>
+    <view class="table-cell-col-6" data-bind='text:F_16'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">婚假</view>
+    <view class="table-cell-col-6" data-bind='text:F_18'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">丧假</view>
+    <view class="table-cell-col-6" data-bind='text:F_19'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">年假</view>
+    <view class="table-cell-col-6" data-bind='text:F_23'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">工伤假</view>
+    <view class="table-cell-col-6" data-bind='text:F_27'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">调休</view>
+    <view class="table-cell-col-6" data-bind='text:F_28'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">旷工</view>
+    <view class="table-cell-col-6" data-bind='text:F_3'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产检假</view>
+    <view class="table-cell-col-6" data-bind='text:F_35'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产前假</view>
+    <view class="table-cell-col-6" data-bind='text:F_36'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">哺乳假</view>
+    <view class="table-cell-col-6" data-bind='text:F_37'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">排班出勤</view>
+    <view class="table-cell-col-6" data-bind='text:F_39'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">漏打卡</view>
+    <view class="table-cell-col-6" data-bind='text:F_40'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">计划生育假</view>
+    <view class="table-cell-col-6" data-bind='text:F_52'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">探亲假</view>
+    <view class="table-cell-col-6" data-bind='text:F_53'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">路程假</view>
+    <view class="table-cell-col-6" data-bind='text:F_54'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">其他假</view>
+    <view class="table-cell-col-6" data-bind='text:F_55'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">护理假</view>
+    <view class="table-cell-col-6" data-bind='text:F_69'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">欠班</view>
+    <view class="table-cell-col-6" data-bind='text:F_70'></view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">出勤时数</view>
+    <view class="table-cell-col-6" data-bind='text:F_9'></view>
+  </view>
+</template>

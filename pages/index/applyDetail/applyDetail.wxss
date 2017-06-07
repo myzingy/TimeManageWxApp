@@ -28,11 +28,11 @@ background-image: url(../../../images/lizhuzhang.png)
 }
 
 .pended-state-Y{
-    background-image: url(../../../images/gouxuankuang-2.png);
+    /*background-image: url(../../../images/gouxuankuang-2.png);*/
 }
 
 .pended-state-N{
-    background-image: url(../../../images/gouxuankuang-1.png);
+    /*background-image: url(../../../images/gouxuankuang-1.png);*/
 }
 
 .pended-process-state{

@@ -3,16 +3,19 @@
 <import src="/pages/index/pended/pended.wxml"/>
 <import src="/pages/index/refuse/refuse.wxml"/>
 <import src="/pages/index/history/history.wxml"/>
-<template is="main-nav" data="{{navTitleArr}}">
+<template is="main-nav" data="{{navTitle}}">
 </template>
 
+
  <view class="main-select">
-      <picker bindchange="categoryChange" value="{{selectDataIndex}}" range="{{selectDataArr}}">
+      <picker class="selector" bindchange="categoryChange" value="{{selectDataIndex}}" range="{{selectDataArr}}">
         <view class="picker">
           {{selectDataArr[selectDataIndex]}}
         </view>
       </picker>
     </view>
+
+
 
 
 

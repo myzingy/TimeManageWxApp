@@ -151,8 +151,9 @@ function getLocalImageUrl(str){
   else if(str == 'zzsp') return '/images/zhuzhang.png';
   else if(str == 'zgsp') return '/images/zhuguan.png';
   else if(str == 'jlsp') return '/images/jingli.png';
-
-
+  else if (str == 'spjl') return '/images/wangjingli.png';
+  else if (str == 'spzg') return '/images/zhangzhuguan.png';
+  else if (str == 'spzz') return '/images/lizhuzhang.png';
 }
 
 //处理data中的样式和图片匹配
@@ -160,7 +161,13 @@ function promiseImageWithStyle(data,strArray){
   for(var i = 0 ; i < strArray.length ; i ++){
     var keyStr = strArray[i];
       for(var j = 0 ; j < data.length ; j ++){
-        data[j][keyStr] = getLocalImageUrl(data[j][keyStr]);
+        if (keyStr == 'C3_541450438440'){
+          if (data[j][keyStr] == 'Y'){
+            data[j][keyStr] = '/images/gouxuankuang-2.png'
+          } else data[j][keyStr] = '/images/gouxuankuang-1.png'
+        }else{
+          data[j][keyStr] = getLocalImageUrl(data[j][keyStr]);
+        }
       }
   }
   return data;

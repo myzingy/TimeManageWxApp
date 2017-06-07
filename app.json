@@ -7,7 +7,8 @@
     "pages/index/applyDetail/applyDetail",
     "pages/index/fixSubmit/fixSubmit",
     "pages/verify/index",
-    "pages/query/index"
+    "pages/query/index",
+    "pages/query/dayReportDetail/dayReportDetail"
   ],
   "window": {
     "backgroundTextStyle": "dark",
