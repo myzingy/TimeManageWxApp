@@ -105,8 +105,7 @@ Page({
     app.HttpService.getApplyData(param, function (data) {
       if(!index){//刷新
           if (data && data.data && data.data.data) {
-            let dataArr = Array.from(data.data.data);
-            // dataArr.forEach(x => x.C3_542383374989 = common.getLocalImageUrl(x.C3_542383374989));
+            var dataArr = data.data.data;
             dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
             self.setData({ data: dataArr });
             self.data.dataArr[self.data.pageIndex] = dataArr;
@@ -121,8 +120,8 @@ Page({
 
       }else{//加载
           if (data && data.data && data.data.data) {
-            let oldDataArr = self.data.dataArr[self.data.pageIndex];
-            let dataArr = Array.from(data.data.data); 
+            var oldDataArr = self.data.dataArr[self.data.pageIndex];
+            var dataArr = data.data.data; 
             oldDataArr.concat(dataArr);
             self.setData({ data: oldDataArr });
             self.data.dataArr[self.data.pageIndex] = oldDataArr;

@@ -165,7 +165,7 @@
 
     <!--<view wx:for="{{imageShowArr}}" class="addApply-cell" >-->
     <label>{{item[2]}}</label>
-    <text>{{item[1]}}</text>
+    <text class="text-border">{{item[1]}}</text>
     <button bindtap="chooseImage" data-tag="{{index}}">拍照</button>
   </view>
 </template>
@@ -185,11 +185,14 @@
   </view>
 </template>
 
+
+
+
 <!--applydetail只读型-->
 <template name="add-category-readonly">
   <view class="addApply-cell">
     <label>申请类别</label>
-    <view class="text-border">{{data.C3_533398158705}}</view>
+    <text class="text-border">{{data.C3_533398158705}}</text>
   </view>
 </template>
 
@@ -203,14 +206,14 @@
 <template name="time-start-readonly">
   <view class="addApply-cell">
     <label>开始时间</label>
-    <view class="text-border">{{data.C3_533143179815}}</view>
+    <text class="text-border">{{data.C3_533143179815}}</text>
   </view>
 </template>
 
 <template name="time-end-readonly">
   <view class="addApply-cell">
     <label>结束时间</label>
-    <view class="text-border">{{data.C3_533143217561}}</view>
+    <text class="text-border">{{data.C3_533143217561}}</text>
   </view>
 </template>
 

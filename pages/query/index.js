@@ -78,6 +78,11 @@ Page({
 
     this.setData({ pageName: self.data.pageNameArr[index] });
 
+    this.data.navTitle.activeIndex = index;
+    self.setData({
+      navTitle: this.data.navTitle
+    })
+
     this.getData(index);
 
   },
@@ -101,7 +106,7 @@ Page({
   gotoDayReportDetail:function(e){//跳转到日报详情
     // var value = e.
     wx.navigateTo({
-      url: '/pages/query/dayReportDetail/dayReportDetail',
+      url: '/pages/query/dayReportDetail/dayReportDetail?data='+JSON.stringify(e.currentTarget.dataset.item),
       success: function(res){
         // success
       },

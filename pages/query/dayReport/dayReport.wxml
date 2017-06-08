@@ -2,37 +2,39 @@
 <import src="/pages/index/common.wxml" />
 <import src="../common.wxml" />
 <template name="dayReport">
-  <picker value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="dayReport" range="{{yearMonthArr}}">
+<view class="selector-contain">
+  <picker class="selector" value="{{yearMothSelect}}" bindchange="monthWorkChange" data-tag="dayReport" range="{{yearMonthArr}}">
     <view class="picker">
       {{yearMonthArr[yearMothSelect]}}
     </view>
   </picker>
+  </view>
 
   <view class="dayReport-error">
   <switch checked="{{isChecked}}" bindchange="switchChange" />
   <text>异常</text>
   </view>
 
-  <view class="dayReportCell-mian">
+  <view wx:for="{{dataArr}}" class="dayReportCell-mian">
     <view class="dayReportCell-mian-col">
-      <label class="height-half" data-bind="text:DATES">1yue1日</label>
-      <label class="height-half" data-bind="text:C3_375377576828,style:{color:tcolor}">白帮</label>
+      <label class="height-half">{{item.DATES}}</label>
+      <label class="height-half" style="color:{{item.tcolor}}">{{item.C3_375377576828}}</label>
     </view>
     <view class="dayReportCell-mian-col">
-      <label class="height-half" data-bind="text:STARTTIMES == '00:00' ? '' : STARTTIMES">周一上</label>
-      <label class="height-half" data-bind="text:ENDTIMES == '00:00' ? '' : ENDTIMES">周一下</label>
-    </view>
-    <view class="dayReportCell-mian-col" data-bind="text:F_5">
-      <label class="height-all">10h</label>
+      <label class="height-half" >{{item.STARTTIMES == '00:00' ? '' : item.STARTTIMES}}</label>
+      <label class="height-half">{{item.ENDTIMES == '00:00' ? '' : item.ENDTIMES}}</label>
     </view>
     <view class="dayReportCell-mian-col">
-      <view class="pic-title-btn" bindtap="gotoDayReportDetail">
+      <label class="height-all">{{item.F_5}}</label>
+    </view>
+    <view class="dayReportCell-mian-col">
+      <view class="pic-title-btn" bindtap="gotoDayReportDetail" data-item="{{item}}">
         <image src="../../../images/xiangqing.png">
       </image>
        <text>详细</text>
       </view>
       
     </view>
-    <view class="viewne"></view>
+    <view class="gray-line"></view>
   </view>
 </template>

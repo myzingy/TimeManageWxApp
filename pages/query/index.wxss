@@ -95,6 +95,8 @@
 .dayReportCell-mian-col label{
     display: block;
     font-size: 12px;
+    line-height: 36.5px;
+    text-align: center;
 }
 
 .height-half{
@@ -108,13 +110,15 @@
 .dayReport-error{/*异常switch*/
     position:absolute;
     right: 0;
-    top: 40px;
-    width: 80px;
+    top: 43.5px;
+    width: 90px;
 }
 
 .dayReport-error switch{
     display: inline-block;
-    width: 45px;
+    /*width: 45px;
+    height: 24px;
+    overflow: hidden;*/
 }
 
 
@@ -122,6 +126,9 @@
 .pic-title-btn{/*******详情按钮********/
     width: 60px;
     min-height: 50px;
+    margin-top: 11.5px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 .pic-title-btn image{
@@ -153,6 +160,12 @@
     height: 100%;
     line-height: 37px;
     font-size: 12px;
+    text-align: center;
+    border-width: 0 1px 1px 1px;
+    border-color: #CFCFCF;
+    border-style: solid;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .table-cell-col{

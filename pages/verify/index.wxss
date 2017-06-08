@@ -16,3 +16,22 @@
     top: 5px;
 
 }
+
+.main-cell-btn checkbox-group{
+  margin-top: 34px;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.pended-btn text{/*审批按钮*/
+  position: absolute;
+  top: 0;
+  bottom:0;
+  left:0;
+  right:0;
+  line-height: 60px;
+  font-size: 14px;
+  color: white;
+  text-align: center;
+
+}

@@ -67,44 +67,37 @@ background-image: url(../../../images/xiugai.png);
   height: 39px;
 }
 
-/*.main-select picker {
-  height: 30px;
-  width: 120px;
-  text-align: center;
-  line-height: 30px;
-  border: 1px lightgray solid;
-  border-radius: 4px;
-}*/
 
 /*****cell****/
 
 .main-cell {
   height: 94px;
-  /*display: flex;*/
-  font-size: 0;
+  display: flex;
+  display: -webkit-box;
+  display: -webkit-flex;
   position: relative;
   background-color: white;
 }
 
 .main-cell-icon{
-  width: 60px;
+  flex: 0 0 60px;
+  -webkit-box-flex: 0 0 60px;
+  -webkit-flex:0 0 60px;
+  height: inherit;
 }
 
-.width-calc-main{
-  width: calc(100% - 210px);
+
+.main-cell-btn{
+  flex: 0 0 40px;
+  -webkit-box-flex: 0 0 40px;
+  -webkit-flex:0 0 40px;
+  height: inherit;
 }
 
-.width-70{
-  width: 70px;
-}
-
-.main-cell-detail,.main-cell-btn{
-  width: 40px;
-}
-
-.main-cell-icon, .main-cell-title, .main-cell-detail, .main-cell-btn,.main-cell-text{
-  display: inline-block;
-  vertical-align: top;
+.main-cell-title, .main-cell-detail,.main-cell-text{
+  flex: 1;
+  -webkit-box-flex: 1;
+  -webkit-flex:1;
   height: inherit;
 }
 

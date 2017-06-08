@@ -47,6 +47,11 @@ Page({
 
     this.setData({ pageName: self.data.pageNameArr[index] });
 
+    this.data.navTitle.activeIndex = index;
+    self.setData({
+      navTitle: this.data.navTitle
+    })
+
     this.getData(0);
 
   },
@@ -144,11 +149,11 @@ Page({
   },
   onPullDownRefresh: function() {
     // 页面相关事件处理函数--监听用户下拉动作
-    
+    self.getData(0);
   },
   onReachBottom: function() {
     // 页面上拉触底事件的处理函数
-    
+    self.getData(1);
   },
   onShareAppMessage: function() {
     // 用户点击右上角分享

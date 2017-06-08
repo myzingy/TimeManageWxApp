@@ -10,7 +10,9 @@ function getMonthReportData(self){
   
   app.HttpService.getApplyData(param, function (data) {
     if (data && data.data && data.data.data) {
-
+      self.setData({
+        data: data.data.data[0]
+      })
     }
     wx.stopPullDownRefresh();
     wx.hideLoading();

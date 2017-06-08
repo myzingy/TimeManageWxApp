@@ -4,6 +4,8 @@
 }
 
 .addApply-cell{
+    display: -webkit-box;
+    display: -webkit-flex;
     display: flex;
     min-height: 28px;
     margin-top: 11px;
@@ -14,7 +16,10 @@
 }
 
 .addApply-cell label{
+    -webkit-box-flex: 0 0 65px;
+    -webkit-flex:0 0 65px;
     flex: 0 0 65px;
+    display: inline-block;
     font-size: 12px;
     text-align: right;
     color: #333333;
@@ -23,8 +28,11 @@
 }
 
 .addApply-cell picker,.addApply-cell text,.addApply-cell input,.addApply-cell textarea,.addApply-cell button,.text-border{
+    -webkit-box-flex: 1 1 auto;
+    -webkit-flex: 1 1 auto;
     flex: 1 1 auto;
-    margin-right: 11px;font-size: 12px;
+    margin-right: 10px;
+    font-size: 12px;
     line-height: 28px;
     text-indent: 11px;
     color: #666666;

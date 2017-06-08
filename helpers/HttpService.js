@@ -97,15 +97,15 @@ function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
         });
       } else {
         if (typeof doSuccess == "function") {
-          // if(res.data.error == 0){
+          if(res.data.error == 0){
           doSuccess(res);
-          // }else{
-          //   wx.showModal({
-          //     title:'失败',
-          //     content:res.data.message
-          //   })
-          //    doFail();
-          // }
+          }else{
+            wx.showModal({
+              title:'失败',
+              content:res.data.message
+            })
+             doFail();
+          }
 
         }
       }

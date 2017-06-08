@@ -8,12 +8,12 @@
 </template>
 
  <view class="main-select">
-      <picker bindchange="categoryChange" value="{{selectDataIndex}}" range="{{selectDataArr}}">
+      <picker class="selector" bindchange="categoryChange" value="{{selectDataIndex}}" range="{{selectDataArr}}">
         <view class="picker">
           {{selectDataArr[selectDataIndex]}}
         </view>
       </picker>
-      <checkbox-group bindchange="selectAllChange" >
+      <checkbox-group wx:if="{{pageIndex == '0'}}" bindchange="selectAllChange" >
       <label class="checkbox selectAll" >
         <checkbox value="selectAll" />
       </label>
@@ -45,6 +45,6 @@
 <template is="{{noMore ? 'noMore' : 'loadMore'}}"></template>
 
 <!--<button class="add-apply" bindtap="gotoAddApply"></button>-->
-<image src="/images/shengpianniu-2.png" class="add-apply" bindtap="approve">
+<image  src="/images/shengpianniu-2.png" class="add-apply pended-btn" bindtap="approve">
     <text>审批</text>
 </image>

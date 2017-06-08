@@ -7,7 +7,13 @@ Page({
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
-    
+    var item;
+    if(options.data){
+      item = JSON.parse(options.data);
+      self.setData({
+        data:item
+      })
+    }
   },
   onReady:function(){
     // 生命周期函数--监听页面初次渲染完成
