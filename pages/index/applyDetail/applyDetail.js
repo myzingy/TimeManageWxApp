@@ -1,6 +1,7 @@
 import common from "../../../common/common"
 
 var app = getApp();
+var self;
 Page({
   data: {
     files: [],
@@ -11,15 +12,20 @@ Page({
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
+    console.log("--------->1" + options.data);
 
     if (options.data) {
       let item = JSON.parse(options.data);
+      console.log("--------->2" + item);
       let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
-      urls = urls.filter(x => x != null);
+      urls = urls.filter(function(x){
+        return x != null;
+      });
       self.setData({
         data: item,
         files: urls
       })
+        console.log("urls" + urls);
 
 
       var ruleM = common.getRule(item.C3_533398158705);
@@ -49,7 +55,9 @@ Page({
   },
   getData: function () {
 
-
+    wx.showLoading({
+      title: '加载中'
+    })
     var param = {
       'resid': 541502768110,
       'subresid': 541521075674,
@@ -64,11 +72,7 @@ Page({
         self.setData({
           pendedProcessData: pendedProcessData
         })
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 2000
-        })
+        
       } else self.setData({ pendedProcessData: [] });
       wx.stopPullDownRefresh();
       wx.hideLoading();
@@ -106,9 +110,8 @@ Page({
     }
   },
   previewImage: function (e) {
-    wx.previewImage({
-      current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+    wx.previewImage({ // 当前显示图片的http链接
+      urls: self.data.files // 需要预览的图片http链接列表
     })
   },
   cancel: function () {

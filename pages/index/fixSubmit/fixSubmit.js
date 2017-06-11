@@ -10,8 +10,8 @@ Page({
     // 生命周期函数--监听页面加载
     self = this;
 
-    let item = JSON.parse(options.data);
-    let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
+    var item = JSON.parse(options.data);
+    var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     urls = urls.filter(x => x != null);
     self.setData({
       data: item,
@@ -35,7 +35,7 @@ Page({
     }
     app.HttpService.getSubData(param, function (data) {
       if (data && data.data && data.data.data) {
-        let pendedProcessData = Array.from(data.data.data);
+        var pendedProcessData = data.data.data;
         self.setData({
           pendedProcessData:pendedProcessData
         })
@@ -89,7 +89,7 @@ Page({
   addApply:function(e){//提交
     self.data.data.C3_541449538456 = 'Y';
     self.data.data.C3_541449606438 = 'N';
-    let item = self.data.data;
+    var item = self.data.data;
      common.reSaveAndSubmit(item,function(){
         // self.setData({
         //   data:self.data.data
@@ -102,7 +102,7 @@ Page({
   },
   saveApply:function(e){//保存
     self.data.data.C3_541449538456 = 'N';
-    let item = self.data.data;
+    var item = self.data.data;
     common.reSaveAndSubmit(item,function(){
       common.successBack();
     },function(){

@@ -49,3 +49,17 @@
       border: 1px #CFCFCF solid;
        border-radius: 4px;
 }
+
+.btn-submit{/*提交*/
+  background-color: #2AC5F8;
+  margin-left: 10px;
+}
+
+.btn-save{/*保存*/
+  background-color: #8BC84F;
+}
+
+.btn-submit,.btn-save{
+  color: white !important;
+  margin-bottom: 20px;
+}

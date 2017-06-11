@@ -97,15 +97,22 @@ function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
         });
       } else {
         if (typeof doSuccess == "function") {
-          if(res.data.error == 0){
-          doSuccess(res);
+          if ('error' in res.data){
+            if (res.data.error == 0) {
+              doSuccess(res);
+            } else {
+              if (res.data.message) {
+                wx.showModal({
+                  title: '失败',
+                  content: res.data.message
+                })
+              }
+              doFail();
+            }
           }else{
-            wx.showModal({
-              title:'失败',
-              content:res.data.message
-            })
-             doFail();
+            doSuccess(res);
           }
+          
 
         }
       }
@@ -220,10 +227,41 @@ function saveData(params, doSuccess, doFail) {
   coustomRequest(path.apply, params, 4, doSuccess, doFail);
 }
 
-// 修改数据
+// 修改多条数据
 function saveDataArr(params, doSuccess, doFail) {
   coustomRequest(path.apply, params, 5, doSuccess, doFail);
 }
+
+//图片上传
+function uploadImg(tempFilePath,callback){
+  //res.tempFilePaths[0]
+  wx.uploadFile({
+    url: getApp().Config.uploadImgPath + tempFilePath,
+    filePath: tempFilePath,
+    name: 'file',
+    success: function (e) {
+      var data = e.data;
+      console.log("image-====>" + e.data);
+      var imgModel = JSON.parse(e.data);
+      if(imgModel.Data){
+        callback(getApp().Config.basePath + imgModel.Data)
+      }else{
+        wx.showModal({
+          title: '注意',
+          content: '上传错误',
+        })
+      }
+      
+    },
+    fail: function (e) {
+      wx.showModal({
+        title: '注意',
+        content: '图片上传失败',
+      })
+    }
+  })
+}
+
 
 
 module.exports = {
@@ -235,5 +273,6 @@ module.exports = {
   saveData: saveData,
   addData: addData,
   getData:getData,
-  saveDataArr:saveDataArr
+  saveDataArr:saveDataArr,
+  uploadImg: uploadImg
 }

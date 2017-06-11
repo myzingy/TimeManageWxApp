@@ -17,6 +17,7 @@ background-image: url(../../../images/lizhuzhang.png)
 }
 
 .pended-process{
+    -webkit-box-flex: 0 0 51px;
     flex: 0 0 51px;
     height: 51px;
     background-size: 51px 51px;
@@ -50,4 +51,11 @@ background-image: url(../../../images/lizhuzhang.png)
     height: 12px;
     margin-right: 10px;
     /*position: absolute;*/
+}
+
+.cancel{
+  color: white !important;
+  margin-left: 10px;
+  margin-bottom: 20px;
+  background-color: #EE2A15;
 }

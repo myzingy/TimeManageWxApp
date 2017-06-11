@@ -6,12 +6,12 @@ var app = getApp();
 var startHours = [];
 var startMins = [];
 
-for (let i = 0; i < 24; i++) {
+for (var i = 0; i < 24; i++) {
   if (i < 10) startHours.push('0' + i);
   else startHours.push(i);
 }
 
-for (let i = 0; i < 60; i++) {
+for (var i = 0; i < 60; i++) {
   if (i < 10) startMins.push('0' + i);
   else startMins.push(i);
 }
@@ -56,7 +56,7 @@ Page({
     // 生命周期函数--监听页面加载
     self = this;
 
-    let tmpM = self.data.categoryModel;
+    var tmpM = self.data.categoryModel;
     tmpM.selectDataArr = app.globalData.vacationCategory;
     self.setData({
       categoryModel: tmpM
@@ -71,26 +71,26 @@ Page({
       self.setData({
         isDraft:true
       })
-      let item = JSON.parse(options.data);
+      var item = JSON.parse(options.data);
       self.setData({draftData:item});
-      let tmpCategoryModel = self.data.categoryModel;
+      var tmpCategoryModel = self.data.categoryModel;
       tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value, index, arr) => value == item.C3_533398158705);
       // C3_533143179815
       // C3_533143217561
       //开始时间
-      let tmpStartDateModel = self.data.startDateModel;
+      var tmpStartDateModel = self.data.startDateModel;
       tmpStartDateModel.startDate = item.C3_533143179815.split(' ')[0];
 
-      let tmpSartHour = item.C3_533143179815.split(' ')[1].split(':')[0];
-      let tmpSartMin = item.C3_533143179815.split(' ')[1].split(':')[1];
+      var tmpSartHour = item.C3_533143179815.split(' ')[1].split(':')[0];
+      var tmpSartMin = item.C3_533143179815.split(' ')[1].split(':')[1];
       tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value, index, arr) => value == tmpSartHour)
       tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value, index, arr) => value == tmpSartMin)
 
-      let tmpEndDateModel = self.data.endDateModel;
+      var tmpEndDateModel = self.data.endDateModel;
       tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
 
-      let tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
-      let tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
+      var tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
+      var tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
       tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value, index, arr) => value == tmpEndHour)
       tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value, index, arr) => value == tmpEndMin)
 
@@ -156,16 +156,25 @@ Page({
     }
   },
   chooseImage: function (e) {
-    let tag = e.target.dataset.tag;
+    var tag = e.target.dataset.tag;
     wx.chooseImage({
       count: 1, // 最多可以选择的图片张数，默认9
-      sizeType: ['original', 'compressed'], // original 原图，compressed 压缩图，默认二者都有
+      sizeType: ['original'], // original 原图，compressed 压缩图，默认二者都有
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function (res) {
-        self.data.files[tag] = res.tempFilePaths[0];
-        self.setData({
-          files: self.data.files
-        });
+        
+        
+        app.HttpService.uploadImg(res.tempFilePaths[0],function(path){
+          // self.data.files[tag] = res.tempFilePaths[0];
+          self.data.files[tag] = path;
+          self.setData({
+            files: self.data.files
+          });
+          wx.showModal({
+            title: 'xx',
+            content: path,
+          })
+        })
       },
       fail: function (res) {
         // fail
@@ -182,9 +191,9 @@ Page({
     })
   },
   pickSelect: function (e) {
-    let kindStr = e.target.dataset.kind;
+    var kindStr = e.target.dataset.kind;
     if (kindStr == 'selectDataIndex') {
-      let tmpM = self.data.categoryModel;
+      var tmpM = self.data.categoryModel;
       tmpM.selectDataIndex = e.detail.value;
       self.setData({
         categoryModel: tmpM
@@ -211,41 +220,41 @@ Page({
       }
 
     } else if (kindStr == 'startDate') {
-      let tmpM = self.data.startDateModel;
+      var tmpM = self.data.startDateModel;
       tmpM.startDate = e.detail.value;
       self.setData({
         startDateModel: tmpM
       })
 
     } else if (kindStr == 'startHour') {
-      let tmpM = self.data.startDateModel;
+      var tmpM = self.data.startDateModel;
       tmpM.startHour = e.detail.value;
       self.setData({
         startDateModel: tmpM
       })
 
     } else if (kindStr == 'startMin') {
-      let tmpM = self.data.startDateModel;
+      var tmpM = self.data.startDateModel;
       tmpM.startMin = e.detail.value;
       self.setData({
         startDateModel: tmpM
       })
     } else if (kindStr == 'endDate') {
-      let tmpM = self.data.endDateModel;
+      var tmpM = self.data.endDateModel;
       tmpM.endDate = e.detail.value;
       self.setData({
         endDateModel: tmpM
       })
 
     } else if (kindStr == 'endHour') {
-      let tmpM = self.data.endDateModel;
+      var tmpM = self.data.endDateModel;
       tmpM.endHour = e.detail.value;
       self.setData({
         endDateModel: tmpM
       })
 
     } else if (kindStr == 'endMin') {
-      let tmpM = self.data.endDateModel;
+      var tmpM = self.data.endDateModel;
       tmpM.endMin = e.detail.value;
       self.setData({
         endDateModel: tmpM
@@ -312,7 +321,7 @@ Page({
 
   },
   saveApply: function () {//修改
-    let data = self.fixData('save');
+    var data = self.fixData('save');
     if(self.data.isDraft){//草稿 重新修改
       for(var key in data){
         self.data.draftData[key] = data[key];
@@ -328,7 +337,7 @@ Page({
     
   },
   addApply: function () {//提交
-    let data = self.fixData('submit');
+    var data = self.fixData('submit');
     if(self.data.isDraft){//草稿 重新修改
       for(var key in data){
         self.data.draftData[key] = data[key];

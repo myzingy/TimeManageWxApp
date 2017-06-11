@@ -4,11 +4,33 @@ Page({
   data:{
     vacationCategorySuccess:false,
     teamApproveSuccess:false,
-    refuseArrSuccess:false
+    refuseArrSuccess:false,
+    imgHeight:0
   },
   onLoad:function(options){
     // 生命周期函数--监听页面加载
     self = this;
+
+    var width,height;
+    wx.getImageInfo({
+      src: '../../images/kaoqin-1.png',
+      success:function(res){
+        width = res.width;
+        height = res.height;
+
+        wx.getSystemInfo({
+          success: function (res) {
+            self.setData({
+              imgHeight: res.screenWidth * height / width
+            })
+          },
+        })
+      },
+      fail:function(res){
+
+      }
+    })
+    
   },
   onReady:function(){
     // 生命周期函数--监听页面初次渲染完成

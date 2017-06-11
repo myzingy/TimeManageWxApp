@@ -1,1 +1,1 @@
-<view class="">login</view>
+  <image class="login-bg" style="height:{{imgHeight}}px" src="/images/kaoqin-1.png" mode="aspectFit"></image>

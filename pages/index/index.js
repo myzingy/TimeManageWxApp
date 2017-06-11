@@ -169,13 +169,11 @@ Page({
   onReachBottom: function () {//上拉加载
     if (!self.data.loadMore) self.getData(1);
   },
-  scrolling: function (event) {
-    console.log('scroll');
-  },
   gotoAddApply: function () {//添加请假等
     applying.gotoAddApply();
   },
   gotoApplyDetail: function (e) {//详情
+    console.log("e.target.dataset.item" + e.target.dataset.item);
     wx.navigateTo({
       url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item),
       success: function (res) {
@@ -194,27 +192,12 @@ Page({
     let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     urls = urls.filter(x => x != null);
     wx.previewImage({
-      urls: urls, // 需要预览的图片http链接列表
-      success: function () {
-
-      },
-      fail: function () {
-
-      }
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   draftModify:function(e){
     wx.navigateTo({
-      url: '/pages/index/addApply/addApply?data=' + JSON.stringify(e.target.dataset.item),
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
+      url: '/pages/index/addApply/addApply?data=' + JSON.stringify(e.target.dataset.item)
     })
   },
   submit:function(e){//提交
@@ -222,16 +205,7 @@ Page({
   },
   draftModifySubmit:function(e){
     wx.navigateTo({
-      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.currentTarget.dataset.item),
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
+      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.currentTarget.dataset.item)
     })
   },
   categoryChange:function(e){//类型筛选

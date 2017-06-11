@@ -49,7 +49,7 @@ Page({
       monthWork.getMonthWorkData(self);
     } else if (self.data.pageIndex == 1) {//已审批
       dayReport.getDayReportMonth(self);
-      dayReport.getDayReportData(self);
+      // dayReport.getDayReportData(self);
     } else if (self.data.pageIndex == 2) {//已退回
       monthReport.getMonthReportData(self);
     }
@@ -97,9 +97,11 @@ Page({
       monthWork.getCalendar(self.data.monthWork.yearMonthArr[self.data.monthWork.yearMothSelect],self);
     }else if(tag == "dayReport"){
         self.data.dayReport.yearMothSelect = e.detail.value;
+        self.data.dayReport.isChecked = false;
       self.setData({
         data:self.data.dayReport
       })
+      dayReport.getDayReportData(self);
     }
     
   },
@@ -119,8 +121,10 @@ Page({
     })
   },
   switchChange:function(e){//异常switch
+    self.data.dayReport.isChecked = !self.data.dayReport.isChecked;
     if(e.detail.value){
       dayReport.getErrorData(self);
+      
     }else{
       dayReport.getDefaultData(self);
     }

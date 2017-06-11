@@ -5,6 +5,6 @@
       "navigationBarTitleText": "我的审批",
       "backgroundColor": "#eeeeee",
       "backgroundTextStyle": "light",
-      "enablePullDownRefresh": true
+      "enablePullDownRefresh": false
     
 }

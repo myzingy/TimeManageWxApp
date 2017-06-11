@@ -156,8 +156,8 @@
 </template>
 <template name="cell-submit-modify">
   <view class="addApply-cell">
-    <button class="weui-btn" bindtap="addApply">提交</button>
-    <button bindtap="saveApply">保存</button>
+    <button class="btn-submit" bindtap="addApply">提交</button>
+    <button class="btn-save" bindtap="saveApply">保存</button>
   </view>
 </template>
 <template name="cell-pricture-title">
@@ -270,6 +270,6 @@
 
 <template name="cell-cancel">
   <view class="addApply-cell" wx:if="{{data.C3_541449538456=='Y'&&data.C3_541449586048!=='Y'}}">
-    <button class="weui-btn" bindtap="cancel">撤销</button>
+    <button class="cancel" bindtap="cancel">撤销</button>
   </view>
 </template>
