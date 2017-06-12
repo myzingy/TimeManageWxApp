@@ -94,12 +94,12 @@ Page({
     app.HttpService.getApplyData(param, function (data) {
       if (data && data.data && data.data.data) {
         var dataArr;
+        if (common.isArray(data.data.data)) dataArr = data.data.data;
 
         if (dataArr.length < param.pageSize) self.setData({ noMore: true });
         else self.setData({ noMore: false });
 
 
-        if (common.isArray(data.data.data)) dataArr = data.data.data;
         dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
         dataArr.forEach(x => x.selected = false);
 
