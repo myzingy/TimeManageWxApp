@@ -1,4 +1,5 @@
 @import "../addApply/addApply.wxss";
+@import "../applyDetail/applyDetail.wxss";
 
 .cgsp{
     background-image: url(../../../images/)
@@ -16,7 +17,7 @@ background-image: url(../../../images/zhangzhuguan.png)
 background-image: url(../../../images/lizhuzhang.png)
 }
 
-.pended-process{
+/*.pended-process{
     flex: 0 0 51px;
     height: 51px;
     background-size: 51px 51px;
@@ -49,5 +50,5 @@ background-image: url(../../../images/lizhuzhang.png)
     line-height: 12px;
     height: 12px;
     margin-right: 10px;
-    /*position: absolute;*/
-}
+    /*position: absolute;
+}*/

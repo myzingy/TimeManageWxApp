@@ -83,6 +83,7 @@
 .dayReportCell-mian{
     height: 73px;
     font-size: 0;
+    position: relative;
 }
 
 .dayReportCell-mian-col{
@@ -121,6 +122,10 @@
     overflow: hidden;*/
 }
 
+.dayReport-error text{
+  font-size: 12px;
+  color: #EE2A15;
+}
 
 
 .pic-title-btn{/*******详情按钮********/
@@ -144,6 +149,7 @@
     margin-top: 10px;
     text-align: center;
     display: block;
+    color: #666666
 }
 
 /***************日报详情cell************/

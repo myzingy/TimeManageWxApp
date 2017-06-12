@@ -30,7 +30,12 @@
     <button bindtap="refuseClick">退回</button>
 </view>
 
-<template is="cell-picture-readonly" data="{{files}}">
+<view class="addApply-cell" wx:if="{{isRefuseOther}}" >
+    <label>退回理由</label>
+    <textarea auto-height maxlength="-1"  bindinput="textInput" />
+</view>
+
+<template is="cell-picture" data="{{files}}">
   
 </template>
 

@@ -88,9 +88,9 @@ background-image: url(../../../images/xiugai.png);
 
 
 .main-cell-btn{
-  flex: 0 0 40px;
   -webkit-box-flex: 0 0 40px;
   -webkit-flex:0 0 40px;
+  flex: 0 0 40px;
   height: inherit;
 }
 

@@ -55,7 +55,7 @@
 <template name="cell-modify-submit">
   <view class="main-cell-btn">
     <!--<button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>-->
-     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-item="{{item}}">              <text class="font-999999">修改并提交</text>
+     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-item="{{item}}">              <text class="font-999999">修改</text>
     </image>
   </view>
 </template>
@@ -156,8 +156,8 @@
 </template>
 <template name="cell-submit-modify">
   <view class="addApply-cell">
-    <button class="btn-submit" bindtap="addApply">提交</button>
-    <button class="btn-save" bindtap="saveApply">保存</button>
+    <button class="btn-submit" data-title="submit" bindtap="saveOrSubmitApply">提交</button>
+    <button class="btn-save" data-title="save" bindtap="saveOrSubmitApply">保存</button>
   </view>
 </template>
 <template name="cell-pricture-title">
@@ -173,7 +173,7 @@
   <view class="addApply-cell">
     <view class="weui-uploader">
       <view class="weui-uploader__bd">
-        <view class="weui-uploader__files" id="uploaderFiles">
+        <view class="weui-uploader__files marg-lr" id="uploaderFiles">
           <block wx:for="{{files}}" wx:if="{{files[index]}}" wx:key="*this">
             <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
               <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
@@ -238,7 +238,7 @@
   </view>
 </template>
 
-<template name="cell-picture-readonly">
+<!--<template name="cell-picture-readonly">
 <view class="addApply-cell">
   <view class="weui-uploader">
     <view class="weui-uploader__hd">
@@ -254,17 +254,18 @@
     </view>
   </view>
   </view>
-</template>
+</template>-->
 
 <template name="cell-pended-readonly">
   <view class="addApply-cell">
     <label>审批流</label>
   </view>
-  <view class="addApply-cell" wx:for="{{pendedProcessData}}">
+  <view class="pendend-cell" wx:for="{{pendedProcessData}}">
     <image src="{{item.C3_543790707188}}" class="pended-process"></image>
     <view class="pended-process-person">{{item.C3_541450392920}}</view>
     <image src="{{item.C3_541450438440}}" class="pended-process-state"></image>
-    <view class="pended-process-date">{{item.C3_541450449702 ? 'item.C3_541450449702' : '未审核'}}</view>
+    <view class="pended-process-date">{{item.C3_541450449702 ? item.C3_541450449702 : '未审核'}}</view>
+    <image wx:if="{{pendedProcessData.length -1 != index}}" src="/images/shuakajilu.png" mode="aspectFit" class="col-red-line"></image>
   </view>
 </template>
 

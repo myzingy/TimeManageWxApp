@@ -19,7 +19,6 @@ Page({
     pageNameArr: ['applying', 'pended','refuse','history'],
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
-    loadMore: false,
     noMore: false,
 
   },
@@ -50,12 +49,12 @@ Page({
     }
   },
   onShow: function () {
-
+    // self.
   },
   onReady: function () {
     if (!app.globalData.userInfo) {return}
     self.setData({
-      selectDataArr:common.getAllRuleCategory()
+      selectDataArr:common.getAllRuleCategory()//获取请假类别
     })
 
     self.getData(0);
@@ -84,7 +83,7 @@ Page({
         'key': ''
       }
 
-      param.pageSize = 20;
+      param.pageSize = 1;
       if(!index){//刷新
         param.pageIndex = 0;
         
@@ -98,42 +97,34 @@ Page({
        param.resid = 541518522808
     }else if (self.data.pageIndex == 2) {//已退回
        param.resid =  543000345781
-      // param.resid = 541502768110
+      // if(app.debug) param.resid = 541502768110
     }else if (self.data.pageIndex == 3) {//历史记录
        param.resid = 541518678060
     }
     app.HttpService.getApplyData(param, function (data) {
-      if(!index){//刷新
-          if (data && data.data && data.data.data) {
-            var dataArr = data.data.data;
-            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
-            self.setData({ data: dataArr });
-            self.data.dataArr[self.data.pageIndex] = dataArr;
 
-            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
-            else self.setData({ noMore: false });
-          } else {
-            self.setData({ data: [] }); 
-            self.setData({ noMore: true });
-          }
+      if (data && data.data && data.data.data) {
+        var dataArr = data.data.data;
 
+        if (dataArr.length < param.pageSize) self.setData({ noMore: true });
+        else self.setData({ noMore: false });
 
-      }else{//加载
-          if (data && data.data && data.data.data) {
-            var oldDataArr = self.data.dataArr[self.data.pageIndex];
-            var dataArr = data.data.data; 
-            oldDataArr.concat(dataArr);
-            self.setData({ data: oldDataArr });
-            self.data.dataArr[self.data.pageIndex] = oldDataArr;
+        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
 
-            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
-            else self.setData({ noMore: false });
-          } else {
-            self.setData({ noMore: true });
-          }
+        if(index == 1){//加载
+          var oldDataArr = self.data.dataArr[self.data.pageIndex];
+          oldDataArr = oldDataArr.concat(dataArr);
+          dataArr = oldDataArr;
+        }
+
+        self.setData({ data: dataArr });
+        self.data.dataArr[self.data.pageIndex] = dataArr;
+
+        
+      } else {
+        self.setData({ data: [] });
+        self.setData({ noMore: true });
       }
-
-
       wx.stopPullDownRefresh();
       wx.hideLoading();
     }, function () {
@@ -144,30 +135,29 @@ Page({
   },
   bindPickerChange: function (e) {//picker 选择事件
     console.log('picker发送选择改变，携带值为', e.detail.value)
-    this.setData({
+    self.setData({
       selectDataIndex: e.detail.value
     })
   },
   pageClick: function (event) {//导航点击事件
-    var self = this;
     var index = event.target.dataset.id;
-    this.setData({ pageIndex: index });
+    self.setData({ pageIndex: index,data:[] });
 
-    this.setData({ pageName: self.data.pageNameArr[index] });
+    self.setData({ pageName: self.data.pageNameArr[index] });
 
-    this.data.navTitle.activeIndex = index;
+    self.data.navTitle.activeIndex = index;
     self.setData({
-      navTitle: this.data.navTitle
+      navTitle: self.data.navTitle
     })
 
-    this.getData(0);
+    self.getData(0);
 
   },
   onPullDownRefresh: function () {//下拉刷新
     self.getData(0);
   },
   onReachBottom: function () {//上拉加载
-    if (!self.data.loadMore) self.getData(1);
+    if (!self.data.noMore) self.getData(1);
   },
   gotoAddApply: function () {//添加请假等
     applying.gotoAddApply();
@@ -188,8 +178,8 @@ Page({
     })
   },
   attachShow: function (e) {//附件
-    let item = e.target.dataset.item;
-    let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
+    var item = e.target.dataset.item;
+    var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     urls = urls.filter(x => x != null);
     wx.previewImage({
       urls: urls // 需要预览的图片http链接列表
@@ -203,7 +193,7 @@ Page({
   submit:function(e){//提交
     applying.submit(e,self);
   },
-  draftModifySubmit:function(e){
+  draftModifySubmit:function(e){//修改并提交
     wx.navigateTo({
       url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.currentTarget.dataset.item)
     })

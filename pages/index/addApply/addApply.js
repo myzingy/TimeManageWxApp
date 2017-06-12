@@ -4,23 +4,23 @@ var self;
 var app = getApp();
 
 var startHours = [];
-var startMins = [];
+var startMins = ['00', '30'];
 
 for (var i = 0; i < 24; i++) {
   if (i < 10) startHours.push('0' + i);
-  else startHours.push(i);
+  else startHours.push(i + '');
 }
 
-for (var i = 0; i < 60; i++) {
-  if (i < 10) startMins.push('0' + i);
-  else startMins.push(i);
-}
+// for (var i = 0; i < 60; i++) {
+//   if (i < 10) startMins.push('0' + i);
+//   else startMins.push(i);
+// }
 
 Page({
   data: {
     isCard: false,
     isDraft: false,
-    draftData:{},
+    draftData: {},
     categoryModel: {
       selectDataIndex: 0,
       selectDataArr: []
@@ -69,10 +69,10 @@ Page({
 
     if (options.data) {
       self.setData({
-        isDraft:true
+        isDraft: true
       })
       var item = JSON.parse(options.data);
-      self.setData({draftData:item});
+      self.setData({ draftData: item });
       var tmpCategoryModel = self.data.categoryModel;
       tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value, index, arr) => value == item.C3_533398158705);
       // C3_533143179815
@@ -111,18 +111,18 @@ Page({
     // var e;
     // e.target.dataset.kind = 'selectDataIndex';
     // self.pickSelect();
-     var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+    var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
 
-     var ruleM = common.getRule(ruleStr);
-     if(ruleM){
-     self.setData({
-        noticeStr: ruleM.C3_545771115865
+    var ruleM = common.getRule(ruleStr);
+    if (ruleM) {
+      self.setData({
+        noticeStr: ruleM.C3_545771115865 ? ruleM.C3_545771115865 : ''
       })
-      var imageShowArr = self.kvoAttach(ruleM);
+      var imageShowArr = common.kvoAttach(ruleM);
       self.setData({
         imageShowArr: imageShowArr
       })
-     }
+    }
   },
   getData: function () {
 
@@ -162,9 +162,9 @@ Page({
       sizeType: ['original'], // original 原图，compressed 压缩图，默认二者都有
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function (res) {
-        
-        
-        app.HttpService.uploadImg(res.tempFilePaths[0],function(path){
+
+
+        app.HttpService.uploadImg(res.tempFilePaths[0], function (path) {
           // self.data.files[tag] = res.tempFilePaths[0];
           self.data.files[tag] = path;
           self.setData({
@@ -204,7 +204,7 @@ Page({
       self.setData({
         noticeStr: ruleM.C3_545771115865
       })
-      var imageShowArr = self.kvoAttach(ruleM);
+      var imageShowArr = common.kvoAttach(ruleM);
       self.setData({
         imageShowArr: imageShowArr
       })
@@ -219,7 +219,12 @@ Page({
         })
       }
 
+
+
+
+
     } else if (kindStr == 'startDate') {
+      var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
       var tmpM = self.data.startDateModel;
       tmpM.startDate = e.detail.value;
       self.setData({
@@ -227,10 +232,29 @@ Page({
       })
 
     } else if (kindStr == 'startHour') {
+
+
       var tmpM = self.data.startDateModel;
       tmpM.startHour = e.detail.value;
       self.setData({
         startDateModel: tmpM
+      })
+
+      //设置结束小时的间隔
+      var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+      var hor, endHours;
+      var valueInt = parseInt(e.detail.value);
+      if (itemStr == '丧假' || itemStr == '路程假') {
+        hor = 8;
+      } else {
+        hor = 1;
+      }
+      endHours = startHours.filter(function (item) {
+        return ((parseInt(item) - valueInt) % hor == 0);
+      })
+      self.data.endDateModel.startHours = endHours;
+      self.setData({
+        endDateModel: self.data.endDateModel
       })
 
     } else if (kindStr == 'startMin') {
@@ -243,26 +267,32 @@ Page({
       var tmpM = self.data.endDateModel;
       tmpM.endDate = e.detail.value;
       self.setData({
-        endDateModel: tmpM
+        endDateModel: tmpM,
+        hour: ''
       })
 
     } else if (kindStr == 'endHour') {
-      var tmpM = self.data.endDateModel;
-      tmpM.endHour = e.detail.value;
+
+      self.data.endDateModel.endHour = e.detail.value;
       self.setData({
-        endDateModel: tmpM
+        endDateModel: self.data.endDateModel,
+        hour: ''
       })
 
     } else if (kindStr == 'endMin') {
       var tmpM = self.data.endDateModel;
       tmpM.endMin = e.detail.value;
       self.setData({
-        endDateModel: tmpM
+        endDateModel: tmpM,
+        hour: ''
       })
     }
 
   },
   hourCalculate: function () {//计算时长
+    wx.showLoading({
+      title: '加载中'
+    })
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
@@ -274,13 +304,10 @@ Page({
       "C3_546181010461": app.globalData.userInfo.data.Dep1Code
     }
 
-
-
     var param = {
       'resid': 546129993686,
       'data': data1
     }
-
 
     var data2 = {
       "C3_545822726730": startTime,
@@ -304,61 +331,35 @@ Page({
             })
 
           } else self.setData({ data: [] });
-          wx.stopPullDownRefresh();
           wx.hideLoading();
         }, function () {
-          wx.stopPullDownRefresh();
           wx.hideLoading();
         });
 
       } else self.setData({ data: [] });
-      wx.stopPullDownRefresh();
       wx.hideLoading();
     }, function () {
-      wx.stopPullDownRefresh();
       wx.hideLoading();
     });
 
   },
-  saveApply: function () {//修改
-    var data = self.fixData('save');
-    if(self.data.isDraft){//草稿 重新修改
-      for(var key in data){
+  saveOrSubmitApply: function (e) {//修改 提交
+    var title = e.currentTarget.dataset.title;
+    var data = self.fixData(title);
+
+    if (self.data.isDraft) {//草稿 重新修改
+      for (var key in data) {
         self.data.draftData[key] = data[key];
       }
-      common.reSaveAndSubmit(self.data.draftData,function(){
+      common.reSaveAndSubmit(self.data.draftData, function () {
         common.successBack();
       })
-    }else{
+    } else {
       common.saveAndSubmit(data, function () {
-      common.successBack();
-     });
-    }
-    
-  },
-  addApply: function () {//提交
-    var data = self.fixData('submit');
-    if(self.data.isDraft){//草稿 重新修改
-      for(var key in data){
-        self.data.draftData[key] = data[key];
-      }
-      common.reSaveAndSubmit(self.data.draftData,function(){
         common.successBack();
-      })
-    }else{
-    common.saveAndSubmit(data, function () {
-      common.successBack();
-    });
+      });
     }
-  },
-  kvoAttach: function (selectRuleM) {//附件
-    if (selectRuleM == null) return ["", "", "", ""];
-    var imgShowArr = [];//拍照是否显示
-    imgShowArr.push([selectRuleM.C3_545770918237 == 'Y' ? true : false, selectRuleM.C3_545770982165 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032511]);
-    imgShowArr.push([selectRuleM.C3_545770921226 == 'Y' ? true : false, selectRuleM.C3_545770982361 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032706]);
-    imgShowArr.push([selectRuleM.C3_545770922361 == 'Y' ? true : false, selectRuleM.C3_545770982566 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032913]);
-    imgShowArr.push([selectRuleM.C3_545770923478 == 'Y' ? true : false, selectRuleM.C3_545770990395 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771067208]);
-    return imgShowArr;
+
   },
   fixData: function (str) {
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
@@ -394,9 +395,9 @@ Page({
     }
     return data;
   },
-  textInput:function(e){//监听text输入
+  textInput: function (e) {//监听text输入
     self.setData({
-      reason:e.detail.value
+      reason: e.detail.value
     })
   }
 

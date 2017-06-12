@@ -3,7 +3,7 @@
 <template is="add-category-readonly" data="{{data}}">
 </template>
 
-<template is="cell-notice-readonly" data="{{data}}">
+<template is="cell-notice-readonly" data="{{noticeStr}}">
 </template>
 
 <template is="time-start-readonly" data="{{data}}">
@@ -20,8 +20,18 @@
 
 
 </template>
-<template is="reson" data="{{reason}}">
+<template is="reason" data="{{reason}}">
 </template>
+
+<view class="addApply-cell" >
+    <label>退回理由</label>
+    <text class="text-border">{{data.C3_541451198969 == '其他' ? data.C3_547719838514 : data.C3_541451198969}}
+    </text>
+</view>
+
+<template is="cell-pricture-title" data="{{imageShowArr}}">
+</template>
+
 <template is="cell-picture" data="{{files}}">
 
 </template>

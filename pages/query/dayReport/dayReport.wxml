@@ -29,7 +29,7 @@
     </view>
     <view class="dayReportCell-mian-col">
       <view class="pic-title-btn" bindtap="gotoDayReportDetail" data-item="{{item}}">
-        <image src="../../../images/xiangqing.png">
+        <image src="/images/xiangqing.png">
       </image>
        <text>详细</text>
       </view>

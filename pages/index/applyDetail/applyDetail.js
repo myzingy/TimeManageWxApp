@@ -7,16 +7,17 @@ Page({
     files: [],
     willRefuse: false,
     refuseArr:[],
-    refuseIndex:0
+    refuseIndex:0,
+    isRefuseOther:false
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
-    console.log("--------->1" + options.data);
+    if(app.debug) console.log("--------->1" + options.data);
 
     if (options.data) {
       let item = JSON.parse(options.data);
-      console.log("--------->2" + item);
+      if (app.debug) console.log("--------->2" + item);
       let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
       urls = urls.filter(function(x){
         return x != null;
@@ -25,7 +26,8 @@ Page({
         data: item,
         files: urls
       })
-        console.log("urls" + urls);
+      
+      if(app.debug) console.log("urls" + urls);
 
 
       var ruleM = common.getRule(item.C3_533398158705);
@@ -68,7 +70,15 @@ Page({
     app.HttpService.getSubData(param, function (data) {
       if (data && data.data && data.data.data) {
         var pendedProcessData = data.data.data;
+        
         pendedProcessData = common.promiseImageWithStyle(pendedProcessData, ['C3_543790707188','C3_541450438440'])
+        if (app.debug) {
+          var a = [];
+          for (var i = 0; i < 3; i++) {
+            a.push(pendedProcessData[0]);
+          }
+          pendedProcessData = a;
+        } 
         self.setData({
           pendedProcessData: pendedProcessData
         })
@@ -121,6 +131,17 @@ Page({
     self.setData({
       refuseIndex:e.detail.value
     })
+
+    self.data.data.C3_541451198969 = self.data.refuseArr[self.data.refuseIndex];
+    if (self.data.refuseArr[self.data.refuseIndex] == '其他'){
+      self.setData({
+        isRefuseOther:true
+      })
+    }else{
+      self.setData({
+        isRefuseOther: false
+      })
+    }
   },
   refuseClick:function(e){//退回
     // C3_541449606438
@@ -132,5 +153,8 @@ Page({
     },function(){
       self.data.data.C3_541449606438 = '';
     });
+  },
+  textInput:function(e){//退回理由
+    self.data.data.C3_547719838514 = e.detail.value;
   }
 })

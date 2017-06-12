@@ -1,5 +1,6 @@
-var app = getApp();
+import common from "../../../common/common"
 
+var app = getApp();
 
 
 function gotoAddApply(){
@@ -18,10 +19,10 @@ function gotoAddApply(){
 }
 
 function submit(e,self) {//提交
-  let tag = e.target.dataset.tag;
+  var tag = e.target.dataset.tag;
   self.data.data[tag].C3_541449538456 = 'Y';
-  let item = self.data.data[tag];
-  common.saveAndSubmit(item, function () {
+  var item = self.data.data[tag];
+  common.reSaveAndSubmit(item, function () {
     self.setData({
       data: self.data.data
     })

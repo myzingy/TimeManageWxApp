@@ -18,7 +18,8 @@ Page({
     pageIndex:0,
     selectMap:{},
     inputShowed: false,
-        inputVal: ""
+        inputVal: "",
+        noMore: false
     
   },
   onLoad:function(options){
@@ -91,39 +92,28 @@ Page({
        param.resid = 541520707421
     }
     app.HttpService.getApplyData(param, function (data) {
-      if(!index){//刷新
-          if (data && data.data && data.data.data) {
-            var dataArr;
-            if(common.isArray(data.data.data)) dataArr = data.data.data;
-            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
-            dataArr.forEach(x => x.selected = false);
-            self.setData({ data: dataArr });
-            self.data.dataArr[self.data.pageIndex] = dataArr;
+      if (data && data.data && data.data.data) {
+        var dataArr;
 
-            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
-            else self.setData({ noMore: false });
-          } else {
-            self.setData({ data: [] }); 
-            self.setData({ noMore: true });
-          }
+        if (dataArr.length < param.pageSize) self.setData({ noMore: true });
+        else self.setData({ noMore: false });
 
 
-      }else{//加载
-          if (data && data.data && data.data.data) {
-            var oldDataArr = self.data.dataArr[self.data.pageIndex];
-            var dataArr;
-            if(common.isArray(data.data.data)) dataArr = data.data.data;
-            dataArr = common.promiseImageWithStyle(dataArr,['C3_542383374989','C3_543518801920'])
-            dataArr.forEach(x => x.selected = 'N');
-            oldDataArr.concat(dataArr);
-            self.setData({ data: oldDataArr });
-            self.data.dataArr[self.data.pageIndex] = oldDataArr;
+        if (common.isArray(data.data.data)) dataArr = data.data.data;
+        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
+        dataArr.forEach(x => x.selected = false);
 
-            if(dataArr.length < param.pageSize) self.setData({ noMore: true });
-            else self.setData({ noMore: false });
-          } else {
-            self.setData({ noMore: true });
-          }
+        if (index) {//加载
+          var oldDataArr = self.data.dataArr[self.data.pageIndex];
+          oldDataArr = oldDataArr.concat(dataArr);
+          dataArr = oldDataArr;
+        }
+
+        self.setData({ data: dataArr });
+        self.data.dataArr[self.data.pageIndex] = dataArr;
+      } else {
+        self.setData({ data: [] });
+        self.setData({ noMore: true });
       }
 
 
@@ -153,7 +143,7 @@ Page({
   },
   onReachBottom: function() {
     // 页面上拉触底事件的处理函数
-    self.getData(1);
+    if (!self.data.noMore) self.getData(1);
   },
   onShareAppMessage: function() {
     // 用户点击右上角分享
@@ -185,6 +175,11 @@ Page({
     this.setData({ pageIndex: index });
 
     this.setData({ pageName: self.data.pageNameArr[index] });
+
+    this.data.navTitle.activeIndex = index;
+    self.setData({
+      navTitle: this.data.navTitle
+    })
 
     this.getData(0);
 

@@ -9,7 +9,15 @@
     display: flex;
     min-height: 28px;
     margin-top: 11px;
+    position: relative;
 }
+
+/*.flex-align-center{
+  -webkit-box-align: center;
+  -webkit-align-items:center;
+  align-items: center;
+  padding-bottom: 20px;
+}*/
 
 .addApply-cell:nth-child(1){
     margin-top: 21px;
@@ -25,6 +33,10 @@
     color: #333333;
     margin-right: 10px;
     line-height: 28px;
+}
+
+.addApply-cell textarea{
+  text-indent: 3px !important; 
 }
 
 .addApply-cell picker,.addApply-cell text,.addApply-cell input,.addApply-cell textarea,.addApply-cell button,.text-border{
@@ -62,4 +74,8 @@
 .btn-submit,.btn-save{
   color: white !important;
   margin-bottom: 20px;
+}
+
+.marg-lr{
+  margin: 0 10px;
 }

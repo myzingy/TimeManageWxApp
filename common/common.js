@@ -1,8 +1,8 @@
 var app = getApp();
 
 function saveAndSubmit(data, success, fail) { //提交 保存
-  //  success();
-  //  return;
+  var valiateBool = valiateForm(data);
+  if(!valiateBool) return;
   var param = {
     'resid': 541502768110,
     'data': data
@@ -31,8 +31,8 @@ function saveAndSubmit(data, success, fail) { //提交 保存
 }
 
 function reSaveAndSubmit(data, success, fail) { //重新提交 保存
-  //  success();
-  //  return;
+  var valiateBool = valiateForm(data);
+  if (!valiateBool) return;
   var param = {
     'resid': 541502768110,
     'data': data
@@ -59,6 +59,32 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
     fail();
   });
 }
+
+function valiateForm(data){//验证提交数据
+
+  if (data.C3_533398158705 != '补打卡') {//非补打卡时长的验证
+    if (data.C3_541449935726 == undefined || data.C3_541449935726 == '') { 
+        customModal("时长不能为空！"); 
+        return false;
+      }
+    }
+
+  var selectRuleM = getRule(data.C3_533398158705);
+
+    var cameraNeccesseryArr = [selectRuleM.C3_545770918237,
+selectRuleM.C3_545770921226,
+selectRuleM.C3_545770922361,
+selectRuleM.C3_545770923478];
+    var addressArr = [data.C3_541450276993, data.C3_545771156108, data.C3_545771157350, data.C3_545771158420];
+    for (var i = 0; i < addressArr.length; i++) {
+      if (i >= cameraNeccesseryArr.length) { alert(cameraNeccesseryArr); return false; }
+      if (cameraNeccesseryArr[i] == 'Y' && (addressArr[i] == undefined || addressArr[i] == '' || addressArr[i] == null)) {
+        customModal("必填未填完！");
+        return false;
+      }
+    }
+    return true;
+  }
 
 function successBack() {
   wx.showToast({
@@ -161,20 +187,36 @@ function promiseImageWithStyle(data,strArray){
   for(var i = 0 ; i < strArray.length ; i ++){
     var keyStr = strArray[i];
       for(var j = 0 ; j < data.length ; j ++){
+        var item = data[j];
         if (keyStr == 'C3_541450438440'){
-          if (data[j][keyStr] == 'Y'){
-            data[j][keyStr] = '/images/gouxuankuang-2.png'
-          } else data[j][keyStr] = '/images/gouxuankuang-1.png'
+          if (item[keyStr] == 'Y'){
+            item[keyStr] = '/images/gouxuankuang-2.png'
+          } else item[keyStr] = '/images/gouxuankuang-1.png'
         }else{
-          data[j][keyStr] = getLocalImageUrl(data[j][keyStr]);
+          item[keyStr] = getLocalImageUrl(item[keyStr]);
         }
       }
   }
   return data;
 }
 
-function isArray(o) {  
-    return Object.prototype.toString.call(o) === '[object Array]';  
+//获取照片非必填
+function kvoAttach(selectRuleM) {//附件
+  if (selectRuleM == null) return ["", "", "", ""];
+  var imgShowArr = [];//拍照是否显示
+  imgShowArr.push([selectRuleM.C3_545770918237 == 'Y' ? true : false, selectRuleM.C3_545770982165 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032511]);
+  imgShowArr.push([selectRuleM.C3_545770921226 == 'Y' ? true : false, selectRuleM.C3_545770982361 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032706]);
+  imgShowArr.push([selectRuleM.C3_545770922361 == 'Y' ? true : false, selectRuleM.C3_545770982566 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771032913]);
+  imgShowArr.push([selectRuleM.C3_545770923478 == 'Y' ? true : false, selectRuleM.C3_545770990395 == 'Y' ? "必填" : "非必填", selectRuleM.C3_545771067208]);
+  return imgShowArr;
+}
+
+
+
+
+/*************util 工具类 */
+function isArray(o) {
+  return Object.prototype.toString.call(o) === '[object Array]';
 }
 
 Date.prototype.format = function (format)
@@ -197,6 +239,18 @@ Date.prototype.format = function (format)
   return format;
  }  
 
+function customModal(title){
+  wx.showModal({
+    title: title
+  })
+}
+
+function customLoading(){
+  wx.showLoading({
+    title: '加载中',
+  })
+}
+
 
 
 module.exports = {
@@ -208,5 +262,8 @@ module.exports = {
   getAllRuleCategory:getAllRuleCategory,
   getLocalImageUrl:getLocalImageUrl,
   promiseImageWithStyle:promiseImageWithStyle,
-  isArray:isArray
+  isArray:isArray,
+  kvoAttach:kvoAttach,
+  customModal:customModal,
+  customLoading:customLoading
 }

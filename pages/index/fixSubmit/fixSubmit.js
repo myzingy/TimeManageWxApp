@@ -4,7 +4,8 @@ var app = getApp();
 Page({
   data: {
     // data
-    files: []
+    files: [],
+    noticeStr:''
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
@@ -12,11 +13,25 @@ Page({
 
     var item = JSON.parse(options.data);
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
-    urls = urls.filter(x => x != null);
+    // urls = urls.filter(x => x != null);
     self.setData({
       data: item,
-      files:urls
+      files: urls
     })
+
+
+    var ruleM = common.getRule(item.C3_533398158705);
+    var imageShowArr = common.kvoAttach(ruleM);
+    self.setData({
+      imageShowArr: imageShowArr,
+      reason: self.data.data.C3_533143291117
+    })
+
+    var ruleM = common.getRule(item.C3_533398158705);
+    self.setData({
+      noticeStr: ruleM.C3_545771115865
+    })
+
     self.getData();
   },
   onReady: function () {
@@ -24,25 +39,21 @@ Page({
     self.getData();
   },
   getData: function () {
-
+    common.customLoading();
 
     var param = {
       'resid': 541502768110,
       'subresid': 541521075674,
       'cmswhere': '',
-      'hostrecid':self.data.data.REC_ID,
-      'cmsorder':''
+      'hostrecid': self.data.data.REC_ID,
+      'cmsorder': ''
     }
     app.HttpService.getSubData(param, function (data) {
       if (data && data.data && data.data.data) {
         var pendedProcessData = data.data.data;
+        pendedProcessData = common.promiseImageWithStyle(pendedProcessData, ['C3_543790707188', 'C3_541450438440'])
         self.setData({
-          pendedProcessData:pendedProcessData
-        })
-        wx.showToast({
-          title: '成功',
-          icon: 'success',
-          duration: 2000
+          pendedProcessData: pendedProcessData
         })
       } else self.setData({ pendedProcessData: [] });
       wx.stopPullDownRefresh();
@@ -51,6 +62,31 @@ Page({
       wx.stopPullDownRefresh();
       wx.hideLoading();
     });
+  },
+  chooseImage: function (e) {
+    var tag = e.target.dataset.tag;
+    wx.chooseImage({
+      count: 1, // 最多可以选择的图片张数，默认9
+      sizeType: ['original'], // original 原图，compressed 压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
+      success: function (res) {
+
+
+        app.HttpService.uploadImg(res.tempFilePaths[0], function (path) {
+          // self.data.files[tag] = res.tempFilePaths[0];
+          self.data.files[tag] = path;
+          self.setData({
+            files: self.data.files
+          });
+        })
+      },
+      fail: function (res) {
+        // fail
+      },
+      complete: function (res) {
+        // complete
+      }
+    })
   },
   onShow: function () {
     // 生命周期函数--监听页面显示
@@ -81,35 +117,45 @@ Page({
     }
   },
   previewImage: function (e) {
+    var imgUrls = this.data.files.filter(function (val) {
+      return val;
+    })
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+      urls: imgUrls // 需要预览的图片http链接列表
     })
   },
-  addApply:function(e){//提交
-    self.data.data.C3_541449538456 = 'Y';
-    self.data.data.C3_541449606438 = 'N';
+  saveOrSubmitApply: function (e) {//提交
+        self.data.data.C3_541450276993 = self.data.files[0];
+        self.data.data.C3_545771156108 = self.data.files[1];
+        self.data.data.C3_545771157350 = self.data.files[2];
+        self.data.data.C3_545771158420 = self.data.files[3];
+        
+
+    var title = e.currentTarget.dataset.title;
+
+    if (title == 'submit') {
+      self.data.data.C3_541449606438 = 'N';
+    }
     var item = self.data.data;
-     common.reSaveAndSubmit(item,function(){
-        // self.setData({
-        //   data:self.data.data
-        // })
-        common.successBack();
-     },function(){
-        self.data.data.C3_541449538456 = '';
-        self.data.data.C3_541449606438 = '';
-     });
-  },
-  saveApply:function(e){//保存
-    self.data.data.C3_541449538456 = 'N';
-    var item = self.data.data;
-    common.reSaveAndSubmit(item,function(){
+    common.reSaveAndSubmit(item, function () {
       common.successBack();
-    },function(){
-      self.data.data.C3_541449538456 = '';
+    }, function () {
+      if (title == 'submit') {
+        self.data.data.C3_541449606438 = 'Y';
+      }
+
     });
+
+
   },
-  cancel:function(){
+  cancel: function () {
     common.cancel(self.data.data);
+  },
+  textInput: function (e) {//监听text输入
+    self.setData({
+      reason: e.detail.value
+    })
+    self.data.data.C3_533143291117 = e.detail.value;
   }
 })
