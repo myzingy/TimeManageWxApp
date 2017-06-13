@@ -3,167 +3,163 @@
 <import src="../common.wxml" />
 <template name="monthReport">
   <view class="table-cell">
-                        <view class="table-cell-col-4">
-                            姓名
-                        </view>
-                        <view class="table-cell-col-6">{{YGNAMES}}</view>
-                    </view>
+    <view class="table-cell-col-4">姓名</view>
+    <view class="table-cell-col-6">{{YGNAMES}}</view>
+  </view>
 
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">
-                           年月
-                        </view>
-                        <view class="table-cell-col-6">{{YEARMONTH}}</view>
-                    </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">年月</view>
+    <view class="table-cell-col-6">{{YEARMONTH}}</view>
+  </view>
 
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">入职日期</view>
-                        <view class="table-cell-col-6">{{JOINDATE}}</view>
-                    </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">入职日期</view>
+    <view class="table-cell-col-6">{{JOINDATE}}</view>
+  </view>
 
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">考勤类别</view>
-                        <view class="table-cell-col-6">{{KQTYPE}}</view>
-                    </view>
-                    
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">制度工作时数</view>
-                        <view class="table-cell-col-6">{{STWOKDAYS}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">标准时数</view>
-                        <view class="table-cell-col-6">{{STWORKHOURS}}</view>
-                    </view>
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">排班工时</view>
-                        <view class="table-cell-col-6">{{F_79}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">上月累计欠班</view>
-                        <view class="table-cell-col-6">{{F_20}}</view>
-                    </view>
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">年假</view>
-                        <view class="table-cell-col-6">{{F_23}}</view>
-                    </view>   
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">病假</view>
-                        <view class="table-cell-col-6">{{F_14}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">工伤假</view>
-                        <view class="table-cell-col-6">{{F_27}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">产假</view>
-                        <view class="table-cell-col-6">{{F_16}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">产检假</view>
-                        <view class="table-cell-col-6">{{F_35}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">旷工</view>
-                        <view class="table-cell-col-6">{{F_3}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">事假0</view>
-                        <view class="table-cell-col-6">{{C3_424668212115}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">事假1</view>
-                        <view class="table-cell-col-6">{{F_15}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">平时15</view>
-                        <view class="table-cell-col-6">{{F_56}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">周末加班</view>
-                        <view class="table-cell-col-6">{{F_11}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">平日加班</view>
-                        <view class="table-cell-col-6">{{C3_431863381230}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">上海无锡出差</view>
-                        <view class="table-cell-col-6">{{C3_431881701098}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">调休</view>
-                        <view class="table-cell-col-6">{{F_28}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">欠班</view>
-                        <view class="table-cell-col-6">{{F_70}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">路程假</view>
-                        <view class="table-cell-col-6">{{F_54}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">婚假</view>
-                        <view class="table-cell-col-6">{{F_18}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">丧假</view>
-                        <view class="table-cell-col-6">{{F_19}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">计划生育假</view>
-                        <view class="table-cell-col-6">{{F_52}}</view>
-                    </view>
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">护理假</view>
-                        <view class="table-cell-col-6">{{F_69}}</view>
-                    </view>
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">其他假</view>
-                        <view class="table-cell-col-6">{{F_55}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">未刷卡</view>
-                        <view class="table-cell-col-6">{{C3_427746113976}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">实际补卡次数</view>
-                        <view class="table-cell-col-6">{{C3_431874465038}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">补卡扣款次数</view>
-                        <view class="table-cell-col-6">{{C3_431874818112}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">国定加班</view>
-                        <view class="table-cell-col-6">{{C3_431863392840}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">中夜津贴1</view>
-                        <view class="table-cell-col-6">{{F_66}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">全勤津贴</view>
-                        <view class="table-cell-col-6">{{C3_456101596314}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">公出A</view>
-                        <view class="table-cell-col-6">{{C3_431881684425}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">产前假</view>
-                        <view class="table-cell-col-6">{{F_36}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">哺乳假</view>
-                        <view class="table-cell-col-6">{{F_37}}</view>
-                    </view>
-                    <view class="table-cell">
-                        <view class="table-cell-col-4">漏打卡</view>
-                        <view class="table-cell-col-6">{{F_40}}</view>
-                    </view>
-                     <view class="table-cell">
-                        <view class="table-cell-col-4">超出工时</view>
-                        <view class="table-cell-col-6">{{C3_427727611415}}</view>
-                    </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">考勤类别</view>
+    <view class="table-cell-col-6">{{KQTYPE}}</view>
+  </view>
+
+  <view class="table-cell">
+    <view class="table-cell-col-4">制度工作时数</view>
+    <view class="table-cell-col-6">{{STWOKDAYS}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">标准时数</view>
+    <view class="table-cell-col-6">{{STWORKHOURS}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">排班工时</view>
+    <view class="table-cell-col-6">{{F_79}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">上月累计欠班</view>
+    <view class="table-cell-col-6">{{F_20}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">年假</view>
+    <view class="table-cell-col-6">{{F_23}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">病假</view>
+    <view class="table-cell-col-6">{{F_14}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">工伤假</view>
+    <view class="table-cell-col-6">{{F_27}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产假</view>
+    <view class="table-cell-col-6">{{F_16}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产检假</view>
+    <view class="table-cell-col-6">{{F_35}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">旷工</view>
+    <view class="table-cell-col-6">{{F_3}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">事假0</view>
+    <view class="table-cell-col-6">{{C3_424668212115}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">事假1</view>
+    <view class="table-cell-col-6">{{F_15}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">平时15</view>
+    <view class="table-cell-col-6">{{F_56}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">周末加班</view>
+    <view class="table-cell-col-6">{{F_11}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">平日加班</view>
+    <view class="table-cell-col-6">{{C3_431863381230}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">上海无锡出差</view>
+    <view class="table-cell-col-6">{{C3_431881701098}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">调休</view>
+    <view class="table-cell-col-6">{{F_28}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">欠班</view>
+    <view class="table-cell-col-6">{{F_70}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">路程假</view>
+    <view class="table-cell-col-6">{{F_54}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">婚假</view>
+    <view class="table-cell-col-6">{{F_18}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">丧假</view>
+    <view class="table-cell-col-6">{{F_19}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">计划生育假</view>
+    <view class="table-cell-col-6">{{F_52}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">护理假</view>
+    <view class="table-cell-col-6">{{F_69}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">其他假</view>
+    <view class="table-cell-col-6">{{F_55}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">未刷卡</view>
+    <view class="table-cell-col-6">{{C3_427746113976}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">实际补卡次数</view>
+    <view class="table-cell-col-6">{{C3_431874465038}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">补卡扣款次数</view>
+    <view class="table-cell-col-6">{{C3_431874818112}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">国定加班</view>
+    <view class="table-cell-col-6">{{C3_431863392840}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">中夜津贴1</view>
+    <view class="table-cell-col-6">{{F_66}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">全勤津贴</view>
+    <view class="table-cell-col-6">{{C3_456101596314}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">公出A</view>
+    <view class="table-cell-col-6">{{C3_431881684425}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">产前假</view>
+    <view class="table-cell-col-6">{{F_36}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">哺乳假</view>
+    <view class="table-cell-col-6">{{F_37}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">漏打卡</view>
+    <view class="table-cell-col-6">{{F_40}}</view>
+  </view>
+  <view class="table-cell">
+    <view class="table-cell-col-4">超出工时</view>
+    <view class="table-cell-col-6">{{C3_427727611415}}</view>
+  </view>
 </template>

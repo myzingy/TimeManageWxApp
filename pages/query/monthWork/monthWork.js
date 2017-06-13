@@ -70,6 +70,15 @@ function getCalendar(defaultYM,self) {
   app.HttpService.getApplyData(param, function (data) {
     // if (data && data.data && data.data.data) 
     data = data.data.data;
+    if(app.debug) {
+      for(var i = 0 ; i < 31 ; i ++){
+        var a = {
+          C3_375377576828:'常日班',
+          DATES:i
+        }
+        data.push(a)
+      }
+    }
     var textColorArr = [];//字体颜色数组
     var monthDayCount = monthDayCountArr[dateM];//当月天数
     // data.splice(10, 5);

@@ -47,15 +47,6 @@ background-image: url(../../../images/lizhuzhang.png)
     font-size: 14px;
 
 }
-
-.pended-state-Y{
-    /*background-image: url(../../../images/gouxuankuang-2.png);*/
-}
-
-.pended-state-N{
-    /*background-image: url(../../../images/gouxuankuang-1.png);*/
-}
-
 .pended-process-state{
     -webkit-box-flex: 0 0 20px;
     -webkit-flex:0 0 20px;

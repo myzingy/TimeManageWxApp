@@ -96,16 +96,17 @@
 .dayReportCell-mian-col label{
     display: block;
     font-size: 12px;
-    line-height: 36.5px;
     text-align: center;
 }
 
 .height-half{
     height: 50%;
+    line-height: 36.5px;
 }
 
 .height-all{
     height: 100%;
+    line-height: 73px;
 }
 
 .dayReport-error{/*异常switch*/

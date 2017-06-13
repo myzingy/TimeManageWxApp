@@ -10,42 +10,42 @@
   </picker>
   </view>
   <view class="week-cell">
-    <text>日</text>
+    <text class="color-lightGray">日</text>
     <text>一</text>
     <text>二</text>
     <text>三</text>
     <text>四</text>
     <text>五</text>
-    <text>六</text>
+    <text class="color-lightGray">六</text>
   </view>
   <view class="calendar-cell" wx:for="{{dateArr}}">
     <view class="calendar-cell-col">
-      <text class="calendar-title">{{item.sun[0]}}</text>
-      <text class="calendar-subTitle" style="color:{{item.sun[2]}}">{{item.sun[1]}}</text>
+      <text class="calendar-title color-lightGray">{{item.sun[0] ? item.sun[0] : ''}}</text>
+      <text class="calendar-subTitle" style="color:{{item.sun[2]}}">{{item.sun[1] ? item.sun[1] : ''}}</text>
     </view>
     <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.mon[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.mon[2]}}">{{item.mon[1]}}</text>
+    <text class="calendar-title">{{item.mon[0] ? item.mon[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.mon[2]}}">{{item.mon[1] ? item.mon[1] : '' }}</text>
     </view>
     <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.tus[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.tus[2]}}">{{item.tus[1]}}</text>
+    <text class="calendar-title">{{item.tus[0] ? item.tus[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.tus[2]}}">{{item.tus[1] ? item.tus[1] : ''}}</text>
     </view>
     <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.wen[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.wen[2]}}">{{item.wen[1]}}</text>
+    <text class="calendar-title">{{item.wen[0] ? item.wen[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.wen[2]}}">{{item.wen[1] ? item.wen[1] : ''}}</text>
     </view>
     <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.thur[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.thur[2]}}">{{item.thur[1]}}</text>
+    <text class="calendar-title">{{item.thur[0] ? item.thur[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.thur[2]}}">{{item.thur[1] ? item.thur[1] : ''}}</text>
     </view>
     <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.fri[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.fri[2]}}">{{item.fri[1]}}</text>
+    <text class="calendar-title">{{item.fri[0] ? item.fri[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.fri[2]}}">{{item.fri[1] ? item.fri[1] : ''}}</text>
     </view>
-    <view class="calendar-cell-col">
-    <text class="calendar-title">{{item.sat[0]}}</text>
-    <text class="calendar-subTitle" style="color:{{item.sat[2]}}">{{item.sat[1]}}</text>
+    <view class="calendar-cell-col color-lightGray">
+    <text class="calendar-title">{{item.sat[0] ? item.sat[0] : ''}}</text>
+    <text class="calendar-subTitle" style="color:{{item.sat[2]}}">{{item.sat[1] ? item.sat[1] : '' }}</text>
     </view>
     <view class="gray-line"></view>
   </view>

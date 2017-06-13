@@ -349,3 +349,12 @@ page {
     text-indent: 6.818%;
     letter-spacing: 0.8px;
 }
+/*浅灰字体颜色*/
+.color-lightGray{
+  color: #BBBBBB !important;
+}
+
+/*红色字体*/
+.color-red{
+  color: red;
+}

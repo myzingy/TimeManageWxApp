@@ -218,7 +218,7 @@ Page({
           isCard: false
         })
       }
-
+      self.resetTimeModel();
 
 
 
@@ -353,10 +353,21 @@ Page({
       }
       common.reSaveAndSubmit(self.data.draftData, function () {
         common.successBack();
+
+
+        // var tmpReloadM = wx.getStorageSync("reloadModel");
+        // tmpReloadM.item = self.data.draftData;
+        // tmpReloadM.add = false;
+        // wx.setStorageSync("reloadModel", tmpReloadM);
       })
     } else {
       common.saveAndSubmit(data, function () {
         common.successBack();
+
+        // var tmpReloadM = wx.getStorageSync("reloadModel");
+        // tmpReloadM.item = data;
+        // tmpReloadM.add = true;
+        // wx.setStorageSync("reloadModel", tmpReloadM);
       });
     }
 
@@ -377,7 +388,6 @@ Page({
       "C3_533143179815": startTime,
       "C3_533143217561": endTime,
       "C3_533398158705": self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex],
-      // "C3_546181010461":app.globalData.userInfo.data.Dep1Code
       "C3_542556605600": self.data.tempApprove,
       "C3_541449935726": self.data.hour,
       "C3_541450276993": self.data.files[0],
@@ -399,6 +409,29 @@ Page({
     self.setData({
       reason: e.detail.value
     })
+  },
+  resetTimeModel:function(){//切换类型时重置时间规则
+    var startDateModel = {
+      startDate: '请选择',
+        startHour: '0',
+          startHours: startHours,
+            startMin: '0',
+              startMins: startMins
+    }
+
+  var endDateModel = {
+    endDate: '请选择',
+    endHour: '0',
+    startHours: startHours,
+    endMin: '0',
+    startMins: startMins
+  }
+
+  self.setData({
+    startDateModel: startDateModel,
+    endDateModel: endDateModel
+  })
+
   }
 
 })

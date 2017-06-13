@@ -19,8 +19,7 @@ Page({
     pageNameArr: ['applying', 'pended','refuse','history'],
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
-    noMore: false,
-
+    noMore: false
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
@@ -50,6 +49,20 @@ Page({
   },
   onShow: function () {
     // self.
+    // var localReloadM = wx.getStorageSync("reloadModel");
+    // if (localReloadM){
+    //   var localPageIndex = localReloadM.pageIndex;
+    //   var tmpDataArr = self.data.dataArr[localPageIndex]
+    //   if (localReloadM.add){
+    //     tmpDataArr.unshift(localReloadM.item);
+    //   }else{
+    //     tmpDataArr[localReloadM.index] = localReloadM.item;
+    //   }
+    //   self.setData({
+    //     data: tmpDataArr
+    //   })
+    // }
+    //  wx.removeStorageSync("reloadModel");
   },
   onReady: function () {
     if (!app.globalData.userInfo) {return}
@@ -64,14 +77,6 @@ Page({
   },
   getData: function (index) {//获取数据
     var self = this;
-
-    
-
-
-    // if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
-    //   self.setData({ data: self.data.dataArr[self.data.pageIndex] });
-    //   return;
-    // }
 
     wx.showLoading({
       title: '加载中'
@@ -143,14 +148,19 @@ Page({
     var index = event.target.dataset.id;
     self.setData({ pageIndex: index,data:[] });
 
+    //设置page的模板
     self.setData({ pageName: self.data.pageNameArr[index] });
 
+    //切换激活导航的样式
     self.data.navTitle.activeIndex = index;
     self.setData({
       navTitle: self.data.navTitle
     })
 
-    self.getData(0);
+    if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
+      self.setData({ data: self.data.dataArr[self.data.pageIndex] });
+      
+    }else self.getData(0);
 
   },
   onPullDownRefresh: function () {//下拉刷新
@@ -160,34 +170,39 @@ Page({
     if (!self.data.noMore) self.getData(1);
   },
   gotoAddApply: function () {//添加请假等
+    // var tmpLocalM = {
+    //   pageIndex: self.data.selectDataIndex
+    // }
+    // wx.setStorageSync("reloadModel", tmpLocalM);
     applying.gotoAddApply();
   },
   gotoApplyDetail: function (e) {//详情
     console.log("e.target.dataset.item" + e.target.dataset.item);
     wx.navigateTo({
-      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item),
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
+      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item)
     })
   },
   attachShow: function (e) {//附件
     var item = e.target.dataset.item;
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
-    urls = urls.filter(x => x != null);
+    urls = urls.filter(function(x){return x != null});
     wx.previewImage({
       urls: urls // 需要预览的图片http链接列表
     })
   },
-  draftModify:function(e){
+  draftModify:function(e){//修改
+    var tag = e.target.dataset.tag;
+    var item = self.data.data[tag];
+
+
+    // var tmpLocalM = {
+    //   pageIndex: self.data.selectDataIndex,
+    //   index:tag
+    // }
+    // wx.setStorageSync("reloadModel", tmpLocalM);
+
     wx.navigateTo({
-      url: '/pages/index/addApply/addApply?data=' + JSON.stringify(e.target.dataset.item)
+      url: '/pages/index/addApply/addApply?data=' + JSON.stringify(item)
     })
   },
   submit:function(e){//提交

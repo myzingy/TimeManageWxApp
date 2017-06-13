@@ -1,2 +1,24 @@
 /* pages/query/dayReportDetail/dayReportDetail.wxss */
-@import '../index.wxss'
+@import '../index.wxss';
+
+.top-border{
+    border-width: 1px 0 0 0 ;
+    border-color: #CFCFCF;
+    border-style: solid;
+}
+
+.label-title{
+  font-size: 14px;
+  text-indent: 10px;
+  margin: 5px;
+  letter-spacing: 1px;
+}
+
+.table-cell-col{
+  letter-spacing: 1px;
+}
+
+.table-cell{
+  margin: 0 10px;
+  width: auto !important;
+}

@@ -1,48 +1,48 @@
 <view class="">
-  <view class="">{{data.DATES}}</view>
-  <view class="table-cell">
+  <view class="label-title">{{data.DATES}}</view>
+  <view class="table-cell top-border">
     <view class="table-cell-col"></view>
-    <view class="table-cell-col">{{item.C3_375377576828}}</view>
+    <view class="table-cell-col">{{data.C3_375377576828}}</view>
     <view class="table-cell-col"></view>
     <view class="table-cell-col"></view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">上班</view>
-    <view class="table-cell-col">{{item.STARTTIMES == '00:00' ? '' : item.STARTTIMES}}</view>
+    <view class="table-cell-col">{{data.STARTTIMES == '00:00' ? '' : data.STARTTIMES}}</view>
     <view class="table-cell-col"></view>
     <view class="table-cell-col"></view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">下班</view>
-    <view class="table-cell-col">{{item.ENDTIMES == '00:00' ? '' : item.ENDTIMES}}</view>
+    <view class="table-cell-col">{{data.ENDTIMES == '00:00' ? '' : data.ENDTIMES}}</view>
     <view class="table-cell-col"></view>
     <view class="table-cell-col"></view>
   </view>
-  <view class="">缺勤</view>
-  <view class="table-cell">
+  <view class="label-title">缺勤</view>
+  <view class="table-cell top-border">
     <view class="table-cell-col">迟到</view>
     <view class="table-cell-col">早退</view>
     <view class="table-cell-col">漏刷卡</view>
     <view class="table-cell-col"></view>
   </view>
   <view class="table-cell">
-    <view class="table-cell-col">{{item.F_1}}</view>
-    <view class="table-cell-col">{{item.F_2}}</view>
-    <view class="table-cell-col">{{item.F_3}}</view>
+    <view class="table-cell-col">{{data.F_1}}</view>
+    <view class="table-cell-col">{{data.F_2}}</view>
+    <view class="table-cell-col">{{data.F_3}}</view>
     <view class="table-cell-col"></view>
   </view>
-  <view class="">请假</view>
-  <view class="table-cell">
+  <view class="label-title">请假</view>
+  <view class="table-cell top-border">
     <view class="table-cell-col">病假</view>
     <view class="table-cell-col">事假</view>
     <view class="table-cell-col">年假</view>
     <view class="table-cell-col">婚假</view>
   </view>
   <view class="table-cell">
-    <view class="table-cell-col" >{{item.F_14}}</view>
-    <view class="table-cell-col" >{{item.F_15}}</view>
-    <view class="table-cell-col" >{{item.F_23}}</view>
-    <view class="table-cell-col" >{{item.F_18}}</view>
+    <view class="table-cell-col" >{{data.F_14}}</view>
+    <view class="table-cell-col" >{{data.F_15}}</view>
+    <view class="table-cell-col" >{{data.F_23}}</view>
+    <view class="table-cell-col" >{{data.F_18}}</view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">产前假</view>
@@ -51,10 +51,10 @@
     <view class="table-cell-col">丧假</view>
   </view>
   <view class="table-cell">
-    <view class="table-cell-col" >{{item.F_36}}</view>
-    <view class="table-cell-col" >{{item.F_69}}</view>
-    <view class="table-cell-col" >{{item.F_54}}</view>
-    <view class="table-cell-col" >{{item.F_19}}</view>
+    <view class="table-cell-col" >{{data.F_36}}</view>
+    <view class="table-cell-col" >{{data.F_69}}</view>
+    <view class="table-cell-col" >{{data.F_54}}</view>
+    <view class="table-cell-col" >{{data.F_19}}</view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">工伤假</view>
@@ -63,10 +63,10 @@
     <view class="table-cell-col">哺乳假</view>
   </view>
   <view class="table-cell">
-    <view class="table-cell-col" >{{item.F_27}}</view>
-    <view class="table-cell-col" >{{item.F_16}}</view>
-    <view class="table-cell-col" >{{item.F_35}}</view>
-    <view class="table-cell-col" >{{item.F_37}}</view>
+    <view class="table-cell-col" >{{data.F_27}}</view>
+    <view class="table-cell-col" >{{data.F_16}}</view>
+    <view class="table-cell-col" >{{data.F_35}}</view>
+    <view class="table-cell-col" >{{data.F_37}}</view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">计划生育假</view>
@@ -75,9 +75,10 @@
     <view class="table-cell-col">旷工</view>
   </view>
   <view class="table-cell">
-    <view class="table-cell-col" >{{item.F_52}}</view>
-    <view class="table-cell-col">{{item.F_28}}</view>
-    <view class="table-cell-col">{{item.F_70}}</view>
-    <view class="table-cell-col">{{item.F_3}}</view>
+    <view class="table-cell-col" >{{data.F_52}}</view>
+    <view class="table-cell-col">{{data.F_28}}</view>
+    <view class="table-cell-col">{{data.F_70}}</view>
+    <view class="table-cell-col">{{data.F_3}}</view>
   </view>
+  <view class="label-title">累计出勤<text class="color-red">{{data.F_79 ? data.F_79 : '-'}}</text>h</view>
 </view>

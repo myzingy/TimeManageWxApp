@@ -19,8 +19,9 @@
 
 .main-cell-btn checkbox-group{
   margin-top: 34px;
-  margin-right: 0;
-  margin-left: 0;
+  margin-right: auto;
+  margin-left: auto;
+  width: 30px;
 }
 
 .pended-btn text{/*审批按钮*/

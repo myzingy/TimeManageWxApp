@@ -9,7 +9,7 @@
     <template wx:if="{{!(item.C3_541449606438=='Y')&&item.C3_541449538456=='Y'}}" is="cell-detail" data="{{item}}" ></template>
 
     <template wx:if="{{item.item.C3_541449606438=='Y'||(item.C3_541449538456==null||item.C3_541449538456=='N')}}" is="cell-submit" data="{{index}}" ></template>
-    <template wx:if="{{item.C3_541449606438=='Y'||(item.C3_541449538456==null||item.C3_541449538456=='N')}}" is="cell-modify" data="{{item}}"></template>
+    <template wx:if="{{item.C3_541449606438=='Y'||(item.C3_541449538456==null||item.C3_541449538456=='N')}}" is="cell-modify" data="{{index}}"></template>
 
     <template is="bottom-line"></template>
   </view>

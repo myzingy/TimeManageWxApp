@@ -41,7 +41,15 @@ function getDayReportData(self) {
       var dataArr = data.data.data;
       if(app.debug){
         var a = {};
-        a.DATES = "2017-05-05 12:12:12";
+        a.DATES = "2017-05-05";
+        a.STARTTIMES = "09:00"
+        a.ENDTIMES = "10:00"
+        a.F_5 = "10h";
+        a.C3_375377576828 = '单日班'
+        a.F_1 = '12'
+        a.F_2 = '单日班'
+        a.F_14 = '单日班'
+        a.F_15 = '单日班'
         dataArr = [a];
         console.log('---------------------->dataArr' + dataArr);
       }
