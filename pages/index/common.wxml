@@ -2,7 +2,7 @@
 <!--cell主体-->
 <template name="cell-body">
   <view class="main-cell-icon">
-      <image src="{{item.C3_542383374989}}"  bindtap="gotoUnverifyDetailPage"><text data-item="{{item}}" class="icon-title">{{item.C3_542397132420}}</text></image>
+      <image src="{{item.C3_542383374989}}"  bindtap="gotoUnverifyDetailPage"><text data-tag="{{index}}" class="icon-title">{{item.C3_542397132420}}</text></image>
     <image src="{{item.C3_543518801920}}" mode="aspectFit"></image>
     <label class="font-999999">{{item.C3_533407351131 ? item.C3_533407351131 : ''}}</label>
   </view>
@@ -30,7 +30,7 @@
 <!--详情-->
 <template name="cell-detail">
   <view class="main-cell-btn">
-    <image  src="/images/xiangqing.png" bindtap="gotoApplyDetail" mode="aspectFit" data-item="{{item}}">        <text class="font-999999">详情</text>
+    <image  src="/images/xiangqing.png" bindtap="gotoApplyDetail" mode="aspectFit" data-tag="{{index}}">        <text class="font-999999">详情</text>
     </image>
   </view>
 </template>
@@ -55,7 +55,7 @@
 <template name="cell-modify-submit">
   <view class="main-cell-btn">
     <!--<button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>-->
-     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-item="{{item}}">              <text class="font-999999">修改</text>
+     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-tag="{{index}}">              <text class="font-999999">修改</text>
     </image>
   </view>
 </template>
@@ -269,8 +269,9 @@
   </view>
 </template>
 
+ <!--wx:if="{{data.C3_541449538456=='Y'&&data.C3_541449586048!=='Y'}}"-->
 <template name="cell-cancel">
-  <view class="addApply-cell" wx:if="{{data.C3_541449538456=='Y'&&data.C3_541449586048!=='Y'}}">
+  <view class="addApply-cell">
     <button class="cancel" bindtap="cancel">撤销</button>
   </view>
 </template>

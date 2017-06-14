@@ -140,6 +140,11 @@ Page({
     var item = self.data.data;
     common.reSaveAndSubmit(item, function () {
       common.successBack();
+      if (title == 'submit') {
+        app.notification.emit("dataReoperation", item);
+      }else{
+        app.notification.emit("dataFix", item);
+      }
     }, function () {
       if (title == 'submit') {
         self.data.data.C3_541449606438 = 'Y';
@@ -150,7 +155,9 @@ Page({
 
   },
   cancel: function () {
-    common.cancel(self.data.data);
+    common.cancel(self.data.data,function(){
+      app.notification.emit("dataCancel", null);
+    });
   },
   textInput: function (e) {//监听text输入
     self.setData({

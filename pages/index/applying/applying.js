@@ -18,14 +18,12 @@ function gotoAddApply(){
     })
 }
 
-function submit(e,self) {//提交
+function submit(e,self,success) {//提交
   var tag = e.target.dataset.tag;
   self.data.data[tag].C3_541449538456 = 'Y';
   var item = self.data.data[tag];
-  common.reSaveAndSubmit(item, function () {
-    self.setData({
-      data: self.data.data
-    })
+  common.reSaveAndSubmit(item, function (resData) {
+    if (success) success(resData);
   }, function () {
     self.data.data[tag].C3_541449538456 = 'N';
   });

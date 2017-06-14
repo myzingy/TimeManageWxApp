@@ -353,21 +353,12 @@ Page({
       }
       common.reSaveAndSubmit(self.data.draftData, function () {
         common.successBack();
-
-
-        // var tmpReloadM = wx.getStorageSync("reloadModel");
-        // tmpReloadM.item = self.data.draftData;
-        // tmpReloadM.add = false;
-        // wx.setStorageSync("reloadModel", tmpReloadM);
+        app.notification.emit("dataFix", self.data.draftData);
       })
     } else {
-      common.saveAndSubmit(data, function () {
+      common.saveAndSubmit(data, function (resData) {
         common.successBack();
-
-        // var tmpReloadM = wx.getStorageSync("reloadModel");
-        // tmpReloadM.item = data;
-        // tmpReloadM.add = true;
-        // wx.setStorageSync("reloadModel", tmpReloadM);
+        app.notification.emit("dataAdd", resData);
       });
     }
 

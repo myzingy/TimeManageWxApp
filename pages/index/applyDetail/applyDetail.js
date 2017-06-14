@@ -5,10 +5,11 @@ var self;
 Page({
   data: {
     files: [],
-    willRefuse: false,
+    willRefuse: false,//是否可以有退回操作
+    willCancel:false,//是否可以有撤销操作
     refuseArr:[],
     refuseIndex:0,
-    isRefuseOther:false
+    isRefuseOther:false//选择退回理由其他时 需要显示退回原因
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
@@ -48,7 +49,13 @@ Page({
       })
     }
 
-
+    // willCancel
+    if (options.willCancel) {
+      var tmpWillCancel = JSON.parse(options.willCancel);
+      self.setData({
+        willCancel: tmpWillCancel
+      })
+    }
 
   },
   onReady: function () {
@@ -125,7 +132,10 @@ Page({
     })
   },
   cancel: function () {
-    common.cancel(self.data.data);
+    // dataCancel
+    common.cancel(self.data.data,function(){
+      app.notification.emit("dataCancel", null);
+    });
   },
   refuseChange:function(e){//退回理由选择
     self.setData({
@@ -150,6 +160,7 @@ Page({
     let item = self.data.data;
     common.reSaveAndSubmit(item,function(){
       common.successBack();
+      app.notification.emit("dataReoperation", item);
     },function(){
       self.data.data.C3_541449606438 = '';
     });

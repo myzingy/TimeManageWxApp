@@ -45,5 +45,5 @@
 
 
 
-<!--<template  is="cell-cancel" data="{{data}}">
-</template>-->
+<template  wx:if="{{willCancel}}"  is="cell-cancel" data="{{data}}">
+</template>

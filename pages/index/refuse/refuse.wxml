@@ -5,7 +5,7 @@
     <template is="cell-body" data="{{item}}"> </template>
 
 
-    <template is="{{item.C3_541503245775 == 'Y' ? 'cell-invaild' : 'cell-modify-submit'}}" data="{{item}}">
+    <template is="{{item.C3_541503245775 == 'Y' ? 'cell-invaild' : 'cell-modify-submit'}}" data="{{index}}">
     </template>
 
     <template is="bottom-line"></template>

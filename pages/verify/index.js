@@ -18,7 +18,8 @@ Page({
     pageIndex: 0,
     inputShowed: false,
     inputVal: "",
-    noMore: false
+    noMore: false,
+    fixIndex:null,
 
   },
   onLoad: function (options) {
@@ -35,6 +36,19 @@ Page({
     })
 
     self.getData(0);
+
+    //退回
+    app.notification.on("dataReoperation", self, function (data) {
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr.splice(self.data.fixIndex, 1);
+
+      let applyingDataArr = self.data.dataArr[2];
+      applyingDataArr.unshift(data);
+      self.setData({
+        data: selectDataArr
+      })
+
+    });
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -236,18 +250,10 @@ Page({
     })
   },
   gotoApplyDetail: function (e) {//详情
-    console.log("e.target.dataset.item" + e.target.dataset.item);
+    let tag = e.target.dataset.tag;
+    let item = self.data.data[tag];
     wx.navigateTo({
-      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item) + "&willRefuse=false",
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
+      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + "&willRefuse=false"
     })
   },
   attachShow: function (e) {//附件
@@ -260,18 +266,11 @@ Page({
   },
   //########待审批
   gotoUnverifyDetailPage: function (e) {//退回操作界面
-    // pages/verify/unverifyDetail/unverifyDetail
+    let tag = e.target.dataset.tag;
+    let item = self.data.data[tag];
+    self.data.fixIndex = tag;
     wx.navigateTo({
-      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item) + '&willRefuse=true',
-      success: function (res) {
-        // success
-      },
-      fail: function (res) {
-        // fail
-      },
-      complete: function (res) {
-        // complete
-      }
+      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + '&willRefuse=true'
     })
   },
   selectAllChange: function (e) {//全选
@@ -305,6 +304,14 @@ Page({
     }
 
     app.HttpService.saveDataArr(param, function (data) {
+      let pendDataArr = self.data.dataArr[self.data.pageIndex];
+      pendDataArr = pendDataArr.filter(x => x.selected != true);
+      self.setData({
+        data: pendDataArr
+      })
+
+      let pendedDataArr = self.data.dataArr[1];
+      pendedDataArr = data.data.data.concat(pendedDataArr);
       common.customModal('审批成功')
     });
 

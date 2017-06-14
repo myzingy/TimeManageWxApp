@@ -13,14 +13,19 @@ Page({
     },
     userInfo: {},
     selectDataArr: [],
-    selectDataIndex: 0,
+    selectDataIndex: 0,//类型当前索引
     pageIndex: 0,//当前第几页
     pageName: 'applying',//当前页的名称
     pageNameArr: ['applying', 'pended','refuse','history'],
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
-    noMore: false
+    noMore: false,
+
+    fixIndex:null
   },
+
+
+
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
     self = this;
@@ -30,7 +35,74 @@ Page({
     }
     self.setData({ dataArr: a });//初始化数据
     self.isLaunch();//登录
+
+    //修改数据
+    app.notification.on("dataFix",self,function(data){
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr[self.data.fixIndex] = data;
+      self.setData({
+        data: selectDataArr
+      })
+    })
+
+    //添加数据
+    app.notification.on("dataAdd", self, function (data) {
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr.unshift(data);
+      self.setData({
+        data: selectDataArr
+      })
+    })
+
+    //撤销数据
+    app.notification.on("dataCancel",self,function(){
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr.splice(self.data.fixIndex,1);
+      self.setData({
+        data: selectDataArr
+      })
+      
+    });
+
+    //已退回提交
+    // fixIndex
+    app.notification.on("dataReoperation", self, function (data) {
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr.splice(self.data.fixIndex, 1);
+
+      let applyingDataArr = self.data.dataArr[0];
+      applyingDataArr.unshift(data);
+      self.setData({
+        data: selectDataArr
+      })
+
+    });
+
   },
+  onShow: function () {
+  },
+  onReady: function () {
+    if (!app.globalData.userInfo) {return}
+    self.setData({
+      selectDataArr:common.getAllRuleCategory()//获取请假类别
+    })
+
+    self.getData(0);
+  },
+  onHide: function () {
+
+  },
+
+  //下拉刷新
+  onPullDownRefresh: function () {
+    self.getData(0);
+  },
+  //上拉加载
+  onReachBottom: function () {
+    if (!self.data.noMore) self.getData(1);
+  },
+
+
   isLaunch: function () {
     if (!app.globalData.userInfo) {//判断是否登录
       wx.redirectTo({
@@ -47,36 +119,9 @@ Page({
       })
     }
   },
-  onShow: function () {
-    // self.
-    // var localReloadM = wx.getStorageSync("reloadModel");
-    // if (localReloadM){
-    //   var localPageIndex = localReloadM.pageIndex;
-    //   var tmpDataArr = self.data.dataArr[localPageIndex]
-    //   if (localReloadM.add){
-    //     tmpDataArr.unshift(localReloadM.item);
-    //   }else{
-    //     tmpDataArr[localReloadM.index] = localReloadM.item;
-    //   }
-    //   self.setData({
-    //     data: tmpDataArr
-    //   })
-    // }
-    //  wx.removeStorageSync("reloadModel");
-  },
-  onReady: function () {
-    if (!app.globalData.userInfo) {return}
-    self.setData({
-      selectDataArr:common.getAllRuleCategory()//获取请假类别
-    })
 
-    self.getData(0);
-  },
-  onHide: function () {
-
-  },
-  getData: function (index) {//获取数据
-    var self = this;
+/*----------获取数据--------------- */
+  getData: function (index) {
 
     wx.showLoading({
       title: '加载中'
@@ -138,6 +183,9 @@ Page({
     });
 
   },
+
+
+  /*---------事件类-------------*/
   bindPickerChange: function (e) {//picker 选择事件
     console.log('picker发送选择改变，携带值为', e.detail.value)
     self.setData({
@@ -156,30 +204,28 @@ Page({
     self.setData({
       navTitle: self.data.navTitle
     })
-
-    if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
+    //内存缓存数据提取
+    if (self.data.dataArr[self.data.pageIndex].length) {
       self.setData({ data: self.data.dataArr[self.data.pageIndex] });
       
     }else self.getData(0);
 
   },
-  onPullDownRefresh: function () {//下拉刷新
-    self.getData(0);
-  },
-  onReachBottom: function () {//上拉加载
-    if (!self.data.noMore) self.getData(1);
-  },
   gotoAddApply: function () {//添加请假等
-    // var tmpLocalM = {
-    //   pageIndex: self.data.selectDataIndex
-    // }
-    // wx.setStorageSync("reloadModel", tmpLocalM);
     applying.gotoAddApply();
   },
   gotoApplyDetail: function (e) {//详情
-    console.log("e.target.dataset.item" + e.target.dataset.item);
+    let tag = e.target.dataset.tag;
+    self.data.fixIndex = tag;
+    let item = self.data.data[tag];
+    let urlStr = '';
+    if(!self.data.pageIndex){
+      urlStr = '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + "&willCancel=true"
+    }else{
+      urlStr = '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item)
+    }
     wx.navigateTo({
-      url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(e.target.dataset.item)
+      url: urlStr
     })
   },
   attachShow: function (e) {//附件
@@ -193,24 +239,28 @@ Page({
   draftModify:function(e){//修改
     var tag = e.target.dataset.tag;
     var item = self.data.data[tag];
-
-
-    // var tmpLocalM = {
-    //   pageIndex: self.data.selectDataIndex,
-    //   index:tag
-    // }
-    // wx.setStorageSync("reloadModel", tmpLocalM);
+    self.data.fixIndex = tag;//记录点击修改的记录的索引
 
     wx.navigateTo({
       url: '/pages/index/addApply/addApply?data=' + JSON.stringify(item)
     })
   },
   submit:function(e){//提交
-    applying.submit(e,self);
+    let tag = e.currentTarget.tag;
+    applying.submit(e,self,function(resData){
+      let selectDataArr = self.data.dataArr[self.data.pageIndex];
+      selectDataArr[tag] = resData;
+      self.setData({
+        data: selectDataArr
+      })
+    });
   },
   draftModifySubmit:function(e){//修改并提交
+    var tag = e.currentTarget.dataset.tag;
+    var item = self.data.data[tag];
+    self.data.fixIndex = tag;
     wx.navigateTo({
-      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(e.currentTarget.dataset.item)
+      url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(item)
     })
   },
   categoryChange:function(e){//类型筛选
@@ -225,5 +275,11 @@ Page({
           data:conditionData
       })
 
+  },
+  /*---------通知事件------------ */
+  onUnload:function(){
+    // 移除通知
+    app.notification.remove("dataFix", self); 
+    app.notification.remove("dataAdd", self); 
   }
 });

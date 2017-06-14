@@ -1,7 +1,7 @@
 <!--退回-->
 <template name="cell-refuse">
     <view class="main-cell-btn">
-    <image  src="/images/1_11_1.png" bindtap="gotoUnverifyDetailPage" mode="aspectFit" data-item="{{item}}">                <text>退回</text>
+    <image  src="/images/1_11_1.png" bindtap="gotoUnverifyDetailPage" mode="aspectFit" data-tag="{{index}}">                <text>退回</text>
     </image>
   </view>
 </template>

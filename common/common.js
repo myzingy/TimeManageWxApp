@@ -1,6 +1,7 @@
 var app = getApp();
 
 function saveAndSubmit(data, success, fail) { //提交 保存
+  customLoading();
   var valiateBool = valiateForm(data);
   if(!valiateBool) return;
   var param = {
@@ -13,7 +14,13 @@ function saveAndSubmit(data, success, fail) { //提交 保存
     wx.hideLoading();
 
     if (data.data.error == 0) {
-      if(success) success();
+      if (data.data.data && data.data.data[0]){
+        dataArr = common.promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
+        if (success) success(dataArr[0]);
+      }else{
+        if (fail) fail();
+      }
+      
 
     } else {
       wx.showModal({
@@ -31,6 +38,7 @@ function saveAndSubmit(data, success, fail) { //提交 保存
 }
 
 function reSaveAndSubmit(data, success, fail) { //重新提交 保存
+  customLoading();
   var valiateBool = valiateForm(data);
   if (!valiateBool) return;
   var param = {
@@ -43,7 +51,12 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
     wx.hideLoading();
 
     if (data.data.error == 0) {
-      success();
+      if (data.data.data && data.data.data[0]) {
+        var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
+        if (success) success(dataArr[0]);
+      } else {
+        if (fail) fail();
+      }
 
     } else {
       wx.showModal({
@@ -109,7 +122,7 @@ function successBack() {
 }
 
 //撤销
-function cancel(data) {
+function cancel(data,success) {
   //541502768110
   data.C3_541449646638 = 'Y';
   var param = {
@@ -124,6 +137,7 @@ function cancel(data) {
 
     if (data.data.error == 0) {
       // success();
+      if (success) success();
       successBack();
     } else {
       wx.showModal({
