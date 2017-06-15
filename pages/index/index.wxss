@@ -135,6 +135,8 @@ background-image: url(../../../images/xiugai.png);
   color: white;
 }
 .main-cell-icon label {
+  -webkit-box-flex: 0 0 14px;
+  -webkit-flex: 0 0 14px;
   flex: 0 0 14px;
   display: block;
   font-size: 12px;
@@ -145,6 +147,8 @@ background-image: url(../../../images/xiugai.png);
 .main-cell-title label {
   display: block;
   font-size: 12px;
+  -webkit-box-flex: 0 0 14px;
+  -webkit-flex: 0 0 14px;
   flex: 0 0 14px;
   padding: 1px 0;
   text-align: center;
@@ -152,9 +156,12 @@ background-image: url(../../../images/xiugai.png);
 
 .main-cell-title label:nth-child(1) {
   font-size: 14px;
+  -webkit-box-flex: 1 1 auto;
+  -webkit-flex: 1 1 auto;
   flex: 1 1 auto;
   line-height: 46px;
   padding: 0;
+  height: 46px;
 }
 
 .main-cell-btn image {

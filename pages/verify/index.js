@@ -19,25 +19,18 @@ Page({
     inputShowed: false,
     inputVal: "",
     noMore: false,
-    fixIndex:null,
+    fixIndex: null,
 
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
 
-    var a = [];
-    for (var i = 0; i < 4; i++) {
-      a.push([]);
-    }
-    self.setData({ dataArr: a });//初始化数据
-    self.setData({
-      selectDataArr: common.getAllRuleCategory()
-    })
+    self.initData();
 
     self.getData(0);
 
-    //退回
+    //退回通知
     app.notification.on("dataReoperation", self, function (data) {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
       selectDataArr.splice(self.data.fixIndex, 1);
@@ -50,27 +43,44 @@ Page({
 
     });
   },
+
+  //数据初始化
+  initData: function () {
+    var a = [];
+    for (var i = 0; i < 4; i++) {
+      a.push([]);
+    }
+    self.setData({
+      dataArr: a,
+      selectDataArr: common.getAllRuleCategory()
+    })
+  },
+
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
 
   },
-  pageClick: function (event) {//导航点击事件
-    var self = this;
-    var index = event.target.dataset.id;
-    this.setData({ pageIndex: index });
 
-    this.setData({ pageName: self.data.pageNameArr[index] });
-
-    this.data.navTitle.activeIndex = index;
+  //导航点击事件
+  pageClick: function (event) {
     self.setData({
+      data: []
+    })
+    var index = event.target.dataset.id;
+
+    self.data.navTitle.activeIndex = index;
+
+    this.setData({
+      pageIndex: index,
+      pageName: self.data.pageNameArr[index],
       navTitle: this.data.navTitle
     })
 
     this.getData(0);
-
   },
-  getData: function (index) {//获取数据
-    var self = this;
+
+  //获取数据
+  getData: function (index) {
 
     // if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
     //   self.setData({ data: self.data.dataArr[self.data.pageIndex] });
@@ -84,15 +94,15 @@ Page({
     var param = {
       'subresid': '',
       'cmswhere': '',
-      'key': self.data.inputVal ? self.data.inputVal : '' 
+      'key': self.data.inputVal ? self.data.inputVal : ''
     }
 
-    param.pageSize = 20;
+    param.pageSize = 10;
     if (!index) {//刷新
       param.pageIndex = 0;
 
     } else {//加载
-      param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
+      param.pageIndex = self.data.data.length;
     }
 
     if (self.data.pageIndex == 0) {//待审批
@@ -106,24 +116,29 @@ Page({
     }
     app.HttpService.getApplyData(param, function (data) {
       if (data && data.data && data.data.data) {
-        var dataArr;
-        if (common.isArray(data.data.data)) dataArr = data.data.data;
+        var dataArr = data.data.data;
+
+        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
+        dataArr.forEach(x => x.selected = false);
+
+        self.data.dataArr[self.data.pageIndex] = dataArr;
+
+        var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
+        if (conditionStr != '全部') dataArr = dataArr.filter(x => x.C3_533398158705 == conditionStr)
 
         if (dataArr.length < param.pageSize) self.setData({ noMore: true });
         else self.setData({ noMore: false });
 
 
-        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
-        dataArr.forEach(x => x.selected = false);
+        
 
         if (index) {//加载
-          var oldDataArr = self.data.dataArr[self.data.pageIndex];
+          var oldDataArr = self.data.data;
           oldDataArr = oldDataArr.concat(dataArr);
           dataArr = oldDataArr;
         }
 
         self.setData({ data: dataArr });
-        self.data.dataArr[self.data.pageIndex] = dataArr;
       } else {
         self.setData({ data: [] });
         self.setData({ noMore: true });
@@ -138,27 +153,18 @@ Page({
     });
 
   },
-  onShow: function () {
-    // 生命周期函数--监听页面显示
 
-  },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
-
-  },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
-
-  },
+  // 页面相关事件处理函数--监听用户下拉动作
   onPullDownRefresh: function () {
-    // 页面相关事件处理函数--监听用户下拉动作
     self.getData(0);
   },
+  // 页面上拉触底事件的处理函数
   onReachBottom: function () {
-    // 页面上拉触底事件的处理函数
     if (!self.data.noMore) self.getData(1);
   },
-  categoryChange: function (e) {//类型筛选
+
+  //类型筛选
+  categoryChange: function (e) {
     self.setData({
       selectDataIndex: e.detail.value
     })
@@ -169,24 +175,6 @@ Page({
     self.setData({
       data: conditionData
     })
-
-  },
-  pageClick: function (event) {//导航点击事件
-    self.setData({
-      data: []
-    })
-
-    var index = event.target.dataset.id;
-    this.setData({ pageIndex: index });
-
-    this.setData({ pageName: self.data.pageNameArr[index] });
-
-    this.data.navTitle.activeIndex = index;
-    self.setData({
-      navTitle: this.data.navTitle
-    })
-
-    this.getData(0);
 
   },
   showInput: function () {
@@ -211,43 +199,10 @@ Page({
     });
   },
   inputConfim: function (e) {//确认搜索按钮
-    var param = {
-      'subresid': '',
-      'cmswhere': '',
-      'key': e.detail.value,
-      'pageIndex': 0
-    }
-    param.pageSize = self.data.dataArr[self.data.pageIndex].length;
-
-
-    if (self.data.pageIndex == 0) {//待审批
-      param.resid = 541518842754
-    } else if (self.data.pageIndex == 1) {//已审批
-      param.resid = 541518986783
-    } else if (self.data.pageIndex == 2) {//已退回
-      param.resid = 541519417864
-    } else if (self.data.pageIndex == 3) {//历史记录
-      param.resid = 541520707421
-    }
-    app.HttpService.getApplyData(param, function (data) {
-
-      if (data && data.data && data.data.data) {
-        var dataArr;
-        if (common.isArray(data.data.data)) dataArr = data.data.data;
-        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
-        dataArr.forEach(x => x.selected = false);
-        self.setData({ data: dataArr });
-        self.data.dataArr[self.data.pageIndex] = dataArr;
-
-        if (dataArr.length < param.pageSize) self.setData({ noMore: true });
-        else self.setData({ noMore: false });
-      } else {
-        self.setData({ data: [] });
-        self.setData({ noMore: true });
-      }
-
-
-    })
+    this.setData({
+      inputVal: e.detail.value
+    });
+    self.getData(0)
   },
   gotoApplyDetail: function (e) {//详情
     let tag = e.target.dataset.tag;
@@ -264,8 +219,11 @@ Page({
       urls: urls // 需要预览的图片http链接列表
     })
   },
-  //########待审批
-  gotoUnverifyDetailPage: function (e) {//退回操作界面
+
+
+  //################待审批
+  //退回操作界面
+  gotoUnverifyDetailPage: function (e) {
     let tag = e.target.dataset.tag;
     let item = self.data.data[tag];
     self.data.fixIndex = tag;
@@ -273,7 +231,9 @@ Page({
       url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + '&willRefuse=true'
     })
   },
-  selectAllChange: function (e) {//全选
+
+  //全选
+  selectAllChange: function (e) {
     for (var i = 0; i < self.data.data.length; i++) {
       if (e.detail.value.length) self.data.data[i].selected = true;
       else self.data.data[i].selected = false;
@@ -282,7 +242,9 @@ Page({
       data: self.data.data
     })
   },
-  approve: function () {//审批
+
+  //审批
+  approve: function () {
     // for(var i = 0 ; i < self.data.selectMap.le)
     var submitArr = [];
     self.data.data.forEach(function (item) {
@@ -316,6 +278,7 @@ Page({
     });
 
   },
+
   checkboxChange: function (e) {
     var index = e.target.dataset.tag;
     var tempData;

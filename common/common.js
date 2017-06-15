@@ -1,9 +1,9 @@
 var app = getApp();
 
 function saveAndSubmit(data, success, fail) { //提交 保存
-  customLoading();
   var valiateBool = valiateForm(data);
   if(!valiateBool) return;
+  customLoading();
   var param = {
     'resid': 541502768110,
     'data': data
@@ -15,7 +15,7 @@ function saveAndSubmit(data, success, fail) { //提交 保存
 
     if (data.data.error == 0) {
       if (data.data.data && data.data.data[0]){
-        dataArr = common.promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
+       var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
         if (success) success(dataArr[0]);
       }else{
         if (fail) fail();
@@ -84,10 +84,14 @@ function valiateForm(data){//验证提交数据
 
   var selectRuleM = getRule(data.C3_533398158705);
 
-    var cameraNeccesseryArr = [selectRuleM.C3_545770918237,
-selectRuleM.C3_545770921226,
-selectRuleM.C3_545770922361,
-selectRuleM.C3_545770923478];
+  var cameraNeccesseryArr = [selectRuleM.C3_545770982165,
+    selectRuleM.C3_545770982361,
+    selectRuleM.C3_545770982566,
+    selectRuleM.C3_545770990395];
+    
+    
+    
+    
     var addressArr = [data.C3_541450276993, data.C3_545771156108, data.C3_545771157350, data.C3_545771158420];
     for (var i = 0; i < addressArr.length; i++) {
       if (i >= cameraNeccesseryArr.length) { alert(cameraNeccesseryArr); return false; }
@@ -130,13 +134,13 @@ function cancel(data,success) {
     'data': data
   }
 
-
+  customLoading();
   app.HttpService.saveData(param, function (data) {
     wx.stopPullDownRefresh();
     wx.hideLoading();
 
     if (data.data.error == 0) {
-      // success();
+      customModal('撤销成功')
       if (success) success();
       successBack();
     } else {

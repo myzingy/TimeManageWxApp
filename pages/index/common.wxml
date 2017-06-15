@@ -12,7 +12,7 @@
     <label class="font-999999">{{item.C3_541449974021}}日{{item.C3_541450008801}}</label>
   </view>
   <view class="main-cell-title width-70">
-    <label>{{item.C3_541449935726}}小时</label>
+    <label>{{item.C3_541449935726 ? item.C3_541449935726 + '小时' : '' }}</label>
     <label class="font-999999">{{item.C3_541450072499}}:{{item.C3_541450107087}}</label>
     <label class="font-999999">{{item.C3_541450084259}}:{{item.C3_541450125786}}</label>
   </view>
@@ -93,7 +93,7 @@
 </template>
 <template name="time-start">
   <view class="addApply-cell">
-    <label>{{isCard ? '开始补卡时间' : '开始时间'}} </label>
+    <label>开始时间</label>
   </view>
   <view class="addApply-cell">
     <picker class="left-space" mode="date" value="{{startDateModel.startDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="startDate">
@@ -115,7 +115,7 @@
 </template>
 <template name="time-end">
   <view class="addApply-cell">
-    <label>{{isCard ? '结束补卡时间' : '结束时间'}}</label>
+    <label>结束时间</label>
   </view>
   <view class="addApply-cell">
     <picker class="left-space" mode="date" value="{{endDateModel.endDate}}" start="2015-09-01" end="2017-09-01" bindchange="pickSelect" data-kind="endDate">
@@ -142,7 +142,7 @@
   </view>
 </template>
 <template name="time-length">
-  <view wx:if="{{!isCard}}" class="addApply-cell">
+  <view  class="addApply-cell">
     <label>时长</label>
     <text class="text-border">{{hour}}</text>
     <button bindtap="hourCalculate">获取时长</button>

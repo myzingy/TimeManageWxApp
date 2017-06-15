@@ -108,9 +108,7 @@ Page({
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
-    // var e;
-    // e.target.dataset.kind = 'selectDataIndex';
-    // self.pickSelect();
+    
     var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
 
     var ruleM = common.getRule(ruleStr);
@@ -124,37 +122,7 @@ Page({
       })
     }
   },
-  getData: function () {
-
-  },
-  onShow: function () {
-    // 生命周期函数--监听页面显示
-
-  },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
-
-  },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
-
-  },
-  onPullDownRefresh: function () {
-    // 页面相关事件处理函数--监听用户下拉动作
-
-  },
-  onReachBottom: function () {
-    // 页面上拉触底事件的处理函数
-
-  },
-  onShareAppMessage: function () {
-    // 用户点击右上角分享
-    return {
-      title: 'title', // 分享标题
-      desc: 'desc', // 分享描述
-      path: 'path' // 分享路径
-    }
-  },
+  
   chooseImage: function (e) {
     var tag = e.target.dataset.tag;
     wx.chooseImage({
@@ -220,19 +188,16 @@ Page({
       }
       self.resetTimeModel();
 
-
-
-
     } else if (kindStr == 'startDate') {
       var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
       var tmpM = self.data.startDateModel;
       tmpM.startDate = e.detail.value;
       self.setData({
-        startDateModel: tmpM
+        startDateModel: tmpM,
+        hour: ''
       })
 
     } else if (kindStr == 'startHour') {
-
 
       var tmpM = self.data.startDateModel;
       tmpM.startHour = e.detail.value;
@@ -254,14 +219,16 @@ Page({
       })
       self.data.endDateModel.startHours = endHours;
       self.setData({
-        endDateModel: self.data.endDateModel
+        endDateModel: self.data.endDateModel,
+        hour: ''
       })
 
     } else if (kindStr == 'startMin') {
       var tmpM = self.data.startDateModel;
       tmpM.startMin = e.detail.value;
       self.setData({
-        startDateModel: tmpM
+        startDateModel: tmpM,
+        hour: ''
       })
     } else if (kindStr == 'endDate') {
       var tmpM = self.data.endDateModel;
@@ -352,11 +319,15 @@ Page({
         self.data.draftData[key] = data[key];
       }
       common.reSaveAndSubmit(self.data.draftData, function () {
+        if (title == 'save') common.customModal("保存成功");
+        else common.customModal("提交成功");
         common.successBack();
         app.notification.emit("dataFix", self.data.draftData);
       })
     } else {
       common.saveAndSubmit(data, function (resData) {
+        if (title == 'save') common.customModal("保存成功");
+        else common.customModal("提交成功");
         common.successBack();
         app.notification.emit("dataAdd", resData);
       });
@@ -367,13 +338,6 @@ Page({
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
-
-    // if (app.debug) {
-    //   startTime = '2017-04-25 19:00';
-    //   endTime = '2017-04-25 20:00';
-    //   self.data.hour = '1';
-    // }
-
 
     var data = {
       "C3_533143179815": startTime,
@@ -401,27 +365,29 @@ Page({
       reason: e.detail.value
     })
   },
-  resetTimeModel:function(){//切换类型时重置时间规则
+  resetTimeModel: function () {//切换类型时重置时间规则
     var startDateModel = {
       startDate: '请选择',
-        startHour: '0',
-          startHours: startHours,
-            startMin: '0',
-              startMins: startMins
+      startHour: '0',
+      startHours: startHours,
+      startMin: '0',
+      startMins: startMins
     }
 
-  var endDateModel = {
-    endDate: '请选择',
-    endHour: '0',
-    startHours: startHours,
-    endMin: '0',
-    startMins: startMins
-  }
+    var endDateModel = {
+      endDate: '请选择',
+      endHour: '0',
+      startHours: startHours,
+      endMin: '0',
+      startMins: startMins
+    }
 
-  self.setData({
-    startDateModel: startDateModel,
-    endDateModel: endDateModel
-  })
+    self.setData({
+      startDateModel: startDateModel,
+      endDateModel: endDateModel,
+      hour:'',
+      files:['','','','']
+    })
 
   }
 

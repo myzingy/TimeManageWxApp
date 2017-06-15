@@ -15,7 +15,7 @@
 <template is="apply-person" data="{{tempApprove}}">
 </template>
 
-<template is="time-length" data="{{hour}}">
+<template wx:if="{{!isCard}}" is="time-length" data="{{hour}}">
 
 
 </template>

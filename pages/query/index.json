@@ -2,7 +2,7 @@
     
       "navigationBarBackgroundColor": "#ffffff",
       "navigationBarTextStyle": "black",
-      "navigationBarTitleText": "我的审批",
+      "navigationBarTitleText": "我的查询",
       "backgroundColor": "#eeeeee",
       "backgroundTextStyle": "light",
       "enablePullDownRefresh": false

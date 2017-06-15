@@ -108,16 +108,7 @@ Page({
   gotoDayReportDetail:function(e){//跳转到日报详情
     // var value = e.
     wx.navigateTo({
-      url: '/pages/query/dayReportDetail/dayReportDetail?data='+JSON.stringify(e.currentTarget.dataset.item),
-      success: function(res){
-        // success
-      },
-      fail: function(res) {
-        // fail
-      },
-      complete: function(res) {
-        // complete
-      }
+      url: '/pages/query/dayReportDetail/dayReportDetail?data='+JSON.stringify(e.currentTarget.dataset.item)
     })
   },
   switchChange:function(e){//异常switch

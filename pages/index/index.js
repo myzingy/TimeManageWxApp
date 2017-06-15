@@ -6,22 +6,21 @@ var app = getApp();
 var self;
 Page({
   data: {
-    navTitle:{
+    navTitle: {
       navTitleArr: ['申请中', '已审核', '已退回', '历史记录'],
-      activeIndex:0,
-      navWidth:'25%'
+      activeIndex: 0,
+      navWidth: '25%'
     },
     userInfo: {},
     selectDataArr: [],
     selectDataIndex: 0,//类型当前索引
     pageIndex: 0,//当前第几页
     pageName: 'applying',//当前页的名称
-    pageNameArr: ['applying', 'pended','refuse','history'],
+    pageNameArr: ['applying', 'pended', 'refuse', 'history'],
     data: [],//当前页的数据
     dataArr: [],//所有页的数据
     noMore: false,
-
-    fixIndex:null
+    fixIndex: null,
   },
 
 
@@ -37,7 +36,7 @@ Page({
     self.isLaunch();//登录
 
     //修改数据
-    app.notification.on("dataFix",self,function(data){
+    app.notification.on("dataFix", self, function (data) {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
       selectDataArr[self.data.fixIndex] = data;
       self.setData({
@@ -55,17 +54,16 @@ Page({
     })
 
     //撤销数据
-    app.notification.on("dataCancel",self,function(){
+    app.notification.on("dataCancel", self, function () {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
-      selectDataArr.splice(self.data.fixIndex,1);
+      selectDataArr.splice(self.data.fixIndex, 1);
       self.setData({
         data: selectDataArr
       })
-      
+
     });
 
     //已退回提交
-    // fixIndex
     app.notification.on("dataReoperation", self, function (data) {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
       selectDataArr.splice(self.data.fixIndex, 1);
@@ -79,20 +77,14 @@ Page({
     });
 
   },
-  onShow: function () {
-  },
   onReady: function () {
-    if (!app.globalData.userInfo) {return}
+    if (!app.globalData.userInfo) { return }
     self.setData({
-      selectDataArr:common.getAllRuleCategory()//获取请假类别
+      selectDataArr: common.getAllRuleCategory()//获取请假类别
     })
 
     self.getData(0);
   },
-  onHide: function () {
-
-  },
-
   //下拉刷新
   onPullDownRefresh: function () {
     self.getData(0);
@@ -120,36 +112,43 @@ Page({
     }
   },
 
-/*----------获取数据--------------- */
+  /*----------获取数据--------------- */
   getData: function (index) {
 
     wx.showLoading({
       title: '加载中'
     })
 
-     var param = {
-        'subresid': '',
-        'cmswhere': '',
-        'key': ''
-      }
+    var keyStr;
+    if (self.data.selectDataIndex < self.data.selectDataArr.length) {
+      keyStr = self.data.selectDataArr[self.data.selectDataIndex];
+      keyStr = keyStr == '全部' ? '' : keyStr;
+    }
 
-      param.pageSize = 1;
-      if(!index){//刷新
-        param.pageIndex = 0;
-        
-      }else{//加载
-        param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
-      }
+    var param = {
+      'subresid': '',
+      'cmswhere': '',
+      'key': keyStr
+    }
+
+
+    param.pageSize = 10;
+    if (!index) {//刷新
+      param.pageIndex = 0;
+
+    } else {//加载
+      param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
+    }
 
     if (self.data.pageIndex == 0) {//申请中
-       param.resid = 541502768110
+      param.resid = 541502768110
     } else if (self.data.pageIndex == 1) {//已审核
-       param.resid = 541518522808
-    }else if (self.data.pageIndex == 2) {//已退回
-       param.resid =  543000345781
+      param.resid = 541518522808
+    } else if (self.data.pageIndex == 2) {//已退回
+      param.resid = 543000345781
       // if(app.debug) param.resid = 541502768110
-    }else if (self.data.pageIndex == 3) {//历史记录
-       param.resid = 541518678060
+    } else if (self.data.pageIndex == 3) {//历史记录
+      param.resid = 541518678060
     }
     app.HttpService.getApplyData(param, function (data) {
 
@@ -161,7 +160,7 @@ Page({
 
         dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
 
-        if(index == 1){//加载
+        if (index == 1) {//加载
           var oldDataArr = self.data.dataArr[self.data.pageIndex];
           oldDataArr = oldDataArr.concat(dataArr);
           dataArr = oldDataArr;
@@ -170,7 +169,7 @@ Page({
         self.setData({ data: dataArr });
         self.data.dataArr[self.data.pageIndex] = dataArr;
 
-        
+
       } else {
         self.setData({ data: [] });
         self.setData({ noMore: true });
@@ -194,7 +193,7 @@ Page({
   },
   pageClick: function (event) {//导航点击事件
     var index = event.target.dataset.id;
-    self.setData({ pageIndex: index,data:[] });
+    self.setData({ pageIndex: index, data: [] });
 
     //设置page的模板
     self.setData({ pageName: self.data.pageNameArr[index] });
@@ -207,8 +206,8 @@ Page({
     //内存缓存数据提取
     if (self.data.dataArr[self.data.pageIndex].length) {
       self.setData({ data: self.data.dataArr[self.data.pageIndex] });
-      
-    }else self.getData(0);
+
+    } else self.getData(0);
 
   },
   gotoAddApply: function () {//添加请假等
@@ -219,9 +218,9 @@ Page({
     self.data.fixIndex = tag;
     let item = self.data.data[tag];
     let urlStr = '';
-    if(!self.data.pageIndex){
+    if (!self.data.pageIndex) {
       urlStr = '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + "&willCancel=true"
-    }else{
+    } else {
       urlStr = '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item)
     }
     wx.navigateTo({
@@ -231,12 +230,13 @@ Page({
   attachShow: function (e) {//附件
     var item = e.target.dataset.item;
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
-    urls = urls.filter(function(x){return x != null});
+    urls = urls.filter(function (x) { return x != null });
+    console.log("=========>urls" + urls);
     wx.previewImage({
       urls: urls // 需要预览的图片http链接列表
     })
   },
-  draftModify:function(e){//修改
+  draftModify: function (e) {//修改
     var tag = e.target.dataset.tag;
     var item = self.data.data[tag];
     self.data.fixIndex = tag;//记录点击修改的记录的索引
@@ -245,17 +245,18 @@ Page({
       url: '/pages/index/addApply/addApply?data=' + JSON.stringify(item)
     })
   },
-  submit:function(e){//提交
-    let tag = e.currentTarget.tag;
-    applying.submit(e,self,function(resData){
+  submit: function (e) {//提交
+    var tag = e.currentTarget.dataset.tag;
+    applying.submit(e, self, function (resData) {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
       selectDataArr[tag] = resData;
+      self.data.data[tag] = resData;
       self.setData({
-        data: selectDataArr
+        data: self.data.data
       })
     });
   },
-  draftModifySubmit:function(e){//修改并提交
+  draftModifySubmit: function (e) {//修改并提交
     var tag = e.currentTarget.dataset.tag;
     var item = self.data.data[tag];
     self.data.fixIndex = tag;
@@ -263,23 +264,23 @@ Page({
       url: '/pages/index/fixSubmit/fixSubmit?data=' + JSON.stringify(item)
     })
   },
-  categoryChange:function(e){//类型筛选
-      self.setData({
-        selectDataIndex:e.detail.value
-      })
-      var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
-      var conditionData = self.data.dataArr[self.data.pageIndex];
-      if(conditionStr != '全部') conditionData = Array.from(conditionData).filter( x => x.C3_533398158705 == conditionStr)
-      
-      self.setData({
-          data:conditionData
-      })
+  categoryChange: function (e) {//类型筛选
+    self.setData({
+      selectDataIndex: e.detail.value
+    })
+    var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
+    var conditionData = self.data.dataArr[self.data.pageIndex];
+    if (conditionStr != '全部') conditionData = Array.from(conditionData).filter(x => x.C3_533398158705 == conditionStr)
+
+    self.setData({
+      data: conditionData
+    })
 
   },
   /*---------通知事件------------ */
-  onUnload:function(){
+  onUnload: function () {
     // 移除通知
-    app.notification.remove("dataFix", self); 
-    app.notification.remove("dataAdd", self); 
+    app.notification.remove("dataFix", self);
+    app.notification.remove("dataAdd", self);
   }
 });
