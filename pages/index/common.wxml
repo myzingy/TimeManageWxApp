@@ -19,43 +19,45 @@
 </template>
 
 <!--附件-->
-<template name="cell-attach">
-  <view class="main-cell-btn">
+<template name="cell-attach" >
+  <view class="main-cell-btn" bindtap="attachShow"
+data-item="{{item}}">
     <!--<button class="image-attach" bindtap="attachShow" data-item="{{item}}">附件</button>-->
-    <image  src="/images/fujian.png" bindtap="attachShow" mode="aspectFit" data-item="{{item}}">                <text class="font-999999">附件</text>
+    <image  src="/images/fujian.png"  mode="aspectFit" >                <text class="font-999999">附件</text>
     </image>
   </view>
 </template>
 
 <!--详情-->
 <template name="cell-detail">
-  <view class="main-cell-btn">
-    <image  src="/images/xiangqing.png" bindtap="gotoApplyDetail" mode="aspectFit" data-tag="{{index}}">        <text class="font-999999">详情</text>
+  <view class="main-cell-btn" bindtap="gotoApplyDetail" data-tag="{{index}}">
+    <image  src="/images/xiangqing.png"  mode="aspectFit" >        <text class="font-999999">详情</text>
     </image>
   </view>
 </template>
 
 <!--提交-->
 <template name="cell-submit">
-  <view class="main-cell-btn">
-    <image  src="/images/tijiao.png" bindtap="submit" mode="aspectFit" data-tag="{{index}}">        <text class="font-999999">提交</text>
+  <view class="main-cell-btn" bindtap="submit" data-tag="{{index}}">
+    <image  src="/images/tijiao.png"  mode="aspectFit" >        <text class="font-999999">提交</text>
     </image>
   </view>
 </template>
 
 <!--修改-->
 <template name="cell-modify">
-  <view class="main-cell-btn">
-  <image  src="/images/xiugai.png" bindtap="draftModify" mode="aspectFit" data-tag="{{index}}">        <text class="font-999999">修改</text>
+  <view class="main-cell-btn" bindtap="draftModify" data-tag="{{index}}">
+  <image  src="/images/xiugai.png"  mode="aspectFit" >        <text class="font-999999">修改</text>
     </image>
   </view>
 </template>
 
 <!--修改并提交-->
 <template name="cell-modify-submit">
-  <view class="main-cell-btn">
+  <view class="main-cell-btn" bindtap="draftModifySubmit"
+data-tag="{{index}}">
     <!--<button class="image-modify" data-item="{{item}}" bindtap="draftModifySubmit">修改并提交</button>-->
-     <image  src="/images/xiugai.png" bindtap="draftModifySubmit" mode="aspectFit" data-tag="{{index}}">              <text class="font-999999">修改</text>
+     <image  src="/images/xiugai.png"  mode="aspectFit" >              <text class="font-999999">修改</text>
     </image>
   </view>
 </template>
@@ -63,7 +65,8 @@
 <!--已作废-->
 <template name="cell-invaild">
   <view class="main-cell-btn">
-    <button class="image-modify">已作废</button>
+    <image  src="/images/yizuofei.png"  mode="aspectFit" ><text class="font-999999">作废</text>
+    </image>
   </view>
 </template>
 

@@ -193,7 +193,7 @@ Page({
   },
   pageClick: function (event) {//导航点击事件
     var index = event.target.dataset.id;
-    self.setData({ pageIndex: index, data: [] });
+    self.setData({ pageIndex: index, data: [], selectDataIndex:0});
 
     //设置page的模板
     self.setData({ pageName: self.data.pageNameArr[index] });
@@ -214,7 +214,7 @@ Page({
     applying.gotoAddApply();
   },
   gotoApplyDetail: function (e) {//详情
-    let tag = e.target.dataset.tag;
+    let tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     self.data.fixIndex = tag;
     let item = self.data.data[tag];
     let urlStr = '';
@@ -228,7 +228,7 @@ Page({
     })
   },
   attachShow: function (e) {//附件
-    var item = e.target.dataset.item;
+    var item = e.currentTarget.dataset.item != undefined ? e.currentTarget.dataset.item : e.target.dataset.item;
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     urls = urls.filter(function (x) { return x != null });
     console.log("=========>urls" + urls);
@@ -237,7 +237,7 @@ Page({
     })
   },
   draftModify: function (e) {//修改
-    var tag = e.target.dataset.tag;
+    var tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     var item = self.data.data[tag];
     self.data.fixIndex = tag;//记录点击修改的记录的索引
 
@@ -246,7 +246,7 @@ Page({
     })
   },
   submit: function (e) {//提交
-    var tag = e.currentTarget.dataset.tag;
+    var tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     applying.submit(e, self, function (resData) {
       let selectDataArr = self.data.dataArr[self.data.pageIndex];
       selectDataArr[tag] = resData;
@@ -257,7 +257,7 @@ Page({
     });
   },
   draftModifySubmit: function (e) {//修改并提交
-    var tag = e.currentTarget.dataset.tag;
+    var tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     var item = self.data.data[tag];
     self.data.fixIndex = tag;
     wx.navigateTo({

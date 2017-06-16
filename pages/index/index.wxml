@@ -23,6 +23,6 @@
 
 <template is="{{noMore ? 'noMore' : 'loadMore'}}"></template>
 
-<image src="/images/xinjian-2.png" class="add-apply" bindtap="gotoAddApply"></image>
+<image wx:if="{{pageIndex == 0}}" src="/images/xinjian-2.png" class="add-apply" bindtap="gotoAddApply"></image>
 
 

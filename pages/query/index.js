@@ -87,7 +87,7 @@ Page({
 
   },
   monthWorkChange:function(e){//日期选择
-    var tag = e.currentTarget.dataset.tag;
+    var tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     console.log("--------------->tag"+tag);
     if(tag == "monthWork"){
         self.data.monthWork.yearMothSelect = e.detail.value;

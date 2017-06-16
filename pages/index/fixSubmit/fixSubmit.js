@@ -139,11 +139,12 @@ Page({
     }
     var item = self.data.data;
     common.reSaveAndSubmit(item, function () {
-      common.successBack();
       if (title == 'submit') {
         app.notification.emit("dataReoperation", item);
+        common.successBackModal("提交成功");
       }else{
         app.notification.emit("dataFix", item);
+        common.successBackModal("保存成功");
       }
     }, function () {
       if (title == 'submit') {

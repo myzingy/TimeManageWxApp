@@ -159,7 +159,7 @@ Page({
     self.data.data.C3_541449606438 = 'Y';
     let item = self.data.data;
     common.reSaveAndSubmit(item,function(){
-      common.successBack();
+      common.successBackModal("退回成功");
       app.notification.emit("dataReoperation", item);
     },function(){
       self.data.data.C3_541449606438 = '';

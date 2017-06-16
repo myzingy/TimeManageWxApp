@@ -45,6 +45,6 @@
 <template is="{{noMore ? 'noMore' : 'loadMore'}}"></template>
 
 <!--<button class="add-apply" bindtap="gotoAddApply"></button>-->
-<image  src="/images/shengpianniu-2.png" class="add-apply pended-btn" bindtap="approve">
+<image wx:if="{{pageIndex == 0}}"  src="/images/shengpianniu-2.png" class="add-apply pended-btn" bindtap="approve">
     <text>审批</text>
 </image>

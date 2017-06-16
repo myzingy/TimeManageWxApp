@@ -64,7 +64,8 @@ Page({
   //导航点击事件
   pageClick: function (event) {
     self.setData({
-      data: []
+      data: [],
+      selectDataIndex:0
     })
     var index = event.target.dataset.id;
 
@@ -76,7 +77,10 @@ Page({
       navTitle: this.data.navTitle
     })
 
-    this.getData(0);
+    if (self.data.dataArr[self.data.pageIndex].length) {
+      self.setData({ data: self.data.dataArr[self.data.pageIndex] });
+
+    } else self.getData(0);
   },
 
   //获取数据
@@ -205,14 +209,14 @@ Page({
     self.getData(0)
   },
   gotoApplyDetail: function (e) {//详情
-    let tag = e.target.dataset.tag;
+    let tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     let item = self.data.data[tag];
     wx.navigateTo({
       url: '/pages/index/applyDetail/applyDetail?data=' + JSON.stringify(item) + "&willRefuse=false"
     })
   },
   attachShow: function (e) {//附件
-    var item = e.target.dataset.item;
+    var item = e.currentTarget.dataset.item != undefined ? e.currentTarget.dataset.item : e.target.dataset.item;//e.target.dataset.item;
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     urls = urls.filter(x => x != null);
     wx.previewImage({
@@ -224,7 +228,8 @@ Page({
   //################待审批
   //退回操作界面
   gotoUnverifyDetailPage: function (e) {
-    let tag = e.target.dataset.tag;
+    if(self.data.pageIndex) return;
+    let tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     let item = self.data.data[tag];
     self.data.fixIndex = tag;
     wx.navigateTo({
@@ -234,12 +239,13 @@ Page({
 
   //全选
   selectAllChange: function (e) {
-    for (var i = 0; i < self.data.data.length; i++) {
-      if (e.detail.value.length) self.data.data[i].selected = true;
-      else self.data.data[i].selected = false;
+    var tmpDataArr = self.data.dataArr[self.data.pageIndex];
+    for (var i = 0; i < tmpDataArr.length; i++) {
+      if (e.detail.value.length) tmpDataArr[i].selected = true;
+      else tmpDataArr[i].selected = false;
     }
     self.setData({
-      data: self.data.data
+      data: tmpDataArr
     })
   },
 
@@ -259,12 +265,16 @@ Page({
         submitArr.push(i);
       }
     })
+    if (!submitArr.length){
+       common.customModal("请勾选至少一个事件");
+       return;
+    }
 
     var param = {
       'resid': 541518842754,
       'data': submitArr
     }
-
+    common.customLoading();
     app.HttpService.saveDataArr(param, function (data) {
       let pendDataArr = self.data.dataArr[self.data.pageIndex];
       pendDataArr = pendDataArr.filter(x => x.selected != true);
@@ -280,11 +290,16 @@ Page({
   },
 
   checkboxChange: function (e) {
-    var index = e.target.dataset.tag;
+    var index = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
+    var tmpDataArr = self.data.dataArr[self.data.pageIndex];
     var tempData;
-    if (index < self.data.data.length) tempData = self.data.data[index];
+    if (index < tmpDataArr.length) tempData = tmpDataArr[index];
     if (e.detail.value.length) tempData.selected = true;
     else tempData.selected = false;
+
+    self.setData({
+      data: tmpDataArr
+    })
 
   }
 })

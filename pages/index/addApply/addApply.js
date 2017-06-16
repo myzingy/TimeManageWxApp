@@ -10,17 +10,28 @@ for (var i = 0; i < 24; i++) {
   if (i < 10) startHours.push('0' + i);
   else startHours.push(i + '');
 }
+var startDateModel = {
+  startDate: '请选择',
+  startHour: '0',
+  startHours: startHours,
+  startMin: '0',
+  startMins: startMins
+}
 
-// for (var i = 0; i < 60; i++) {
-//   if (i < 10) startMins.push('0' + i);
-//   else startMins.push(i);
-// }
+var endDateModel = {
+  endDate: '请选择',
+  endHour: '0',
+  startHours: startHours,
+  endMin: '0',
+  startMins: startMins
+}
+
 
 Page({
   data: {
     isCard: false,
     isDraft: false,
-    draftData: {},
+    draftData: {},//草稿数据
     categoryModel: {
       selectDataIndex: 0,
       selectDataArr: []
@@ -28,55 +39,51 @@ Page({
 
     startTime: '请选择',
     endTime: '请选择',
-    files: ['', '', '', ''],
-    startDateModel: {
-      startDate: '请选择',
-      startHour: '0',
-      startHours: startHours,
-      startMin: '0',
-      startMins: startMins
-    },
+    files: ['', '', '', ''],//附件路径
+    startDateModel: startDateModel,
+    endDateModel: endDateModel,
 
-    endDateModel: {
-      endDate: '请选择',
-      endHour: '0',
-      startHours: startHours,
-      endMin: '0',
-      startMins: startMins
-    },
-
-    tempApprove: '',
-    noticeStr: '',
-    hour: '',
-    reason: '',
-    imageShowArr: []
+    tempApprove: '',//审批人
+    noticeStr: '',//注意事项
+    hour: '',//时长
+    reason: '',//事由
+    imageShowArr: []//4个照片控件的显示
 
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
 
+    //配置所有类型
     var tmpM = self.data.categoryModel;
     tmpM.selectDataArr = app.globalData.vacationCategory;
     self.setData({
       categoryModel: tmpM
     })
 
+    //配置类型对应的控件
+    self.getSetWithCategory();
+
+    //设置审批人
     self.setData({
       tempApprove: app.globalData.teamApprove
     })
 
 
-    if (options.data) {
+    if (options.data || options.data != 'undefined') {//草稿数据
+      if(app.debug) console.log("draftdata");
       self.setData({
         isDraft: true
       })
+      if (app.debug) console.log("data1" + JSON.stringify(options));
       var item = JSON.parse(options.data);
+      if (app.debug) console.log("data2" +item);
       self.setData({ draftData: item });
       var tmpCategoryModel = self.data.categoryModel;
-      tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.findIndex((value, index, arr) => value == item.C3_533398158705);
+      tmpCategoryModel.selectDataIndex = tmpCategoryModel.selectDataArr.indexOf(item.C3_533398158705); //tmpCategoryModel.selectDataArr.findIndex((value, index, arr) => value == );
       // C3_533143179815
       // C3_533143217561
+      if (app.debug) console.log("starttime");
       //开始时间
       var tmpStartDateModel = self.data.startDateModel;
       tmpStartDateModel.startDate = item.C3_533143179815.split(' ')[0];
@@ -86,6 +93,7 @@ Page({
       tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value, index, arr) => value == tmpSartHour)
       tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value, index, arr) => value == tmpSartMin)
 
+      if (app.debug) console.log("endtime");
       var tmpEndDateModel = self.data.endDateModel;
       tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
 
@@ -94,6 +102,12 @@ Page({
       tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value, index, arr) => value == tmpEndHour)
       tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value, index, arr) => value == tmpEndMin)
 
+      var ruleM = common.getRule(item.C3_533398158705);
+      var imageShowArr = common.kvoAttach(ruleM);
+      self.setData({
+        imageShowArr: imageShowArr
+      })
+      if (app.debug) console.log("setdata");
       self.setData({
         categoryModel: tmpCategoryModel,
         reason: item.C3_533143291117,
@@ -108,21 +122,10 @@ Page({
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
-    
-    var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
 
-    var ruleM = common.getRule(ruleStr);
-    if (ruleM) {
-      self.setData({
-        noticeStr: ruleM.C3_545771115865 ? ruleM.C3_545771115865 : ''
-      })
-      var imageShowArr = common.kvoAttach(ruleM);
-      self.setData({
-        imageShowArr: imageShowArr
-      })
-    }
+
   },
-  
+
   chooseImage: function (e) {
     var tag = e.target.dataset.tag;
     wx.chooseImage({
@@ -138,10 +141,7 @@ Page({
           self.setData({
             files: self.data.files
           });
-          wx.showModal({
-            title: 'xx',
-            content: path,
-          })
+          common.customModal("上传成功")
         })
       },
       fail: function (res) {
@@ -155,7 +155,7 @@ Page({
   previewImage: function (e) {
     wx.previewImage({
       current: e.currentTarget.id, // 当前显示图片的http链接
-      urls: this.data.files // 需要预览的图片http链接列表
+    urls: self.data.files.filter( function(x) {return x != null}) // 需要预览的图片http链接列表
     })
   },
   pickSelect: function (e) {
@@ -166,27 +166,8 @@ Page({
       self.setData({
         categoryModel: tmpM
       })
-
-      var itemStr = self.data.categoryModel.selectDataArr[e.detail.value];
-      var ruleM = common.getRule(itemStr);
-      self.setData({
-        noticeStr: ruleM.C3_545771115865
-      })
-      var imageShowArr = common.kvoAttach(ruleM);
-      self.setData({
-        imageShowArr: imageShowArr
-      })
-
-      if (itemStr == '补打卡') {
-        self.setData({
-          isCard: true
-        })
-      } else {
-        self.setData({
-          isCard: false
-        })
-      }
-      self.resetTimeModel();
+      self.getSetWithCategory();
+      self.resetTimeModel();//重置所有控件的值
 
     } else if (kindStr == 'startDate') {
       var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
@@ -209,11 +190,9 @@ Page({
       var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
       var hor, endHours;
       var valueInt = parseInt(e.detail.value);
-      if (itemStr == '丧假' || itemStr == '路程假') {
-        hor = 8;
-      } else {
-        hor = 1;
-      }
+      if (itemStr == '丧假' || itemStr == '路程假') hor = 8;
+      else hor = 1;
+
       endHours = startHours.filter(function (item) {
         return ((parseInt(item) - valueInt) % hor == 0);
       })
@@ -256,10 +235,9 @@ Page({
     }
 
   },
-  hourCalculate: function () {//计算时长
-    wx.showLoading({
-      title: '加载中'
-    })
+  //计算时长
+  hourCalculate: function () {
+
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
     var endTime = self.data.endDateModel.endDate + " " + self.data.endDateModel.startHours[self.data.endDateModel.endHour] + ":" + self.data.endDateModel.startMins[self.data.endDateModel.endMin];
@@ -287,7 +265,9 @@ Page({
       'resid': 545822693342,
       'data': data2
     }
-
+    wx.showLoading({
+      title: '加载中'
+    })
     app.HttpService.hourCalculate(param, function (data) {
       if (data && data.data && data.data.data) {
         param2.data.C3_546180817741 = data.data.data[0].C3_546130076462;
@@ -310,7 +290,8 @@ Page({
     });
 
   },
-  saveOrSubmitApply: function (e) {//修改 提交
+  //修改 提交
+  saveOrSubmitApply: function (e) {
     var title = e.currentTarget.dataset.title;
     var data = self.fixData(title);
 
@@ -318,22 +299,21 @@ Page({
       for (var key in data) {
         self.data.draftData[key] = data[key];
       }
-      common.reSaveAndSubmit(self.data.draftData, function () {
-        if (title == 'save') common.customModal("保存成功");
-        else common.customModal("提交成功");
-        common.successBack();
-        app.notification.emit("dataFix", self.data.draftData);
+      common.reSaveAndSubmit(self.data.draftData, function (resData) {
+        if (title == 'save') common.successBackModal("保存成功");
+        else common.successBackModal("提交成功");
+        app.notification.emit("dataFix", resData);
       })
     } else {
       common.saveAndSubmit(data, function (resData) {
-        if (title == 'save') common.customModal("保存成功");
-        else common.customModal("提交成功");
-        common.successBack();
+        if (title == 'save') common.successBackModal("保存成功");
+        else common.successBackModal("提交成功");
         app.notification.emit("dataAdd", resData);
       });
     }
 
   },
+  // 提交数据合并
   fixData: function (str) {
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
 
@@ -365,28 +345,32 @@ Page({
       reason: e.detail.value
     })
   },
+  //根据类型获取对应的规则
+  getSetWithCategory: function (categoryStr) {
+    
+
+    var ruleStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+
+    var ruleM = common.getRule(ruleStr);
+    if (ruleM) {
+      self.setData({
+        noticeStr: ruleM.C3_545771115865 ? ruleM.C3_545771115865 : ''
+      })
+      var imageShowArr = common.kvoAttach(ruleM);
+      self.setData({
+        imageShowArr: imageShowArr
+      })
+
+      if (ruleStr == '补打卡') self.setData({ isCard: true })
+      else self.setData({ isCard: false })
+    }
+  },
   resetTimeModel: function () {//切换类型时重置时间规则
-    var startDateModel = {
-      startDate: '请选择',
-      startHour: '0',
-      startHours: startHours,
-      startMin: '0',
-      startMins: startMins
-    }
-
-    var endDateModel = {
-      endDate: '请选择',
-      endHour: '0',
-      startHours: startHours,
-      endMin: '0',
-      startMins: startMins
-    }
-
     self.setData({
       startDateModel: startDateModel,
       endDateModel: endDateModel,
-      hour:'',
-      files:['','','','']
+      hour: '',
+      files: ['', '', '', '']
     })
 
   }

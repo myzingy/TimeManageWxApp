@@ -22,14 +22,14 @@
   <view class="table-cell top-border">
     <view class="table-cell-col">迟到</view>
     <view class="table-cell-col">早退</view>
+    <view class="table-cell-col">未刷卡</view>
     <view class="table-cell-col">漏刷卡</view>
-    <view class="table-cell-col"></view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col">{{data.F_1}}</view>
     <view class="table-cell-col">{{data.F_2}}</view>
     <view class="table-cell-col">{{data.F_3}}</view>
-    <view class="table-cell-col"></view>
+    <view class="table-cell-col">{{data.F_40}}</view>
   </view>
   <view class="label-title">请假</view>
   <view class="table-cell top-border">
@@ -72,13 +72,13 @@
     <view class="table-cell-col">计划生育假</view>
     <view class="table-cell-col">调休</view>
     <view class="table-cell-col">欠班</view>
-    <view class="table-cell-col">旷工</view>
+    <view class="table-cell-col"></view>
   </view>
   <view class="table-cell">
     <view class="table-cell-col" >{{data.F_52}}</view>
     <view class="table-cell-col">{{data.F_28}}</view>
     <view class="table-cell-col">{{data.F_70}}</view>
-    <view class="table-cell-col">{{data.F_3}}</view>
+    <view class="table-cell-col"></view>
   </view>
   <view class="label-title">累计出勤<text class="color-red">{{data.F_79 ? data.F_79 : '-'}}</text>h</view>
 </view>

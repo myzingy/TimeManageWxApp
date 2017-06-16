@@ -23,10 +23,7 @@ function saveAndSubmit(data, success, fail) { //提交 保存
       
 
     } else {
-      wx.showModal({
-        title: '失败',
-        content: data.data.message
-      })
+      failModal(data.data.message ? data.data.message : '');
       if(fail) fail();
     }
 
@@ -59,17 +56,14 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
       }
 
     } else {
-      wx.showModal({
-        title: '失败',
-        content: data.data.message
-      })
-      fail();
+      failModal(data.data.message ? data.data.message : '');
+      if (fail)fail();
     }
 
   }, function () {
     wx.stopPullDownRefresh();
     wx.hideLoading();
-    fail();
+    if (fail)fail();
   });
 }
 
@@ -259,13 +253,32 @@ Date.prototype.format = function (format)
 
 function customModal(title){
   wx.showModal({
-    title: title
+    title: title,
+    showCancel:false,
+  })
+}
+
+function successBackModal(title){
+  wx.showModal({
+    title: title,
+    showCancel:false,
+    complete:function(){
+      successBack();
+    }
   })
 }
 
 function customLoading(){
   wx.showLoading({
     title: '加载中',
+  })
+}
+
+function failModal(title){
+  wx.showModal({
+    title: '失败',
+    content: title,
+    showCancel:false
   })
 }
 
@@ -283,5 +296,6 @@ module.exports = {
   isArray:isArray,
   kvoAttach:kvoAttach,
   customModal:customModal,
-  customLoading:customLoading
+  customLoading:customLoading,
+  successBackModal: successBackModal
 }
