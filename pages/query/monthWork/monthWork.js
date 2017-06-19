@@ -98,7 +98,7 @@ function getCalendar(defaultYM,self) {
     }
 
     for (var i = 0; i < data.length; i++) {
-      if (data[i].C3_375377576828 == '白班') {
+      if (data[i].C3_375377576828 == '白班' || 　data[i].C3_375377576828 == '常日班') {
         textColorArr.push('red');
       } else {
         textColorArr.push('blue');

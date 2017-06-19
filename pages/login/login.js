@@ -41,6 +41,7 @@ Page({
       'apitoken': 'KingOfDinner123456789',
       'clienttype': 'mobile',
       'openid': 'oqWaVwGcgX9cQhwYQs8e1fg7e9U8'
+      // 'openid':'oqWaVwErQY0h7slLohqjgnEgDu2E'
     }
     app.HttpService.customWxLogin(param, function (data) {
       app.globalData.userInfo = data.data;

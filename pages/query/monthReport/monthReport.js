@@ -1,4 +1,5 @@
 var app = getApp();
+import common from '../../../common/common'
 
 function getMonthReportData(self){
   var param = {
@@ -10,8 +11,10 @@ function getMonthReportData(self){
   
   app.HttpService.getApplyData(param, function (data) {
     if (data && data.data && data.data.data) {
+      var dataArr = data.data.data;
+      dataArr = common.dealNull(dataArr)
       self.setData({
-        data: data.data.data[0]
+        data: dataArr[0]
       })
     }
     wx.stopPullDownRefresh();

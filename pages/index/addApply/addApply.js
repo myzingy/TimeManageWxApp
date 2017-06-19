@@ -61,8 +61,7 @@ Page({
       categoryModel: tmpM
     })
 
-    //配置类型对应的控件
-    self.getSetWithCategory();
+    
 
     //设置审批人
     self.setData({
@@ -70,7 +69,7 @@ Page({
     })
 
 
-    if (options.data || options.data != 'undefined') {//草稿数据
+    if (options.data && options.data != 'undefined') {//草稿数据
       if(app.debug) console.log("draftdata");
       self.setData({
         isDraft: true
@@ -119,6 +118,9 @@ Page({
 
       })
     }
+
+    //配置类型对应的控件
+    self.getSetWithCategory();
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成

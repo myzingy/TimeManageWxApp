@@ -9,7 +9,8 @@ Page({
     willCancel:false,//是否可以有撤销操作
     refuseArr:[],
     refuseIndex:0,
-    isRefuseOther:false//选择退回理由其他时 需要显示退回原因
+    isRefuseOther:false,//选择退回理由其他时 需要显示退回原因
+    isCard:false
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
@@ -35,6 +36,12 @@ Page({
       self.setData({
         noticeStr: ruleM.C3_545771115865
       })
+
+      if (item.C3_533398158705 == '补打卡'){
+        self.setData({
+          isCard:true
+        })
+      }
 
     }
 

@@ -1,4 +1,5 @@
 var app = getApp();
+import common from '../../../common/common'
 
 function getDayReportMonth(self) {
   self.data.dayReport.yearMonthArr = self.data.monthWork.yearMonthArr;
@@ -19,6 +20,7 @@ function getDayReportData(self) {
 
   var defaultYM = self.data.dayReport.yearMonthArr[self.data.dayReport.yearMothSelect];
   //  defaultYM = "201703"
+  
   var entYear = parseInt(defaultYM.substring(0, 4)); //.slice('年');
   var entMonth = parseInt(defaultYM.substring(4, 6)) - 1; //.slice('月');
  
@@ -53,6 +55,7 @@ function getDayReportData(self) {
         dataArr = [a];
         console.log('---------------------->dataArr' + dataArr);
       }
+      dataArr = common.dealNull(dataArr)
       self.data.dayReport.dataArr = dataArr;
       self.setData({
         data: self.data.dayReport

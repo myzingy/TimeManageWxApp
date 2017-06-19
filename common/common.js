@@ -282,6 +282,22 @@ function failModal(title){
   })
 }
 
+//处理null
+function dealNull(data){
+  if (Array.isArray(data)) {
+    data.forEach(function (val) {
+      for (var key in val) {
+        if (val[key] == null) val[key] = ''
+      }
+    })
+  }else{
+    for (var key in data) {
+      if (data[key] == null) data[key] = ''
+    }
+  }
+  return data;
+}
+
 
 
 module.exports = {
@@ -297,5 +313,6 @@ module.exports = {
   kvoAttach:kvoAttach,
   customModal:customModal,
   customLoading:customLoading,
-  successBackModal: successBackModal
+  successBackModal: successBackModal,
+  dealNull: dealNull
 }

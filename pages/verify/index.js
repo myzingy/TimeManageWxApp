@@ -284,7 +284,12 @@ Page({
 
       let pendedDataArr = self.data.dataArr[1];
       pendedDataArr = data.data.data.concat(pendedDataArr);
-      common.customModal('审批成功')
+
+      wx.hideLoading();
+      common.customModal('审批成功');
+    },function(){
+      common.customModal('审批失败');
+      wx.hideLoading();
     });
 
   },

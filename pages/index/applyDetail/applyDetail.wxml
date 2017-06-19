@@ -16,7 +16,7 @@
 <template is="apply-person-readonly" data="{{data}}">
 </template>
 
-<template is="time-length-readonly" data="{{data}}">
+<template wx:if="{{!isCard}}" is="time-length-readonly" data="{{data}}">
 
 
 </template>
