@@ -19,6 +19,7 @@ Page({
 
     if (options.data) {
       let item = JSON.parse(options.data);
+      item = common.dealNull(item);
       if (app.debug) console.log("--------->2" + item);
       let urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
       urls = urls.filter(function(x){

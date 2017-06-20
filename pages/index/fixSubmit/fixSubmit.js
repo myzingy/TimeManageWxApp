@@ -5,13 +5,15 @@ Page({
   data: {
     // data
     files: [],
-    noticeStr:''
+    noticeStr:'',
+    reasonStr:''
   },
   onLoad: function (options) {
     // 生命周期函数--监听页面加载
     self = this;
 
     var item = JSON.parse(options.data);
+    console.log("item =>>>" + options.data)
     var urls = [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420];
     // urls = urls.filter(x => x != null);
     self.setData({
@@ -24,9 +26,9 @@ Page({
     var imageShowArr = common.kvoAttach(ruleM);
     self.setData({
       imageShowArr: imageShowArr,
-      reason: self.data.data.C3_533143291117
+      reasonStr: item.C3_533143291117
     })
-
+    console.log("reasonStr =>>>" + self.data.reasonStr)
     var ruleM = common.getRule(item.C3_533398158705);
     self.setData({
       noticeStr: ruleM.C3_545771115865
@@ -64,7 +66,7 @@ Page({
     });
   },
   chooseImage: function (e) {
-    var tag = e.target.dataset.tag;
+    var tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     wx.chooseImage({
       count: 1, // 最多可以选择的图片张数，默认9
       sizeType: ['original'], // original 原图，compressed 压缩图，默认二者都有

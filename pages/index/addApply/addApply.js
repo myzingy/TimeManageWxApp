@@ -47,7 +47,7 @@ Page({
     noticeStr: '',//注意事项
     hour: '',//时长
     reason: '',//事由
-    imageShowArr: []//4个照片控件的显示
+    imageShowArr: [],//4个照片控件的显示
 
   },
   onLoad: function (options) {
@@ -69,13 +69,15 @@ Page({
     })
 
 
+
+    var item;
     if (options.data && options.data != 'undefined') {//草稿数据
       if(app.debug) console.log("draftdata");
       self.setData({
         isDraft: true
       })
       if (app.debug) console.log("data1" + JSON.stringify(options));
-      var item = JSON.parse(options.data);
+      item = JSON.parse(options.data);
       if (app.debug) console.log("data2" +item);
       self.setData({ draftData: item });
       var tmpCategoryModel = self.data.categoryModel;
@@ -89,17 +91,10 @@ Page({
 
       var tmpSartHour = item.C3_533143179815.split(' ')[1].split(':')[0];
       var tmpSartMin = item.C3_533143179815.split(' ')[1].split(':')[1];
-      tmpStartDateModel.startHour = tmpStartDateModel.startHours.findIndex((value, index, arr) => value == tmpSartHour)
-      tmpStartDateModel.startMin = tmpStartDateModel.startMins.findIndex((value, index, arr) => value == tmpSartMin)
+      tmpStartDateModel.startHour = tmpStartDateModel.startHours.indexOf(tmpSartHour)
+      tmpStartDateModel.startMin = tmpStartDateModel.startMins.indexOf(tmpSartMin)
 
-      if (app.debug) console.log("endtime");
-      var tmpEndDateModel = self.data.endDateModel;
-      tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
-
-      var tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
-      var tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
-      tmpEndDateModel.endHour = tmpEndDateModel.startHours.findIndex((value, index, arr) => value == tmpEndHour)
-      tmpEndDateModel.endMin = tmpEndDateModel.startMins.findIndex((value, index, arr) => value == tmpEndMin)
+     
 
       var ruleM = common.getRule(item.C3_533398158705);
       var imageShowArr = common.kvoAttach(ruleM);
@@ -113,14 +108,56 @@ Page({
         tempApprove: item.C3_542556605600,
         hour: item.C3_541449935726,
         files: [item.C3_541450276993, item.C3_545771156108, item.C3_545771157350, item.C3_545771158420],
-        startDateModel: tmpStartDateModel,
-        endDateModel: tmpEndDateModel
+        startDateModel: tmpStartDateModel
 
       })
     }
 
+
+
+
+
+
     //配置类型对应的控件
     self.getSetWithCategory();
+
+
+
+
+
+    if (options.data && options.data != 'undefined'){
+      item = JSON.parse(options.data); 
+      //设置结束小时的间隔
+      // var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+      var hor, endHours;
+      var valueInt = parseInt(self.data.startDateModel.startHour);
+      if (item.C3_533398158705 == '丧假' || item.C3_533398158705 == '路程假') hor = 8;
+      else hor = 1;
+
+      endHours = startHours.filter(function (item) {
+        return ((parseInt(item) - valueInt) % hor == 0);
+      })
+      self.data.endDateModel.startHours = endHours;
+      self.setData({
+        endDateModel: self.data.endDateModel
+      })
+
+
+      //更具请假类型筛选出结束时间的范围，再重新进行赋值
+      if (app.debug) console.log("endtime");
+      var tmpEndDateModel = self.data.endDateModel;
+      tmpEndDateModel.endDate = item.C3_533143217561.split(' ')[0];
+
+      var tmpEndHour = item.C3_533143217561.split(' ')[1].split(':')[0];
+      var tmpEndMin = item.C3_533143217561.split(' ')[1].split(':')[1];
+      tmpEndDateModel.endHour = tmpEndDateModel.startHours.indexOf(tmpEndHour)
+      tmpEndDateModel.endMin = tmpEndDateModel.startMins.indexOf(tmpEndMin)
+
+      self.setData({
+        endDateModel: tmpEndDateModel
+      })
+    }
+
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -136,9 +173,7 @@ Page({
       sourceType: ['album', 'camera'], // album 从相册选图，camera 使用相机，默认二者都有
       success: function (res) {
 
-
         app.HttpService.uploadImg(res.tempFilePaths[0], function (path) {
-          // self.data.files[tag] = res.tempFilePaths[0];
           self.data.files[tag] = path;
           self.setData({
             files: self.data.files
@@ -148,6 +183,7 @@ Page({
       },
       fail: function (res) {
         // fail
+        common.customModal("选择图片失败")
       },
       complete: function (res) {
         // complete
@@ -168,8 +204,10 @@ Page({
       self.setData({
         categoryModel: tmpM
       })
-      self.getSetWithCategory();
+      
       self.resetTimeModel();//重置所有控件的值
+      self.getSetWithCategory();
+      
 
     } else if (kindStr == 'startDate') {
       var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
@@ -188,10 +226,9 @@ Page({
         startDateModel: tmpM
       })
 
-      //设置结束小时的间隔
       var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
       var hor, endHours;
-      var valueInt = parseInt(e.detail.value);
+      var valueInt = parseInt(self.data.startDateModel.startHour);
       if (itemStr == '丧假' || itemStr == '路程假') hor = 8;
       else hor = 1;
 
@@ -204,11 +241,15 @@ Page({
         hour: ''
       })
 
-    } else if (kindStr == 'startMin') {
-      var tmpM = self.data.startDateModel;
-      tmpM.startMin = e.detail.value;
+    } else if (kindStr == 'startMin' || kindStr == 'endMin') {
+      var startTmpM = self.data.startDateModel;
+      startTmpM.startMin = e.detail.value;
+
+      var endTmpM = self.data.endDateModel;
+      endTmpM.endMin = e.detail.value;
       self.setData({
-        startDateModel: tmpM,
+        startDateModel: startTmpM,
+        endDateModel: endTmpM,
         hour: ''
       })
     } else if (kindStr == 'endDate') {
@@ -227,13 +268,6 @@ Page({
         hour: ''
       })
 
-    } else if (kindStr == 'endMin') {
-      var tmpM = self.data.endDateModel;
-      tmpM.endMin = e.detail.value;
-      self.setData({
-        endDateModel: tmpM,
-        hour: ''
-      })
     }
 
   },
@@ -292,6 +326,7 @@ Page({
     });
 
   },
+
   //修改 提交
   saveOrSubmitApply: function (e) {
     var title = e.currentTarget.dataset.title;
@@ -315,6 +350,7 @@ Page({
     }
 
   },
+
   // 提交数据合并
   fixData: function (str) {
     var startTime = self.data.startDateModel.startDate + " " + self.data.startDateModel.startHours[self.data.startDateModel.startHour] + ":" + self.data.startDateModel.startMins[self.data.startDateModel.startMin];
@@ -347,6 +383,7 @@ Page({
       reason: e.detail.value
     })
   },
+  
   //根据类型获取对应的规则
   getSetWithCategory: function (categoryStr) {
     
@@ -365,6 +402,21 @@ Page({
 
       if (ruleStr == '补打卡') self.setData({ isCard: true })
       else self.setData({ isCard: false })
+
+      //设置结束小时的间隔
+      // var itemStr = self.data.categoryModel.selectDataArr[self.data.categoryModel.selectDataIndex];
+      var hor, endHours;
+      var valueInt = parseInt(self.data.startDateModel.startHour);
+      if (ruleStr == '丧假' || ruleStr == '路程假') hor = 8;
+      else hor = 1;
+
+      endHours = startHours.filter(function (item) {
+        return ((parseInt(item) - valueInt) % hor == 0);
+      })
+      self.data.endDateModel.startHours = endHours;
+      self.setData({
+        endDateModel: self.data.endDateModel
+      })
     }
   },
   resetTimeModel: function () {//切换类型时重置时间规则

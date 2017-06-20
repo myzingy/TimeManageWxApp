@@ -3,7 +3,9 @@ const path = {
   config: '/config',
   login: 'rispweb/rispservice/apiSvrLogin.aspx',
   apply: 'rispweb/risphost/data/AjaxService.aspx',
-  dataLogin:'kingofweixin/WxOpen/loginService'
+  dataLogin:'kingofweixin/WxOpen/loginService',
+  sendValiateCode:'kingofweixin/rsauth/SendValidMsg',
+  authCode:'kingofweixin/rsauth/AuthClient'
 }
 
 function getRequest(url, data, doSuccess, doFail, doComplete) {
@@ -78,6 +80,7 @@ function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
     str = str + '&' + key + '=' + data[key];
   }
   console.log(str);
+  
   wx.request({
     url: getApp().Config.basePath + url,
     data: data,
@@ -236,38 +239,53 @@ function saveDataArr(params, doSuccess, doFail) {
 //图片上传
 function uploadImg(tempFilePath,callback){
   //res.tempFilePaths[0]
-  wx.uploadFile({
-    url: getApp().Config.uploadImgPath + tempFilePath,
-    filePath: tempFilePath,
-    name: 'file',
-    success: function (e) {
-      var data = e.data;
-      console.log("image-====>" + e.data);
-      var imgModel = JSON.parse(e.data);
-      if(imgModel.Data){
-        callback(getApp().Config.basePath + imgModel.Data)
-      }else{
+    wx.uploadFile({
+      url: getApp().Config.uploadImgPath + tempFilePath,
+      filePath: tempFilePath,
+      name: 'file',
+      success: function (e) {
+        var data = e.data;
+        console.log("image-====>" + e.data);
+        var imgModel = JSON.parse(e.data);
+        if (imgModel.Data) {
+          callback(getApp().Config.basePath + imgModel.Data)
+        } else {
+          wx.showModal({
+            title: '注意',
+            content: '上传错误',
+          })
+        }
+
+      },
+      fail: function (e) {
         wx.showModal({
           title: '注意',
-          content: '上传错误',
+          content: '图片上传失败',
         })
       }
-      
-    },
-    fail: function (e) {
-      wx.showModal({
-        title: '注意',
-        content: '图片上传失败',
-      })
-    }
-  })
+    })
+  
+  
 }
 
-//wxlogin
+//获取openid unionid
 function customLogin(params, doSuccess, doFail) {
   getRequest(path.dataLogin, params, doSuccess, doFail);
 }
 
+//发送验证码
+function sendValidMsg(params, doSuccess, doFail) {
+  params.openid = wx.getStorageSync('openid');
+  params.unionid = wx.getStorageSync('unionid');
+  getRequest(path.sendValiateCode, params, doSuccess, doFail);
+}
+
+//验证
+function authClient(params, doSuccess, doFail) {
+  params.openid = wx.getStorageSync('openid');
+  params.unionid = wx.getStorageSync('unionid');
+  getRequest(path.authCode, params, doSuccess, doFail);
+}
 
 module.exports = {
   customWxLogin: customWxLogin,
@@ -280,5 +298,7 @@ module.exports = {
   getData:getData,
   saveDataArr:saveDataArr,
   uploadImg: uploadImg,
-  customLogin: customLogin
+  customLogin: customLogin,
+  sendValidMsg: sendValidMsg,
+  authClient: authClient
 }

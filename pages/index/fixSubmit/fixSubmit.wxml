@@ -20,7 +20,7 @@
 
 
 </template>
-<template is="reason" data="{{reason}}">
+<template is="reason" data="{{reasonStr}}">
 </template>
 
 <view class="addApply-cell" >

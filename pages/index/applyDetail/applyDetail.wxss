@@ -56,9 +56,9 @@ background-image: url(../../../images/lizhuzhang.png)
 }
 
 .pended-process-date{
-    -webkit-box-flex:  0 0 80px;
-    -webkit-flex: 0 0 80px;
-    flex: 0 0 80px;
+    -webkit-box-flex:  0 0 120px;
+    -webkit-flex: 0 0 120px;
+    flex: 0 0 120px;
     font-size: 12px;
     margin-right: 10px;
     margin-left: 10px;

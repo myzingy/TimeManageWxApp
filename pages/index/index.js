@@ -14,6 +14,7 @@ Page({
     userInfo: {},
     selectDataArr: [],
     selectDataIndex: 0,//类型当前索引
+    allSelectDataIndex:[0,0,0,0],
     pageIndex: 0,//当前第几页
     pageName: 'applying',//当前页的名称
     pageNameArr: ['applying', 'pended', 'refuse', 'history'],
@@ -21,6 +22,7 @@ Page({
     dataArr: [],//所有页的数据
     noMore: false,
     fixIndex: null,
+
   },
 
 
@@ -137,7 +139,9 @@ Page({
       param.pageIndex = 0;
 
     } else {//加载
-      param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
+      // param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
+      var indx = Math.ceil(self.data.dataArr[self.data.pageIndex].length / param.pageSize);
+      param.pageIndex = indx;
     }
 
     if (self.data.pageIndex == 0) {//申请中
@@ -193,7 +197,7 @@ Page({
   },
   pageClick: function (event) {//导航点击事件
     var index = event.target.dataset.id;
-    self.setData({ pageIndex: index, data: [], selectDataIndex:0});
+    self.setData({ pageIndex: index, data: [], selectDataIndex: self.data.allSelectDataIndex[index]});//, selectDataIndex:0
 
     //设置page的模板
     self.setData({ pageName: self.data.pageNameArr[index] });
@@ -269,13 +273,15 @@ Page({
     self.setData({
       selectDataIndex: e.detail.value
     })
-    var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
-    var conditionData = self.data.dataArr[self.data.pageIndex];
-    if (conditionStr != '全部') conditionData = Array.from(conditionData).filter(x => x.C3_533398158705 == conditionStr)
+    self.data.allSelectDataIndex[self.data.pageIndex] = parseInt(e.detail.value)
+    self.getData(0);
+    // var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
+    // var conditionData = self.data.dataArr[self.data.pageIndex];
+    // if (conditionStr != '全部') conditionData = Array.from(conditionData).filter(x => x.C3_533398158705 == conditionStr)
 
-    self.setData({
-      data: conditionData
-    })
+    // self.setData({
+    //   data: conditionData
+    // })
 
   },
   /*---------通知事件------------ */

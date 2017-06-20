@@ -58,7 +58,9 @@ Page({
             }
             //获取uniid
             app.HttpService.customLogin(param, function (data) {
-              console.log("--------<登录成功");
+              console.log("--------<登录成功" + data);
+              wx.setStorageSync("openid", data.data.openId);
+              wx.setStorageSync("unionid", data.data.unionId);
               var param = {
                 'apitoken': 'KingOfDinner123456789',
                 'clienttype': 'mobile',
@@ -66,12 +68,18 @@ Page({
               }
               //登录
               app.HttpService.customWxLogin(param, function (data) {
-                app.globalData.userInfo = data.data;
-                self.getVacationCategory();
-                self.getTeamApprove();
-                self.getRefuseData();
+                if (data.data.error == 0) {
+                  app.globalData.userInfo = data.data;
+                  self.getVacationCategory();
+                  self.getTeamApprove();
+                  self.getRefuseData();
+                }else{
+                  wx.redirectTo({
+                    url: '/pages/account/account',
+                  })
+                }
               }, function () {
-
+                  
               });
             })
           }

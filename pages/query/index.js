@@ -17,12 +17,12 @@ Page({
     data:{},
     monthWork: {
       yearMothSelect: 0,
-      yearMonthArr:['201705','201705'],
-      dateArr:[[{sun:[1111,2222,'red']}],[{sun:[1111,2222,'red']}]]
+      yearMonthArr:[''],
+      dateArr:[]
     },
     dayReport:{
       yearMothSelect: 0,
-      yearMonthArr:['201705','201705'],
+      yearMonthArr:[''],
       isChecked:false
     },
     pageIndex: 0

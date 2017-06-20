@@ -1,0 +1,10 @@
+<view id="wxauthLogin">
+    <view class="loginTitle">输入手机号</view>
+    <input id="telephone" bindinput="textInput" data-tag = "phone"></input>
+    <button bindtap="getvalidcode">获取验证码</button>
+
+    <view class="loginTitle">输入验证码</view>
+    <input id="validcode" bindinput="textInput" data-tag = "code"></input>
+    
+    <view bindtap="validatecode">验证</view>
+</view>

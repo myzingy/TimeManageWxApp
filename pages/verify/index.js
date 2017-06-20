@@ -13,6 +13,7 @@ Page({
     pageNameArr: ['unverify', 'pended', 'pended', 'history'],
     selectDataArr: [],
     selectDataIndex: 0,
+    allSelectDataIndex: [0, 0, 0, 0],
     data: [],
     dataArr: [],
     pageIndex: 0,
@@ -65,7 +66,8 @@ Page({
   pageClick: function (event) {
     self.setData({
       data: [],
-      selectDataIndex:0
+      selectDataIndex:0,
+      selectDataIndex: self.data.allSelectDataIndex[index]
     })
     var index = event.target.dataset.id;
 
@@ -95,10 +97,11 @@ Page({
     wx.showLoading({
       title: '加载中'
     })
-
+    var keyStr = self.data.selectDataArr[self.data.selectDataIndex];
+     keyStr = keyStr == '全部' ? '' : keyStr
     var param = {
       'subresid': '',
-      'cmswhere': '',
+      'cmswhere': keyStr,
       'key': self.data.inputVal ? self.data.inputVal : ''
     }
 
@@ -107,7 +110,7 @@ Page({
       param.pageIndex = 0;
 
     } else {//加载
-      param.pageIndex = self.data.data.length;
+      param.pageIndex = parseInt(self.data.data.length / param.pageSize)
     }
 
     if (self.data.pageIndex == 0) {//待审批
@@ -123,19 +126,19 @@ Page({
       if (data && data.data && data.data.data) {
         var dataArr = data.data.data;
 
-        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
-        dataArr.forEach(x => x.selected = false);
-
-        self.data.dataArr[self.data.pageIndex] = dataArr;
-
-        var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
-        if (conditionStr != '全部') dataArr = dataArr.filter(x => x.C3_533398158705 == conditionStr)
-
         if (dataArr.length < param.pageSize) self.setData({ noMore: true });
         else self.setData({ noMore: false });
 
+        dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
+        dataArr.forEach(x => x.selected = false);
 
-        
+        var oldDataArr = self.data.dataArr[self.data.pageIndex];
+        oldDataArr = oldDataArr.concat(dataArr);
+        self.data.dataArr[self.data.pageIndex] = oldDataArr;
+
+        var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
+        if (conditionStr != '全部') dataArr = dataArr.filter(x => x.C3_533398158705 == conditionStr)
+  
 
         if (index) {//加载
           var oldDataArr = self.data.data;
@@ -173,13 +176,8 @@ Page({
     self.setData({
       selectDataIndex: e.detail.value
     })
-    var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
-    var conditionData = self.data.dataArr[self.data.pageIndex];
-    if (conditionStr != '全部') conditionData = Array.from(conditionData).filter(x => x.C3_533398158705 == conditionStr)
-
-    self.setData({
-      data: conditionData
-    })
+    self.data.allSelectDataIndex[self.data.pageIndex] = parseInt(e.detail.value)
+    self.getData(0);
 
   },
   showInput: function () {

@@ -154,7 +154,8 @@ data-tag="{{index}}">
 <template name="reason">
   <view class="addApply-cell">
     <label>事由</label>
-    <textarea auto-height maxlength="-1" value="{{reason}}" bindinput="textInput" />
+    <!--<textarea auto-height maxlength="-1" value="{{reasonStr}}" bindinput="textInput" />-->
+    <input type="text" value="{{reasonStr}}" />
   </view>
 </template>
 <template name="cell-submit-modify">
