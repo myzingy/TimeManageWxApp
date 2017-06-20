@@ -79,6 +79,7 @@ Page({
 
     if (self.data.dataArr[self.data.pageIndex].length) {
       self.setData({ data: self.data.dataArr[self.data.pageIndex] });
+      self.setData({ noMore: false });
 
     } else self.getData(0);
   },

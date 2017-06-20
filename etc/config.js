@@ -7,7 +7,7 @@ export default {
 	// loginPath: 'https://Kingofdinner.realsun.me/rispweb/risphost/data/AjaxService.aspx?uiver=200&dynlogin=1',
 	// imgPath: 'https://Kingofdinner.realsun.me/public/uploads/',
 
-	appid: 'wx392bb955636706eb',
-	app_secret: 'adcfd169e8d3dfd58c8309fc332412b8',
+  appid: 'wxa455a1d8b5d9c1ad',
+  app_secret: '0fccc45112071f6d27859ab5d0c69593',
 	logger: 1
 }  

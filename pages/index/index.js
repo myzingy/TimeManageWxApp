@@ -206,6 +206,7 @@ Page({
     //内存缓存数据提取
     if (self.data.dataArr[self.data.pageIndex].length) {
       self.setData({ data: self.data.dataArr[self.data.pageIndex] });
+      self.setData({ noMore: false });
 
     } else self.getData(0);
 

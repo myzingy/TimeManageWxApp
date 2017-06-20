@@ -191,7 +191,7 @@ background-image: url(../../../images/xiugai.png);
 .main-cell-text text{
   display: block;
   text-align: center;
-  line-height: 80px;
+  line-height: 94px;
   height: inherit;
 }
 

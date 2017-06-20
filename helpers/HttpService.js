@@ -2,7 +2,8 @@
 const path = {
   config: '/config',
   login: 'rispweb/rispservice/apiSvrLogin.aspx',
-  apply: 'rispweb/risphost/data/AjaxService.aspx'
+  apply: 'rispweb/risphost/data/AjaxService.aspx',
+  dataLogin:'kingofweixin/WxOpen/loginService'
 }
 
 function getRequest(url, data, doSuccess, doFail, doComplete) {
@@ -262,6 +263,10 @@ function uploadImg(tempFilePath,callback){
   })
 }
 
+//wxlogin
+function customLogin(params, doSuccess, doFail) {
+  getRequest(path.dataLogin, params, doSuccess, doFail);
+}
 
 
 module.exports = {
@@ -274,5 +279,6 @@ module.exports = {
   addData: addData,
   getData:getData,
   saveDataArr:saveDataArr,
-  uploadImg: uploadImg
+  uploadImg: uploadImg,
+  customLogin: customLogin
 }

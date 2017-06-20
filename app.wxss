@@ -309,7 +309,7 @@ page {
   vertical-align: top;
   text-align: center;
   line-height: 40px;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .nav-active {

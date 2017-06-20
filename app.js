@@ -19,5 +19,5 @@ App({
   WxValidate: (rules, messages) => new WxValidate(rules, messages),
   HttpService: HttpService,
   notification: notification,
-  debug:true
+  debug:false
 });
