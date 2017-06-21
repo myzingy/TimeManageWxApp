@@ -19,6 +19,7 @@ Page({
     pageIndex: 0,
     inputShowed: false,
     inputVal: "",
+    allInputVal:["","","",""],
     noMore: false,
     fixIndex: null,
 
@@ -64,12 +65,13 @@ Page({
 
   //导航点击事件
   pageClick: function (event) {
+
+    var index = event.target.dataset.id;
     self.setData({
       data: [],
-      selectDataIndex:0,
-      selectDataIndex: self.data.allSelectDataIndex[index]
+      selectDataIndex: self.data.allSelectDataIndex[index],
+      inputVal: self.data.allInputVal[index]
     })
-    var index = event.target.dataset.id;
 
     self.data.navTitle.activeIndex = index;
 
@@ -89,28 +91,23 @@ Page({
   //获取数据
   getData: function (index) {
 
-    // if (self.data.dataArr[self.data.pageIndex].length) {//内存缓存数据提取
-    //   self.setData({ data: self.data.dataArr[self.data.pageIndex] });
-    //   return;
-    // }
-
     wx.showLoading({
       title: '加载中'
     })
     var keyStr = self.data.selectDataArr[self.data.selectDataIndex];
-     keyStr = keyStr == '全部' ? '' : keyStr
+    keyStr = keyStr == '全部' ? '' : "C3_533398158705 ='" + keyStr + "'"
     var param = {
       'subresid': '',
-      'cmswhere': keyStr,
+      'cmswhere':  keyStr,
       'key': self.data.inputVal ? self.data.inputVal : ''
     }
 
-    param.pageSize = 10;
+    param.pageSize = 3;
     if (!index) {//刷新
       param.pageIndex = 0;
 
     } else {//加载
-      param.pageIndex = parseInt(self.data.data.length / param.pageSize)
+      param.pageIndex = Math.ceil(self.data.dataArr[self.data.pageIndex].length / param.pageSize);
     }
 
     if (self.data.pageIndex == 0) {//待审批
@@ -125,6 +122,7 @@ Page({
     app.HttpService.getApplyData(param, function (data) {
       if (data && data.data && data.data.data) {
         var dataArr = data.data.data;
+        dataArr = common.dealNull(dataArr);
 
         if (dataArr.length < param.pageSize) self.setData({ noMore: true });
         else self.setData({ noMore: false });
@@ -132,21 +130,19 @@ Page({
         dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
         dataArr.forEach(x => x.selected = false);
 
-        var oldDataArr = self.data.dataArr[self.data.pageIndex];
-        oldDataArr = oldDataArr.concat(dataArr);
-        self.data.dataArr[self.data.pageIndex] = oldDataArr;
-
-        var conditionStr = self.data.selectDataArr[self.data.selectDataIndex];
-        if (conditionStr != '全部') dataArr = dataArr.filter(x => x.C3_533398158705 == conditionStr)
+       
   
 
         if (index) {//加载
-          var oldDataArr = self.data.data;
+          // var oldDataArr = self.data.data;
+          // oldDataArr = oldDataArr.concat(dataArr);
+          var oldDataArr = self.data.dataArr[self.data.pageIndex];
           oldDataArr = oldDataArr.concat(dataArr);
           dataArr = oldDataArr;
         }
 
         self.setData({ data: dataArr });
+        self.data.dataArr[self.data.pageIndex] = dataArr;
       } else {
         self.setData({ data: [] });
         self.setData({ noMore: true });
@@ -200,6 +196,7 @@ Page({
     this.setData({
       inputVal: e.detail.value
     });
+    self.data.allInputVal[self.data.pageIndex] = e.detail.value;
   },
   inputConfim: function (e) {//确认搜索按钮
     this.setData({

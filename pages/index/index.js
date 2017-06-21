@@ -158,10 +158,12 @@ Page({
 
       if (data && data.data && data.data.data) {
         var dataArr = data.data.data;
+        dataArr = common.dealNull(dataArr);//处理null
 
         if (dataArr.length < param.pageSize) self.setData({ noMore: true });
         else self.setData({ noMore: false });
 
+        //根据字段配置本地图片路径
         dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
 
         if (index == 1) {//加载
