@@ -117,9 +117,7 @@ Page({
   /*----------获取数据--------------- */
   getData: function (index) {
 
-    wx.showLoading({
-      title: '加载中'
-    })
+    
 
     var keyStr;
     if (self.data.selectDataIndex < self.data.selectDataArr.length) {
@@ -142,6 +140,9 @@ Page({
       // param.pageIndex = self.data.dataArr[self.data.pageIndex].length;
       var indx = Math.ceil(self.data.dataArr[self.data.pageIndex].length / param.pageSize);
       param.pageIndex = indx;
+      wx.showLoading({
+        title: '加载中'
+      })
     }
 
     if (self.data.pageIndex == 0) {//申请中

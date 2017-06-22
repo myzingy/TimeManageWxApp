@@ -38,7 +38,6 @@ Page({
     wx.showNavigationBarLoading();
 
 
-
     var code;
     wx.login({
       success: function (e) {
@@ -158,6 +157,8 @@ Page({
   },
   gotoApplyPage: function () {
     if (self.data.vacationCategorySuccess && self.data.teamApproveSuccess && self.data.refuseArrSuccess) {
+
+      wx.hideNavigationBarLoading();
       wx.switchTab({
         url: '/pages/index/index',
         success: function (res) {

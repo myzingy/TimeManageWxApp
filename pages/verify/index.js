@@ -19,7 +19,7 @@ Page({
     pageIndex: 0,
     inputShowed: false,
     inputVal: "",
-    allInputVal:["","","",""],
+    allInputVal: ["", "", "", ""],
     noMore: false,
     fixIndex: null,
 
@@ -91,23 +91,24 @@ Page({
   //获取数据
   getData: function (index) {
 
-    wx.showLoading({
-      title: '加载中'
-    })
+   
     var keyStr = self.data.selectDataArr[self.data.selectDataIndex];
     keyStr = keyStr == '全部' ? '' : "C3_533398158705 ='" + keyStr + "'"
     var param = {
       'subresid': '',
-      'cmswhere':  keyStr,
+      'cmswhere': keyStr,
       'key': self.data.inputVal ? self.data.inputVal : ''
     }
 
-    param.pageSize = 3;
+    param.pageSize = 10;
     if (!index) {//刷新
       param.pageIndex = 0;
 
     } else {//加载
       param.pageIndex = Math.ceil(self.data.dataArr[self.data.pageIndex].length / param.pageSize);
+      wx.showLoading({
+        title: '加载中'
+      })
     }
 
     if (self.data.pageIndex == 0) {//待审批
@@ -130,8 +131,8 @@ Page({
         dataArr = common.promiseImageWithStyle(dataArr, ['C3_542383374989', 'C3_543518801920'])
         dataArr.forEach(x => x.selected = false);
 
-       
-  
+
+
 
         if (index) {//加载
           // var oldDataArr = self.data.data;
@@ -224,7 +225,7 @@ Page({
   //################待审批
   //退回操作界面
   gotoUnverifyDetailPage: function (e) {
-    if(self.data.pageIndex) return;
+    if (self.data.pageIndex) return;
     let tag = e.currentTarget.dataset.tag != undefined ? e.currentTarget.dataset.tag : e.target.dataset.tag;
     let item = self.data.data[tag];
     self.data.fixIndex = tag;
@@ -261,9 +262,9 @@ Page({
         submitArr.push(i);
       }
     })
-    if (!submitArr.length){
-       common.customModal("请勾选至少一个事件");
-       return;
+    if (!submitArr.length) {
+      common.customModal("请勾选至少一个事件");
+      return;
     }
 
     var param = {
@@ -283,7 +284,7 @@ Page({
 
       wx.hideLoading();
       common.customModal('审批成功');
-    },function(){
+    }, function () {
       common.customModal('审批失败');
       wx.hideLoading();
     });
