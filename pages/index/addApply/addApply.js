@@ -241,15 +241,11 @@ Page({
         hour: ''
       })
 
-    } else if (kindStr == 'startMin' || kindStr == 'endMin') {
+    } else if (kindStr == 'startMin' ) {
       var startTmpM = self.data.startDateModel;
       startTmpM.startMin = e.detail.value;
-
-      var endTmpM = self.data.endDateModel;
-      endTmpM.endMin = e.detail.value;
       self.setData({
         startDateModel: startTmpM,
-        endDateModel: endTmpM,
         hour: ''
       })
     } else if (kindStr == 'endDate') {
@@ -268,6 +264,13 @@ Page({
         hour: ''
       })
 
+    } else if ( kindStr == 'endMin'){
+      var endTmpM = self.data.endDateModel;
+      endTmpM.endMin = e.detail.value;
+      self.setData({
+        endDateModel: endTmpM,
+        hour: ''
+      })
     }
 
   },
