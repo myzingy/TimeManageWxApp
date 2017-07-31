@@ -2,7 +2,7 @@ var app = getApp();
 
 function saveAndSubmit(data, success, fail) { //提交 保存
   var valiateBool = valiateForm(data);
-  if(!valiateBool) return;
+  if (!valiateBool) return;
   customLoading();
   var param = {
     'resid': 541502768110,
@@ -14,28 +14,28 @@ function saveAndSubmit(data, success, fail) { //提交 保存
     wx.hideLoading();
 
     if (data.data.error == 0) {
-      if (data.data.data && data.data.data[0]){
-       var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
+      if (data.data.data && data.data.data[0]) {
+        var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
         if (success) success(dataArr[0]);
-      }else{
+      } else {
         if (fail) fail();
       }
-      
+
 
     } else {
       failModal(data.data.message ? data.data.message : '');
-      if(fail) fail();
+      if (fail) fail();
     }
 
   }, function () {
     wx.stopPullDownRefresh();
     wx.hideLoading();
-    if(fail) fail();
+    if (fail) fail();
   });
 }
 
 function reSaveAndSubmit(data, success, fail) { //重新提交 保存
-  customLoading();
+  
   var valiateBool = valiateForm(data);
   if (!valiateBool) return;
   var param = {
@@ -43,6 +43,7 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
     'data': data
   }
 
+  customLoading();
   app.HttpService.saveData(param, function (data) {
     wx.stopPullDownRefresh();
     wx.hideLoading();
@@ -57,45 +58,48 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
 
     } else {
       failModal(data.data.message ? data.data.message : '');
-      if (fail)fail();
+      if (fail) fail();
     }
 
   }, function () {
     wx.stopPullDownRefresh();
     wx.hideLoading();
-    if (fail)fail();
+    if (fail) fail();
   });
 }
 
-function valiateForm(data){//验证提交数据
+function valiateForm(data) {//验证提交数据
 
   if (data.C3_533398158705 != '补打卡') {//非补打卡时长的验证
-    if (data.C3_541449935726 == undefined || data.C3_541449935726 == '') { 
-        customModal("时长不能为空！"); 
-        return false;
-      }
+    if (data.C3_541449935726 == undefined || data.C3_541449935726 == '') {
+      customModal("时长不能为空！");
+      return false;
     }
+  }
+
+  if (!app.globalData.teamApprove || app.globalData.teamApprove.length == 0) {
+    customModal("审批人不能为空！");
+    return false;
+  }
 
   var selectRuleM = getRule(data.C3_533398158705);
 
   var cameraNeccesseryArr = [selectRuleM.C3_545770982165,
-    selectRuleM.C3_545770982361,
-    selectRuleM.C3_545770982566,
-    selectRuleM.C3_545770990395];
-    
-    
-    
-    
-    var addressArr = [data.C3_541450276993, data.C3_545771156108, data.C3_545771157350, data.C3_545771158420];
-    for (var i = 0; i < addressArr.length; i++) {
-      if (i >= cameraNeccesseryArr.length) { alert(cameraNeccesseryArr); return false; }
-      if (cameraNeccesseryArr[i] == 'Y' && (addressArr[i] == undefined || addressArr[i] == '' || addressArr[i] == null)) {
-        customModal("必填未填完！");
-        return false;
-      }
+  selectRuleM.C3_545770982361,
+  selectRuleM.C3_545770982566,
+  selectRuleM.C3_545770990395];
+
+
+  var addressArr = [data.C3_541450276993, data.C3_545771156108, data.C3_545771157350, data.C3_545771158420];
+  for (var i = 0; i < addressArr.length; i++) {
+    if (i >= cameraNeccesseryArr.length) { alert(cameraNeccesseryArr); return false; }
+    if (cameraNeccesseryArr[i] == 'Y' && (addressArr[i] == undefined || addressArr[i] == '' || addressArr[i] == null)) {
+      customModal("必填未填完！");
+      return false;
     }
-    return true;
   }
+  return true;
+}
 
 function successBack() {
   wx.showToast({
@@ -120,7 +124,7 @@ function successBack() {
 }
 
 //撤销
-function cancel(data,success) {
+function cancel(data, success) {
   //541502768110
   data.C3_541449646638 = 'Y';
   var param = {
@@ -165,49 +169,49 @@ function getRule(str) {
 }
 
 //获取所有请假类型
-function getAllRuleCategory(){
+function getAllRuleCategory() {
   var ruleArr = Array.from(app.globalData.rule);
   var dataArr = ['全部'];
   for (var i = 0; i < ruleArr.length; i++) {
     var tempRuleM = ruleArr[i];
-      dataArr.push(tempRuleM.C3_533402301362);
+    dataArr.push(tempRuleM.C3_533402301362);
   }
   return dataArr;
 }
 
 //配置图片路径
-function getLocalImageUrl(str){
-  const vacationStrArr = ['annual','business','maternity','trip','compassionate','breastfeeding',
- 'sicks','personal','annual'];
+function getLocalImageUrl(str) {
+  const vacationStrArr = ['annual', 'business', 'maternity', 'trip', 'compassionate', 'breastfeeding',
+    'sicks', 'personal', 'annual'];
 
 
 
-  if(str == 'overtime') return '/images/jiaban.png';
-  else if(str == 'fillout') return '/images/bushuaka.png';
-  else if(vacationStrArr.indexOf(str) != -1) return '/images/qingjia.png';
-  else if(str == 'spcg') return '/images/caogao.png';
-  else if(str == 'zzsp') return '/images/zhuzhang.png';
-  else if(str == 'zgsp') return '/images/zhuguan.png';
-  else if(str == 'jlsp') return '/images/jingli.png';
+  if (str == 'overtime') return '/images/jiaban.png';
+  else if (str == 'fillout') return '/images/bushuaka.png';
+  else if (vacationStrArr.indexOf(str) != -1) return '/images/qingjia.png';
+  else if (str == 'spcg') return '/images/caogao.png';
+  else if (str == 'zzsp') return '/images/zhuzhang.png';
+  else if (str == 'zgsp') return '/images/zhuguan.png';
+  else if (str == 'jlsp') return '/images/jingli.png';
   else if (str == 'spjl') return '/images/wangjingli.png';
   else if (str == 'spzg') return '/images/zhangzhuguan.png';
   else if (str == 'spzz') return '/images/lizhuzhang.png';
 }
 
 //处理data中的样式和图片匹配
-function promiseImageWithStyle(data,strArray){
-  for(var i = 0 ; i < strArray.length ; i ++){
+function promiseImageWithStyle(data, strArray) {
+  for (var i = 0; i < strArray.length; i++) {
     var keyStr = strArray[i];
-      for(var j = 0 ; j < data.length ; j ++){
-        var item = data[j];
-        if (keyStr == 'C3_541450438440'){
-          if (item[keyStr] == 'Y'){
-            item[keyStr] = '/images/gouxuankuang-2.png'
-          } else item[keyStr] = '/images/gouxuankuang-1.png'
-        }else{
-          item[keyStr] = getLocalImageUrl(item[keyStr]);
-        }
+    for (var j = 0; j < data.length; j++) {
+      var item = data[j];
+      if (keyStr == 'C3_541450438440') {
+        if (item[keyStr] == 'Y') {
+          item[keyStr] = '/images/gouxuankuang-2.png'
+        } else item[keyStr] = '/images/gouxuankuang-1.png'
+      } else {
+        item[keyStr] = getLocalImageUrl(item[keyStr]);
       }
+    }
   }
   return data;
 }
@@ -231,66 +235,65 @@ function isArray(o) {
   return Object.prototype.toString.call(o) === '[object Array]';
 }
 
-Date.prototype.format = function (format)
- {
+Date.prototype.format = function (format) {
   var o = {
-  "M+" : this.getMonth()+1, //month
-  "d+" : this.getDate(),    //day
-  "h+" : this.getHours(),   //hour
-  "m+" : this.getMinutes(), //minute
-  "s+" : this.getSeconds(), //second
-  "q+" : Math.floor((this.getMonth()+3)/3),  //quarter
-  "S" : this.getMilliseconds() //millisecond
+    "M+": this.getMonth() + 1, //month
+    "d+": this.getDate(),    //day
+    "h+": this.getHours(),   //hour
+    "m+": this.getMinutes(), //minute
+    "s+": this.getSeconds(), //second
+    "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+    "S": this.getMilliseconds() //millisecond
   }
-  if(/(y+)/.test(format)) format=format.replace(RegExp.$1,
-  (this.getFullYear()+"").substr(4 - RegExp.$1.length));
-  for(var k in o)if(new RegExp("("+ k +")").test(format))
-  format = format.replace(RegExp.$1,
-  RegExp.$1.length==1 ? o[k] :
-  ("00"+ o[k]).substr((""+ o[k]).length));
+  if (/(y+)/.test(format)) format = format.replace(RegExp.$1,
+    (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+  for (var k in o) if (new RegExp("(" + k + ")").test(format))
+    format = format.replace(RegExp.$1,
+      RegExp.$1.length == 1 ? o[k] :
+        ("00" + o[k]).substr(("" + o[k]).length));
   return format;
- }  
+}
 
-function customModal(title){
+function customModal(title) {
   wx.showModal({
     title: title,
-    showCancel:false,
+    showCancel: false,
   })
 }
 
-function successBackModal(title){
+function successBackModal(title) {
   wx.showModal({
     title: title,
-    showCancel:false,
-    complete:function(){
+    showCancel: false,
+    complete: function () {
       successBack();
     }
   })
 }
 
-function customLoading(){
+function customLoading() {
   wx.showLoading({
     title: '加载中',
   })
 }
 
-function failModal(title){
+function failModal(title) {
   wx.showModal({
     title: '失败',
     content: title,
-    showCancel:false
+    showCancel: false
   })
 }
 
 //处理null
-function dealNull(data){
+function dealNull(data) {
   if (Array.isArray(data)) {
     data.forEach(function (val) {
       for (var key in val) {
         if (val[key] == null) val[key] = ''
       }
     })
-  }else{
+  } else {
     for (var key in data) {
       if (data[key] == null) data[key] = ''
     }
@@ -302,17 +305,17 @@ function dealNull(data){
 
 module.exports = {
   saveAndSubmit: saveAndSubmit,
-  reSaveAndSubmit:reSaveAndSubmit,
+  reSaveAndSubmit: reSaveAndSubmit,
   successBack: successBack,
   cancel: cancel,
-  getRule:getRule,
-  getAllRuleCategory:getAllRuleCategory,
-  getLocalImageUrl:getLocalImageUrl,
-  promiseImageWithStyle:promiseImageWithStyle,
-  isArray:isArray,
-  kvoAttach:kvoAttach,
-  customModal:customModal,
-  customLoading:customLoading,
+  getRule: getRule,
+  getAllRuleCategory: getAllRuleCategory,
+  getLocalImageUrl: getLocalImageUrl,
+  promiseImageWithStyle: promiseImageWithStyle,
+  isArray: isArray,
+  kvoAttach: kvoAttach,
+  customModal: customModal,
+  customLoading: customLoading,
   successBackModal: successBackModal,
   dealNull: dealNull
 }

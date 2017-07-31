@@ -3,7 +3,6 @@ var self;
 Page({
   data: {
     vacationCategorySuccess: false,
-    teamApproveSuccess: false,
     refuseArrSuccess: false,
     imgHeight: 0
   },
@@ -38,6 +37,60 @@ Page({
     wx.showNavigationBarLoading();
 
 
+    var param = {
+      'apitoken': 'KingOfDinner123456789',
+      'clienttype': 'mobile',
+      'openid': 'oqWaVwKG0Yj0_8cbsSB3b9R31YcA'
+    }
+    //登录
+    app.HttpService.customWxLogin(param, function (data) {
+      if (data.data.error == 0) {
+        app.globalData.userInfo = data.data;
+
+        var needLoginParam = {
+          'resid': 539606519726,
+          'cmswhere': ''
+        }
+        app.HttpService.getData(needLoginParam, function (data) {
+
+          if (data && data.data && data.data.data && data.data.data[0]) {
+            if (data.data.data["0"].C3_554828307258 == 'Y') {
+              self.getVacationCategory();
+              self.getTeamApprove();
+              self.getRefuseData();
+              console.log("debug account")
+            } else {
+              self.login();
+              console.log("default account")
+            }
+          }else{
+            wx.showModal({
+              title: '获取公众号数据失败'
+            })
+          }
+
+        }, function () {
+          wx.showModal({
+            title: '获取公众号数据失败'
+          })
+        });
+
+
+
+      } else {
+        wx.showModal({
+          title: '登录失败'
+        })
+      }
+    }, function () {
+      wx.showModal({
+        title: '登录失败'
+      })
+    });
+
+  },
+
+  login: function () {
     var code;
     wx.login({
       success: function (e) {
@@ -60,6 +113,7 @@ Page({
               console.log("--------<登录成功" + data);
               wx.setStorageSync("openid", data.data.openId);
               wx.setStorageSync("unionid", data.data.unionId);
+
               var param = {
                 'apitoken': 'KingOfDinner123456789',
                 'clienttype': 'mobile',
@@ -72,21 +126,21 @@ Page({
                   self.getVacationCategory();
                   self.getTeamApprove();
                   self.getRefuseData();
-                }else{
+                } else {
                   wx.redirectTo({
                     url: '/pages/account/account',
                   })
                 }
               }, function () {
-                  
+
               });
             })
           }
         })
       }
     })
-
   },
+
   getVacationCategory: function () {
     var param = {
       'resid': 542128856156,
@@ -138,9 +192,6 @@ Page({
         }
 
         console.log('app.globalData.teamApprove' + app.globalData.teamApprove);
-        self.setData({
-          teamApproveSuccess: true
-        })
         self.gotoApplyPage();
       } else {
         wx.showModal({
@@ -156,7 +207,7 @@ Page({
     });
   },
   gotoApplyPage: function () {
-    if (self.data.vacationCategorySuccess && self.data.teamApproveSuccess && self.data.refuseArrSuccess) {
+    if (self.data.vacationCategorySuccess && self.data.refuseArrSuccess) {
 
       wx.hideNavigationBarLoading();
       wx.switchTab({

@@ -51,6 +51,7 @@ function coustomRequest(url, data, method, doSuccess, doFail, doComplete) {
   data.dynlogin = 1;
   data.user = getApp().globalData.userInfo.user;
   data.AccessToken = getApp().globalData.userInfo.ucode;
+
   if (method == 1) {
     data.method = 'ShowHostTableDatas_Ajax';
 

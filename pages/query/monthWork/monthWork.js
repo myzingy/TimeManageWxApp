@@ -49,7 +49,7 @@ function getCalendar(defaultYM,self) {
     return (year % 100 == 0 ? year % 400 == 0 ? 1 : 0 : year % 4 == 0 ? 1 : 0);
   }
 
-  var monthDayCountArr = [31, 28 + is_leap(y), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31];//每月天数
+  var monthDayCountArr = [31, 28 + is_leap(y), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];//每月天数
 
   var firstDate = new Date(entYear, entMonth - 1, 1);
   var firstWeek = firstDate.getDay();//1号星期几

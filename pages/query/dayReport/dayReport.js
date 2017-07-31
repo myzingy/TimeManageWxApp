@@ -25,7 +25,7 @@ function getDayReportData(self) {
   var entMonth = parseInt(defaultYM.substring(4, 6)) - 1; //.slice('月');
  
 
-  var monthDayCountArr = [31, 28 + is_leap(entYear), 31, 30, 31, 31, 30, 31, 30, 31, 30, 31];//每月天数
+  var monthDayCountArr = [31, 28 + is_leap(entYear), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];//每月天数
   var firstDateStr = new Date(entYear, entMonth, 1).format('yyyyMMdd');
   var lastDateStr = new Date(entYear, entMonth, monthDayCountArr[entMonth]).format('yyyyMMdd');
 
