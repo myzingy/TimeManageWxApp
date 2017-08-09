@@ -18,6 +18,25 @@
   </view>
 </template>
 
+<!--cell-pend主体-->
+<template name="cell-body-pend">
+  <view class="main-cell-icon">
+      <image src="{{item.C3_542383374989}}"  bindtap="gotoUnverifyDetailPage"><text data-tag="{{index}}" class="icon-title">{{item.C3_542397132420}}</text></image>
+    <image wx:if="false" src="" mode="aspectFit"></image>
+    <label class="font-999999">{{item.C3_533143303788 ? item.C3_533143303788 : ''}}</label>
+  </view>
+  <view class="main-cell-title width-calc-main">
+    <label>{{item.C3_533398158705}}</label>
+    <label class="font-999999">{{item.C3_541449959569}}日{{item.C3_541450006047}}</label>
+    <label class="font-999999">{{item.C3_541449974021}}日{{item.C3_541450008801}}</label>
+  </view>
+  <view class="main-cell-title width-70">
+    <label>{{item.C3_541449935726 ? item.C3_541449935726 + '小时' : '' }}</label>
+    <label class="font-999999">{{item.C3_541450072499}}:{{item.C3_541450107087}}</label>
+    <label class="font-999999">{{item.C3_541450084259}}:{{item.C3_541450125786}}</label>
+  </view>
+</template>
+
 <!--附件-->
 <template name="cell-attach" >
   <view class="main-cell-btn" bindtap="attachShow"
@@ -193,6 +212,14 @@ data-tag="{{index}}">
 
 
 <!--applydetail只读型-->
+
+<template name="person-name-readonly">
+  <view class="addApply-cell">
+    <label>员工姓名</label>
+    <text class="text-border">{{data.C3_533143303788}}</text>
+  </view>
+</template>
+
 <template name="add-category-readonly">
   <view class="addApply-cell">
     <label>申请类别</label>

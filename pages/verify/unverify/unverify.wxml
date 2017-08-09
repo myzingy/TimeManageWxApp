@@ -3,7 +3,7 @@
 <import src="../common.wxml" />
 <template name="unverify">
   <view class="main-cell" wx:for="{{data}}">
-    <template is="cell-body" data="{{item,index}}"> </template>
+    <template is="cell-body-pend" data="{{item,index}}"> </template>
 
 
     <template wx:if="{{(!(item.item.C3_541449606438=='Y')&&item.item.C3_541449538456=='Y') && item.item.C3_545927244809 == 'Y' }}" is="cell-attach" data="{{item}}"></template>

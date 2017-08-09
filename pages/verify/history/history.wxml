@@ -1,8 +1,8 @@
 <import src="/templates/templates.wxml" />
 <import src="/pages/index/common.wxml" />
-<template name="history-pend">
+<template name="history">
   <view class="main-cell" wx:for="{{data}}">
-    <template is="cell-body-pend" data="{{item}}"> </template>
+    <template is="cell-body" data="{{item}}"> </template>
 
 
     <template is="state" data="{{item}}"></template>

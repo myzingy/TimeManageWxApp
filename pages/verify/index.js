@@ -10,7 +10,7 @@ Page({
       navWidth: '25%'
     },
     pageName: 'unverify',//当前页的名称
-    pageNameArr: ['unverify', 'pended', 'pended', 'history'],
+    pageNameArr: ['unverify', 'pended-pend', 'pended-pend', 'history-pend'],
     selectDataArr: [],
     selectDataIndex: 0,
     allSelectDataIndex: [0, 0, 0, 0],

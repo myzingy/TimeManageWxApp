@@ -1,5 +1,8 @@
 <import src='/pages/index/common.wxml' />
 
+<template wx:if="{{willRefuse}}" is="person-name-readonly" data="{{data}}">
+</template>
+
 <template is="add-category-readonly" data="{{data}}">
 </template>
 
