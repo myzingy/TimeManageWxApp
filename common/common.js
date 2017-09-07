@@ -16,7 +16,10 @@ function saveAndSubmit(data, success, fail) { //提交 保存
     if (data.data.error == 0) {
       if (data.data.data && data.data.data[0]) {
         var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
-        if (success) success(dataArr[0]);
+        if (data.data.data[0].C3_558113184328 <= 0) customModal("当前审批人设置错误，请联系管理员");
+        else {
+          if (success) success(dataArr[0]);
+        }
       } else {
         if (fail) fail();
       }
@@ -51,7 +54,10 @@ function reSaveAndSubmit(data, success, fail) { //重新提交 保存
     if (data.data.error == 0) {
       if (data.data.data && data.data.data[0]) {
         var dataArr = promiseImageWithStyle(data.data.data, ['C3_542383374989', 'C3_543518801920'])
-        if (success) success(dataArr[0]);
+        if (data.data.data[0].C3_558113184328 <= 0) customModal("当前审批人设置错误，请联系管理员");
+        else{
+          if (success) success(dataArr[0]);
+        }
       } else {
         if (fail) fail();
       }
@@ -254,9 +260,11 @@ Date.prototype.format = function (format) {
   return format;
 }
 
-function customModal(title) {
+function customModal(content,title) {
+  if(!title) title = '提示';
   wx.showModal({
     title: title,
+    content: content,
     showCancel: false,
   })
 }
